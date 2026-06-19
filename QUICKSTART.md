@@ -12,15 +12,21 @@ What you get here is a set of structured extraction methods — interview protoc
 
 ### The Pipeline
 
+### The Pipeline (LLM 개입 없는 순수 추출 원칙)
+
+> [!WARNING]
+> **데이터를 뽑아낼 때(추출 단계) 챗봇(LLM)과 대화하지 마세요!**
+> LLM에게 "나한테 질문해 줘"라고 시키면, LLM은 은연중에 질문을 변형하거나 당신의 대답을 라벨링/요약하여 **데이터를 심각하게 오염**시킵니다. 이 프로젝트의 핵심은 **개입 없는 순수한 원본(Raw-ness)**입니다.
+
 ```mermaid
 flowchart LR
-    A[You] -->|1. Paste Prompt| B(LLM ChatGPT/Claude)
-    B -->|2. Asks you question| A
-    A -->|3. Type verbatim answer| C[(Local raw_store.yaml)]
-    C -->|4. Feed all raw data| B
-    B -->|5. Outputs deep analysis| A
+    A[You] -->|1. Read wiki questions| B(Pen & Paper / Text Editor)
+    B -->|2. Think alone & answer| A
+    A -->|3. Save verbatim answer| C[(Local raw_store.yaml)]
+    C -->|4. Feed all raw data| D(LLM ChatGPT/Claude)
+    D -->|5. Outputs deep analysis| A
 ```
-*(Your answers go into the local file, NOT back into the LLM during the extraction phase!)*
+*(추출은 오직 당신 스스로 진행하며, LLM은 데이터가 다 모인 후 분석(활용) 단계에서만 사용합니다!)*
 
 ---
 
@@ -99,11 +105,11 @@ See `examples/analysis_prompt.md` for more prompt templates.
 
 ## Worked example: one CCRT session
 
-**The extraction prompt** (from the CCRT document — paste into any LLM):
+**The extraction question** (Read this from the CCRT document, think about it, and type your answer in a text editor):
 
 > 최근 6개월 이내의 실제 관계 장면 하나를 떠올려주세요. 당신이 상대에게 무언가를 원했는데 잘 안 됐던 순간입니다. 구체적으로: 그 장면에서 당신이 원한 게 뭐였나요? (상대가 어떻게 해주길 바랐나요?) 상대는 실제로 어떻게 했나요? 그 순간 당신은 어떻게 반응했나요? 이런 패턴이 다른 관계에서도 반복됩니까?
 
-**Your verbatim answers go into raw_store.yaml — no summarizing, no paraphrasing:**
+**Your verbatim answers go into `raw_store.yaml` — no summarizing, no paraphrasing:**
 
 ```yaml
 entries:
@@ -128,6 +134,18 @@ raw_wish: "내가 힘든 걸 굳이 말 안 해도 알아봐 주길"
 ```
 
 The key principle: the `raw_*` fields store **what you actually said**, not what it means. The LLM reads the verbatim and does the synthesis in the analysis step.
+
+---
+
+## Step 5 (Optional) — Run a manual Hold-out Validation
+
+If you want to test how well the LLM can predict your behavior before seeing your analysis, try a manual validation test:
+
+1. Copy your `raw_store.yaml`.
+2. Delete ONE specific field from the copy (e.g., delete the `raw_response_self` from a CCRT entry).
+3. Open a **new, clean chat window** with your LLM.
+4. Paste the modified YAML and ask: *"Based on this data, how do you predict I reacted in this specific situation? (Guess the deleted `raw_response_self`)"*.
+5. Compare the LLM's prediction with your actual deleted answer. This measures the sanity of the methodology.
 
 ---
 
