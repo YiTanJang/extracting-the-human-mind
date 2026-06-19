@@ -12,21 +12,29 @@ What you get here is a set of structured extraction methods — interview protoc
 
 ### The Pipeline
 
-### The Pipeline (LLM 개입 없는 순수 추출 원칙)
+### The Pipeline (추출 단계에서의 LLM 개입 최소화 원칙)
 
 > [!WARNING]
-> **데이터를 뽑아낼 때(추출 단계) 챗봇(LLM)과 대화하지 마세요!**
-> LLM에게 "나한테 질문해 줘"라고 시키면, LLM은 은연중에 질문을 변형하거나 당신의 대답을 라벨링/요약하여 **데이터를 심각하게 오염**시킵니다. 이 프로젝트의 핵심은 **개입 없는 순수한 원본(Raw-ness)**입니다.
+> **데이터를 뽑아낼 때(추출 단계) 챗봇(LLM)에게 분석이나 요약을 맡기지 마세요!**
+> "내 대답을 정리해 줘"라고 시키면, LLM은 은연중에 자신의 편향을 섞어 대답을 라벨링하며 **데이터를 심각하게 오염**시킵니다. 이 프로젝트의 핵심은 **개입 없는 순수한 원본(Raw-ness)**입니다.
+
+추출 방법의 성격에 따라 두 가지 방식으로 진행합니다.
+
+**1. 정적 검사 (Static Extraction) - 예: CCRT, 두려운 자기**
+*   질문이 고정되어 있으므로 **LLM을 아예 쓰지 마세요.** 종이나 텍스트 에디터에 혼자 생각하며 답을 적어 `raw_store.yaml`에 바로 저장합니다.
+
+**2. 동적 검사 (Facilitated Extraction) - 예: 래더링(Laddering), 삼항 도출**
+*   "왜 그것이 중요하죠?" 하고 계속 파고들어야 하므로 **LLM(챗봇)의 보조(Facilitation)가 필수적**입니다.
+*   단, 이때 LLM은 엄격하게 훈련된 **'멍청한 질문 기계'** 역할만 수행해야 합니다. 절대로 사용자의 대답을 지레짐작해 요약하지 못하게 프롬프트로 통제한 뒤, 대화가 끝나면 **당신이 입력한 원본 텍스트(Verbatim)만 발췌하여** 저장해야 합니다.
 
 ```mermaid
 flowchart LR
-    A[You] -->|1. Read wiki questions| B(Pen & Paper / Text Editor)
-    B -->|2. Think alone & answer| A
-    A -->|3. Save verbatim answer| C[(Local raw_store.yaml)]
-    C -->|4. Feed all raw data| D(LLM ChatGPT/Claude)
-    D -->|5. Outputs deep analysis| A
+    A[You] -->|1. Read or Chat(Only for Laddering)| B(Text Editor / Strict LLM)
+    B -->|2. Your Verbatim Answer| C[(Local raw_store.yaml)]
+    C -->|3. Feed all raw data| D(LLM ChatGPT/Claude)
+    D -->|4. Outputs deep analysis| A
 ```
-*(추출은 오직 당신 스스로 진행하며, LLM은 데이터가 다 모인 후 분석(활용) 단계에서만 사용합니다!)*
+*(추출은 오직 당신의 날것 그대로 기록되어야 하며, LLM의 지능은 데이터가 다 모인 후 분석(활용) 단계에서만 100% 사용합니다!)*
 
 ---
 
