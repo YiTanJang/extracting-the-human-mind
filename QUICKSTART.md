@@ -139,6 +139,6 @@ The key principle: the `raw_*` fields store **what you actually said**, not what
 | `id` | Method prefix + 4-digit serial (e.g. `ccrt0001`, `l0001`, `t0001`) |
 | `ts` | ISO 8601 timestamp |
 | `method` | `ccrt` / `laddering` / `triadic` / `feared_self` / `esm` / etc. |
-| `object_tag` | **Relationship type only (e.g. "동료", "부모").**<br>⚠️ *CRITICAL: Never use real names (e.g. "John") to preserve privacy and structural anonymity.* |
+| `object_tag` | **Relationship type only (e.g. "동료", "부모").**<br>💡 *Note: You can use real names (e.g. "John") during the extraction to help you think specifically, but you must anonymize them to a relationship tag before saving to `raw_store.yaml`.* |
 
 Full field shapes for all methods → `examples/raw_store.template.yaml`
