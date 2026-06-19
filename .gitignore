@@ -1,3 +1,10 @@
+# Personal raw data — never commit
+raw_store.yaml
+**/raw_store.yaml
+my-data/
+private/
+personal/
+
 # OS / editor cruft
 .DS_Store
 Thumbs.db

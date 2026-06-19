@@ -1,0 +1,78 @@
+# raw_store.template.yaml
+#
+# Copy this file to your local path (outside the repo) and rename it raw_store.yaml.
+# Fill in one entry per extraction session. Append; never overwrite.
+#
+# Rules:
+#   - raw_* fields: verbatim only. No summaries, no labels, no interpretation.
+#   - object_tag: relationship type only (e.g. "동료", "부모"). No names.
+#   - Do not commit this file if it contains real personal data.
+
+entries:
+
+  # ── CCRT (Core Conflictual Relationship Theme) ──────────────────────────────
+  - id: ccrt0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: ccrt
+    object_tag: ""                    # e.g. "동료", "파트너", "부모"
+    raw_wish: ""                      # what you wanted from the other person
+    raw_response_other: ""            # what they actually did (your perception)
+    raw_response_self: ""             # how you reacted
+    raw_recurrence: ""                # does this pattern repeat elsewhere?
+
+  # ── Laddering ────────────────────────────────────────────────────────────────
+  - id: l0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: laddering
+    target_axis_from_event: ""        # id of the triadic entry that prompted this (pointer only)
+    selection_reason: ""              # why this axis was chosen (e.g. "Dilemma", "high saliency")
+    verbatim_chain:                   # user answers only, in order — drop LLM questions
+      - ""
+      - ""
+      - ""
+    boundary_exception: ""            # when does this value NOT apply?
+
+  # ── Triadic Elicitation ──────────────────────────────────────────────────────
+  - id: t0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: triadic
+    context: ""                       # domain: work / relation / daily / etc.
+    round: 1
+    elements_shown: ["", "", ""]      # the three elements presented
+    odd_one: ""                       # which one felt different
+    raw_negative: ""                  # verbatim: what makes the odd one different (negative pole)
+    raw_positive: ""                  # verbatim: what the other two share (positive pole)
+    grid_row: []                      # ratings 1–7 across all elements on this axis
+    selection_audit:
+      dispersion_score: 0.0
+      saliency_sum: 0
+
+  # ── Feared Self ──────────────────────────────────────────────────────────────
+  - id: fs0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: feared_self
+    domain: general                   # general / work / relation
+    raw_feared: ""                    # verbatim description of feared-self state
+    raw_early_warning: ""             # earliest behavioral signal you notice
+    raw_defense: ""                   # what you do to avoid it
+    raw_reality_check: ""            # a past moment when feared-self activated — what happened
+
+  # ── Mini ESM (Experience Sampling) ──────────────────────────────────────────
+  - id: esm0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: esm
+    context: ""                       # what were you doing
+    affect_valence: 0                 # −3 (very negative) to +3 (very positive)
+    affect_arousal: 0                 # 0 (calm) to 3 (activated)
+    raw_thought: ""                   # verbatim: what was on your mind
+    raw_trigger: ""                   # what preceded this state
+    raw_body: ""                      # any physical sensation noticed
+
+  # ── Value Allocation (맥락 속 가치 할당) ────────────────────────────────────
+  - id: va0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: value_allocation
+    scenario: ""                      # the specific situation described
+    raw_allocation: ""                # verbatim: how you distributed the resource/decision
+    raw_reasoning: ""                 # verbatim: why
+    values_mentioned: []              # values the person named themselves (no external taxonomy)
