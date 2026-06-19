@@ -10,8 +10,6 @@
 
 What you get here is a set of structured extraction methods — interview protocols that you run manually with an LLM of your choice — and a local YAML file where you store the verbatim results.
 
-### The Pipeline
-
 ### The Pipeline (추출 단계에서의 LLM 개입 최소화 원칙)
 
 > [!WARNING]
