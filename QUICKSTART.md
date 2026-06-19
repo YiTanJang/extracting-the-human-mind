@@ -29,7 +29,7 @@ What you get here is a set of structured extraction methods — interview protoc
 
 ```mermaid
 flowchart LR
-    A[You] -->|1. Read or Chat(Only for Laddering)| B(Text Editor / Strict LLM)
+    A[You] -->|"1. Read or Chat (Only for Laddering)"| B(Text Editor / Strict LLM)
     B -->|2. Your Verbatim Answer| C[(Local raw_store.yaml)]
     C -->|3. Feed all raw data| D(LLM ChatGPT/Claude)
     D -->|4. Outputs deep analysis| A
