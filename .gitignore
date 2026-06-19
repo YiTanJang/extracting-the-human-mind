@@ -1,0 +1,12 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Obsidian vault config (개인 작업 환경 — 위키 본문과 무관)
+.obsidian/
+
+# Python
+__pycache__/
+*.pyc
+_convert_wikilinks.py
