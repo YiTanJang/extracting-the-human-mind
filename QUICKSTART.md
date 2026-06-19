@@ -23,7 +23,7 @@ What you get here is a set of structured extraction methods — interview protoc
 **1. 정적 검사 (Static Extraction) - 예: CCRT, 두려운 자기**
 *   질문이 고정되어 있으므로 **LLM을 아예 쓰지 마세요.** 종이나 텍스트 에디터에 혼자 생각하며 답을 적어 `raw_store.yaml`에 바로 저장합니다.
 
-**2. 동적 검사 (Facilitated Extraction) - 예: 래더링(Laddering), 삼항 도출**
+**2. 동적 검사 (Facilitated Extraction) - 예: 래더링(Laddering)**
 *   "왜 그것이 중요하죠?" 하고 계속 파고들어야 하므로 **LLM(챗봇)의 보조(Facilitation)가 필수적**입니다.
 *   단, 이때 LLM은 엄격하게 훈련된 **'멍청한 질문 기계'** 역할만 수행해야 합니다. 절대로 사용자의 대답을 지레짐작해 요약하지 못하게 프롬프트로 통제한 뒤, 대화가 끝나면 **당신이 입력한 원본 텍스트(Verbatim)만 발췌하여** 저장해야 합니다.
 
