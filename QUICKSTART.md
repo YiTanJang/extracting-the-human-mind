@@ -2,15 +2,25 @@
 
 ## First: what this repository is (and isn't)
 
-**This is a methodology wiki, not a runnable app.**
+> [!IMPORTANT]
+> **This is a methodology wiki (protocol), not a runnable app.**
+> There is no server to start, no CLI to install, no UI to open. 
+> 
+> *If you want to build a real app based on this wiki, please refer to the [아키텍처 (App Blueprint)](<아키텍처.md>).*
 
-There is no server to start, no CLI to install, no UI to open. What you get is a set of structured extraction methods — interview protocols that you run manually with an LLM of your choice — and a local YAML file where you store the verbatim results.
+What you get here is a set of structured extraction methods — interview protocols that you run manually with an LLM of your choice — and a local YAML file where you store the verbatim results.
 
-The pipeline is:
+### The Pipeline
 
+```mermaid
+flowchart LR
+    A[You] -->|1. Paste Prompt| B(LLM ChatGPT/Claude)
+    B -->|2. Asks you question| A
+    A -->|3. Type verbatim answer| C[(Local raw_store.yaml)]
+    C -->|4. Feed all raw data| B
+    B -->|5. Outputs deep analysis| A
 ```
-You (human) + LLM → extraction session → your local raw_store.yaml → LLM analysis
-```
+*(Your answers go into the local file, NOT back into the LLM during the extraction phase!)*
 
 ---
 
@@ -129,6 +139,6 @@ The key principle: the `raw_*` fields store **what you actually said**, not what
 | `id` | Method prefix + 4-digit serial (e.g. `ccrt0001`, `l0001`, `t0001`) |
 | `ts` | ISO 8601 timestamp |
 | `method` | `ccrt` / `laddering` / `triadic` / `feared_self` / `esm` / etc. |
-| `object_tag` | Relationship type only (e.g. "동료", "부모") — no names |
+| `object_tag` | **Relationship type only (e.g. "동료", "부모").**<br>⚠️ *CRITICAL: Never use real names (e.g. "John") to preserve privacy and structural anonymity.* |
 
 Full field shapes for all methods → `examples/raw_store.template.yaml`
