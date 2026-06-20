@@ -75,4 +75,12 @@
 
 ---
 
+## 🖥️ [UI 렌더링 명세] (Frontend Component)
+- **UI 컴포넌트:** `Episode Card Deck (에피소드 덱)`
+- **상호작용 (Interaction):**
+  - 단일 에피소드(바람 → 타인의 반응 → 나의 반응) 작성을 완료하면, 해당 에피소드가 한 장의 요약 카드로 접혀 상단에 쌓입니다.
+  - "+ 새로운 관계 에피소드 추가" 버튼이 하단에 항시 유지되며, 최소 3장의 카드가 모여야 '검사 완료' 버튼이 활성화됩니다.
+
+---
+
 **🔗 상위 맥락:** [Extracting the human mind](<Extracting the human mind.md>)

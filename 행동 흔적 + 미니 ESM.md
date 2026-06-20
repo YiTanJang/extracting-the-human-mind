@@ -73,4 +73,12 @@ ESM은 *시간순 append*가 본질이다. 매 표집이 하나의 행으로 누
 
 ---
 
+## 🖥️ [UI 렌더링 명세] (Frontend Component)
+- **UI 컴포넌트:** `Push Notification & Quick Action Sheet`
+- **상호작용 (Interaction):**
+  - 앱 내의 정식 검사 페이지가 아닌, 스마트폰 푸시 알림이나 OS 위젯을 통해 진입합니다.
+  - 진입 시 전체 화면이 아닌 바텀 시트(Bottom Sheet)로 절반만 올라오며, 타이핑 마찰을 없애기 위해 텍스트 입력보다는 이모지 탭(Tap)이나 버튼(Pill) 선택 위주의 UI를 제공합니다.
+
+---
+
 **🔗 상위 맥락:** [Extracting the human mind](<Extracting the human mind.md>)

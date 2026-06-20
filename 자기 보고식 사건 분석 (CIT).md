@@ -70,4 +70,12 @@ LLM의 요약·해석 없이, `data_type: self_report` 꼬리표와 함께 verba
 
 ---
 
+## 🖥️ [UI 렌더링 명세] (Frontend Component)
+- **UI 컴포넌트:** `Vertical Accordion (수직 아코디언)`
+- **상호작용 (Interaction):**
+  - 상황 → 행동 → 결과의 3단계가 순차적으로 열립니다.
+  - '행동'을 작성할 때 '상황' 탭은 최소화(Collapse)되지만, 작성한 요약 텍스트는 헤더에 계속 노출되어 맥락을 유지합니다.
+
+---
+
 **🔗 상위 맥락:** [Extracting the human mind](<Extracting the human mind.md>)
