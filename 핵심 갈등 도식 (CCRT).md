@@ -1,5 +1,6 @@
 # Methodology: 핵심 갈등 도식 (Core Conflictual Relationship Theme, CCRT)
 
+> **예상 소요 시간:** 5~10분
 > **한 줄 정체성:** 대인관계에서 반복되는 *소망(Wish) → 타인의 반응(Response of Other) → 나의 반응(Response of Self)* 의 3항 사슬을, 입력 창 세 개만으로 해체해 verbatim으로 뽑는다.
 
 ## 🧠 [Protocol] 0. 이론적 전제 및 설계 원칙
