@@ -283,7 +283,7 @@ verification_ledger:
     - Singer & Blagov (2004). "The Integrative Function of Narrative Processing" — 자기-정의 기억 완료.
     - Aher, Arriaga, & Kalai (2023). "Using Large Language Models to Simulate Multiple Humans" — 고전 심리 실험 재현 완료.
 - [x] **DR-4-2. 경쟁 환경(Competitive Landscape) 섹션 신설:** `관련 연구.md`에 상용 제품(Character.AI, Replika, Rosebud AI, Personal.ai, Pi)과의 포지셔닝 차이 추가 완료.
-- [x] **DR-4-3. 서사적 일관성(Narrative Coherence) 피처 검토:** Life Map에서 서사적 일관성을 계산 가능한 피처로 추출하는 내용을 `대표 인생 장면.md`에 추가 완료.
+- [~] **DR-4-3. 서사적 일관성(Narrative Coherence) 피처 검토:** ~~Life Map에서 서사적 일관성을 계산 가능한 피처로 추출하는 내용을 `대표 인생 장면.md`에 추가 완료.~~ $\rightarrow$ **반려됨:** 사전에 챗봇이 데이터를 가공/계산하는 것은 "Raw Data를 그대로 보존한다"는 프로젝트 핵심 철학에 위배되므로 폐기.
 - [x] **DR-4-4. 적응형 ESM + 센서 트리거 검토:** 이전 응답 기반 최적화 및 센서 맥락적 트리거 방식을 `행동 흔적 + 미니 ESM.md`에 추가 완료.
 
 ### DR-5. 전략적 과제
