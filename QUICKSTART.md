@@ -47,7 +47,7 @@ Pick one extraction method from the wiki. Good starting points:
 | Feared Self | What collapse looks like for you | [두려운 자기와 조기 경보](<두려운 자기와 조기 경보.md>) |
 | Triadic Elicitation | Personal construct axes | [삼항 도출](<삼항 도출.md>) |
 
-Each document has a `UI 프롬프트` section — that's the exact prompt you paste into an LLM to run the session.
+For dynamic extraction methods (like Laddering), the document provides a System Prompt for the LLM. For static methods (like CCRT), the document simply provides the questions you need to answer yourself.
 
 ---
 
