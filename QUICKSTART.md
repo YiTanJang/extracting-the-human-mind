@@ -42,10 +42,10 @@ Pick one extraction method from the wiki. Good starting points:
 
 | Method | What it extracts | Document |
 |---|---|---|
-| CCRT | Core relationship conflict pattern | [핵심 갈등 도식 (CCRT)](핵심%20갈등%20도식%20(CCRT).md) |
-| Laddering | Terminal values behind a preference | [래더링](래더링.md) |
-| Feared Self | What collapse looks like for you | [두려운 자기와 조기 경보](두려운%20자기와%20조기%20경보.md) |
-| Triadic Elicitation | Personal construct axes | [삼항 도출](삼항%20도출.md) |
+| CCRT | Core relationship conflict pattern | [핵심 갈등 도식 (CCRT)](<핵심 갈등 도식 (CCRT).md>) |
+| Laddering | Terminal values behind a preference | [래더링](<래더링.md>) |
+| Feared Self | What collapse looks like for you | [두려운 자기와 조기 경보](<두려운 자기와 조기 경보.md>) |
+| Triadic Elicitation | Personal construct axes | [삼항 도출](<삼항 도출.md>) |
 
 Each document has a `UI 프롬프트` section — that's the exact prompt you paste into an LLM to run the session.
 

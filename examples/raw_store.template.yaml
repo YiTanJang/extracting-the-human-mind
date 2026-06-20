@@ -8,8 +8,13 @@
 #   - object_tag: relationship type only (e.g. "동료", "부모"). No names.
 #   - Do not commit this file if it contains real personal data.
 
-entries:
+user_metadata:
+  demographics:
+    age_group: ""                    # [Optional] e.g. "20s", "30s" (For fairness/bias testing)
+    gender: ""                       # [Optional] e.g. "Male", "Female", "Other"
+    cultural_background: ""          # [Optional] e.g. "Korean", "Western"
 
+entries:
   # ── CCRT (Core Conflictual Relationship Theme) ──────────────────────────────
   - id: ccrt0001
     ts: 2026-01-01T12:00:00+09:00
