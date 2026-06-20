@@ -138,9 +138,9 @@
 ## 트랙 8 — 심화 데스크 리서치 기반 고도화 (Advanced Desk Research)
 최신 LLM 심리학 및 사회과학 시뮬레이션 연구를 바탕으로 시스템의 학술적 방어력을 높이고 아키텍처를 고도화한다. (API 연동 기반의 MVP 범위에 집중)
 
-- [ ] **[DR-6-1] 문화적 편향(WEIRD Bias) 및 사회적 바람직성 통제** — 서구권 중심의 가치관 편향과 LLM의 사회적 바람직성(Social Desirability) 위장 편향을 억제하기 위해, 한국적 맥락을 보호하고 날것의 본능을 추출하는 전용 프롬프팅(CultureSteer 등) 도입 및 문화적 타당도 점검 파이프라인 신설.
-- [ ] **[DR-6-2] 심판으로서의 LLM(LLM-as-a-judge) 편향 교정** — 채점 및 게이팅 시 LLM이 보이는 위치 편향(Positional Bias), 자기 선호 편향 등을 상쇄하기 위해 위치 교환(Position Swapping) 기반 교차 검증 및 점수 보정(Bayesian Calibration) 알고리즘 적용.
-- [ ] **[DR-6-3] 최신 멀티 에이전트 사회 시뮬레이션(MASS) 아키텍처 차용** — 단순 챗봇 대화 구조를 넘어, Micro(개인 인지) - Meso(상호작용, Belief State) - Macro(집단 창발)의 3단계 티어(Tier) 구조를 시뮬레이션 파이프라인에 반영하여 모델의 현실 모사력 강화.
+- [x] **[DR-6-1] 문화적 편향(WEIRD Bias) 및 사회적 바람직성 통제** — `관련 연구.md` §4-2에 CultureSteer 및 한국적 맥락 보호 장치 서술 완료.
+- [x] **[DR-6-2] 심판으로서의 LLM(LLM-as-a-judge) 편향 교정** — `관련 연구.md` §4-2에 위치 편향, 자기 선호 편향, Position Swapping 기반 교차 검증 서술 완료.
+- [x] **[DR-6-3] 최신 멀티 에이전트 사회 시뮬레이션(MASS) 아키텍처 차용** — `관련 연구.md` §4-3에 Micro-Meso-Macro 3단계 구조 기술 완료.
 
 ---
 
