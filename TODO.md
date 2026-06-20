@@ -199,11 +199,9 @@ verification_ledger:
 
 ### D-2. YAML 스키마 불일치 및 미완성
 
-- [ ] **D-2-1. raw_store.template.yaml 미완성:** `examples/raw_store.template.yaml`이 11개 메서드 중 6개만 커버 (CCRT, 래더링, 삼항, 두려운 자기, ESM, 가치 할당). **누락 5개**: 생성 은유/SCT, 판단 스타일 시나리오, 자기–타자, 대표 인생 장면, CIT. 이들의 필드 정의를 템플릿에 추가해야 함.
-- [ ] **D-2-2. YAML 필드명 문서 간 충돌:** 같은 데이터를 가리키는 필드명이 문서마다 다름.
-    - **가치 할당**: `Extracting the human mind.md`(line 179)는 `{value, raw_points}` 구조, `examples/raw_store.template.yaml`(line 76)은 `raw_allocation` + `raw_reasoning` 구조 → 하나로 통일 필요.
-    - **삼항 도출**: 메인 문서의 `raw_negative`/`raw_positive` vs 다른 곳의 변형 — 전수 조사 후 정규화.
-- [ ] **D-2-3. 두려운 자기 '현실 검증' 필드 선택성 불일치:** `두려운 자기와 조기 경보.md`에서는 현실 검증 단계가 "(선택)"이지만, `examples/raw_store.template.yaml`에서는 `raw_reality_check`가 비선택 필드로 나옴. 선택/필수 여부를 통일해야 함.
+- [x] **D-2-1. raw_store.template.yaml 미완성:** 11개 메서드 전체 커버되도록 누락된 5개(생성 은유/SCT, 판단 스타일 시나리오, 자기–타자, 대표 인생 장면, CIT) 필드 정의를 `examples/raw_store.template.yaml`에 추가 완료.
+- [x] **D-2-2. YAML 필드명 문서 간 충돌:** `Extracting the human mind.md`의 가치 할당 필드를 `맥락 속 가치 할당.md`와 동일하게 `{raw_verbatim, points}` 구조 및 `flip_condition` 포함 포맷으로 정규화 완료. 삼항 도출 필드명도 템플릿과 일치함 확인.
+- [x] **D-2-3. 두려운 자기 '현실 검증' 필드 선택성 불일치:** `examples/raw_store.template.yaml`의 `raw_reality_check`에 `[Optional]` 주석을 명시하여 비선택 필드임을 명확히 통일 완료.
 
 ### D-3. 추출 방법 문서 구조 표준화
 

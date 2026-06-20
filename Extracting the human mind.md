@@ -176,11 +176,15 @@ raw_log:                      # append-only, 시간순
     ts: 2026-06-18T10:12:00+09:00
     method: value_allocation
     context: work
-    allocations:              # 숫자 + 맥락. 위계 정규화는 PART 2
-      - {value: "자율성", raw_points: 40}
-      - {value: "안정", raw_points: 25}
-      - {value: "인정", raw_points: 20}
-      - {value: "관계", raw_points: 15}
+    allocations:              # 라벨은 전부 사용자가 직접 적은 verbatim. 위계 정규화는 PART 2
+      - {raw_verbatim: "자율성", points: 40}
+      - {raw_verbatim: "안정", points: 25}
+      - {raw_verbatim: "인정", points: 20}
+      - {raw_verbatim: "관계", points: 15}
+    flip_condition:           # 1위(자율성)를 버리고 최하위(관계)를 택하는 예외 조건
+      top_value: "자율성"
+      bottom_value: "관계"
+      raw_condition: "내 방식대로 밀어붙이다가 누군가 번아웃이 올 때"
 
   - id: e0006
     ts: 2026-06-18T10:15:00+09:00

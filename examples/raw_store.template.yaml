@@ -55,13 +55,14 @@ entries:
     raw_feared: ""                    # verbatim description of feared-self state
     raw_early_warning: ""             # earliest behavioral signal you notice
     raw_defense: ""                   # what you do to avoid it
-    raw_reality_check: ""            # a past moment when feared-self activated — what happened
+    raw_reality_check: ""             # [Optional] a past moment when feared-self activated — what happened
 
   # ── Mini ESM (Experience Sampling) ──────────────────────────────────────────
   - id: esm0001
     ts: 2026-01-01T12:00:00+09:00
     method: esm
     context: ""                       # what were you doing
+    data_type: enacted_proximal       # to distinguish from self_report
     affect_valence: 0                 # −3 (very negative) to +3 (very positive)
     affect_arousal: 0                 # 0 (calm) to 3 (activated)
     raw_thought: ""                   # verbatim: what was on your mind
@@ -72,7 +73,56 @@ entries:
   - id: va0001
     ts: 2026-01-01T12:00:00+09:00
     method: value_allocation
-    scenario: ""                      # the specific situation described
-    raw_allocation: ""                # verbatim: how you distributed the resource/decision
-    raw_reasoning: ""                 # verbatim: why
-    values_mentioned: []              # values the person named themselves (no external taxonomy)
+    context: ""                       # e.g. work_crisis_scenario
+    allocations:                      # verbatim value name and points (must sum to 100)
+      - {raw_verbatim: "", points: 0}
+      - {raw_verbatim: "", points: 0}
+    flip_condition:                   # exception condition to flip top/bottom values
+      top_value: ""
+      bottom_value: ""
+      raw_condition: ""
+
+  # ── Metaphor / SCT (생성 은유와 문장 완성) ───────────────────────────────────
+  - id: met0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: metaphor                  # or sct
+    domain: ""                        # e.g. career, relationship
+    prompt: ""                        # e.g. "나에게 나의 커리어는 [ ]다"
+    raw: ""                           # the user's verbatim completion
+
+  # ── Judgment Scenario (판단 스타일 시나리오) ─────────────────────────────────
+  - id: js0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: judgment_scenario
+    scenario: ""                      # the dilemma presented
+    raw_missing_info: ""              # verbatim: what else do you need to know?
+    raw_tiebreaker: ""                # verbatim: the single ultimate criterion
+
+  # ── Self-Other (자기-타자) ───────────────────────────────────────────────────
+  - id: so0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: self_other
+    value: ""                         # the value or trait in question
+    raw_self_definition: ""           # verbatim: what it means to you
+    raw_other_estimation: ""          # verbatim: what your colleague would say it means
+
+  # ── Life Scene (대표 인생 장면) ──────────────────────────────────────────────
+  - id: ls0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: life_scene
+    data_type: self_report            # explicitly marked as retrospective self-report
+    time_tag: ""                      # when did this happen
+    timeline_order: 1                 # relative chronological order
+    raw_scene_summary: ""             # verbatim: the objective scene
+    raw_meaning: ""                   # verbatim: what it meant to you
+
+  # ── CIT (자기 보고식 사건 분석) ───────────────────────────────────────────────
+  - id: cit0001
+    ts: 2026-01-01T12:00:00+09:00
+    method: cit
+    domain: ""                        # e.g. work
+    data_type: self_report
+    raw_incident: ""                  # the specific past event
+    raw_problem: ""                   # what the core problem was
+    raw_response: ""                  # what you did
+    raw_outcome: ""                   # [Optional] what happened as a result
