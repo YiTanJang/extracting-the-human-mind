@@ -276,19 +276,19 @@ verification_ledger:
 
 ### DR-4. 문헌 보강 (🟢 낮은 우선순위)
 
-- [ ] **DR-4-1. 관련 연구.md에 추가할 문헌:**
-    - McAdams & McLean (2013). "Narrative Identity" — `대표 인생 장면.md` 이론 강화
-    - Jankowicz (2004). "The Easy Guide to Repertory Grids" — `삼항 도출.md` 실용 참고
-    - Horton (2023). "Large Language Models as Simulated Economic Agents" — `검증 모드.md` B5 경제 게임 참고
-    - Singer & Blagov (2004). "The Integrative Function of Narrative Processing" — 자기-정의 기억
-    - Aher, Arriaga, & Kalai (2023). "Using Large Language Models to Simulate Multiple Humans" — 고전 심리 실험 재현
-- [ ] **DR-4-2. 경쟁 환경(Competitive Landscape) 섹션 신설:** `관련 연구.md`에 학술 연구뿐 아니라 상용 제품(Character.AI, Replika, Rosebud AI, Personal.ai, Pi)과의 포지셔닝을 정리하는 섹션 추가. 핵심 차별점: (1) 구조화 추출 배터리, (2) raw verbatim 보존, (3) 공식 검증 프레임워크, (4) 모델 비의존 설계.
-- [ ] **DR-4-3. 서사적 일관성(Narrative Coherence) 피처 검토:** Life Map(대표 인생 장면의 타임라인)에서 서사적 일관성을 계산 가능한 피처로 추출하는 것을 검토. 문헌에 따르면 생애 서사의 일관성은 심리적 웰빙과 상관이 있음.
-- [ ] **DR-4-4. 적응형 ESM + 센서 트리거 검토:** 문헌(Van Berkel et al., 2023 등)에서 AI가 이전 응답에 기반해 ESM 질문을 최적화하거나, 센서(시간, 위치)로 맥락적 트리거를 거는 방식이 유효하다고 보고. 모바일 구현 시 반영 검토.
+- [x] **DR-4-1. 관련 연구.md에 추가할 문헌:**
+    - McAdams & McLean (2013). "Narrative Identity" — `대표 인생 장면.md` 이론 강화 완료.
+    - Jankowicz (2004). "The Easy Guide to Repertory Grids" — `삼항 도출.md` 실용 참고 완료.
+    - Horton (2023). "Large Language Models as Simulated Economic Agents" — `검증 모드.md` B5 경제 게임 참고 완료.
+    - Singer & Blagov (2004). "The Integrative Function of Narrative Processing" — 자기-정의 기억 완료.
+    - Aher, Arriaga, & Kalai (2023). "Using Large Language Models to Simulate Multiple Humans" — 고전 심리 실험 재현 완료.
+- [x] **DR-4-2. 경쟁 환경(Competitive Landscape) 섹션 신설:** `관련 연구.md`에 상용 제품(Character.AI, Replika, Rosebud AI, Personal.ai, Pi)과의 포지셔닝 차이 추가 완료.
+- [x] **DR-4-3. 서사적 일관성(Narrative Coherence) 피처 검토:** Life Map에서 서사적 일관성을 계산 가능한 피처로 추출하는 내용을 `대표 인생 장면.md`에 추가 완료.
+- [x] **DR-4-4. 적응형 ESM + 센서 트리거 검토:** 이전 응답 기반 최적화 및 센서 맥락적 트리거 방식을 `행동 흔적 + 미니 ESM.md`에 추가 완료.
 
 ### DR-5. 전략적 과제
 
-- [ ] **DR-5-1. 프로젝트 최대 해자(Moat) = 검증 프레임워크:** 경쟁 제품 분석 결과, 어떤 상용 AI 심리 도구도 이 프로젝트의 검증 모드에 준하는 체계적 검증을 가지고 있지 않음. 이것이 전략적 차별점이므로, README와 프로젝트 포지셔닝에서 검증 프레임워크를 전면에 내세울 것.
+- [x] **DR-5-1. 프로젝트 최대 해자(Moat) = 검증 프레임워크:** 경쟁 제품 대비 검증 모드의 중요성을 `README.md` 전면에 신설 완료.
 
 ---
 
