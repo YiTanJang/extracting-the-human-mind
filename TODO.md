@@ -150,21 +150,21 @@
 
 ### Critical — 사용자나 구현자가 즉시 막히는 것
 
-- [ ] **[AU-1] YAML 최상위 키 표준 확정** — `Extracting the human mind.md`는 `raw_log:`, `QUICKSTART.md`·`raw_store.template.yaml`은 `entries:`를 쓴다. 하나로 확정하고 세 문서 동기화. `meta:` 블록(schema_version 등) 포함 여부도 결정.
-- [ ] **[AU-2] 판단 스타일 필드명 통일** — `판단 스타일 시나리오.md`의 `raw_tie_breaker` → 템플릿 기준 `raw_tiebreaker`로 수정.
-- [ ] **[AU-3] 검증 관문 통과 조건 단일화** — `아키텍처.md`(임계 점수 도달), `MVP 기획.md`(오차율 "폭발"), `검증 모드.md`(적재 완료)가 각각 다른 조건을 제시한다. 세 문서를 하나의 기준으로 동기화.
-- [ ] **[AU-4] QUICKSTART Step 5 검증 절차 수정** — 현재 "필드를 삭제하고 LLM 예측과 비교"는 사후합리화 오염을 허용한다. "예측 봉인 먼저 → 이후 실제 응답" 순서로 수정하거나, 약식 버전임을 명시하고 `검증 모드.md` 링크 제공.
+- [x] **[AU-1] YAML 최상위 키 표준 확정** — `Extracting the human mind.md`의 `raw_log:` + `meta:` 블록 → `entries:`로 통일. 템플릿·QUICKSTART 이미 `entries:` 사용.
+- [x] **[AU-2] 판단 스타일 필드명 통일** — `판단 스타일 시나리오.md`의 `raw_tie_breaker` → `raw_tiebreaker` 수정 완료.
+- [x] **[AU-3] 검증 관문 통과 조건 단일화** — `아키텍처.md` §Module 2, `MVP 기획.md` §3-4를 `검증 모드.md` §2-2 기준("최소 배터리 적재 완료 = 통과, 정확도 점수 무관")으로 동기화.
+- [x] **[AU-4] QUICKSTART Step 5 검증 절차 수정** — 봉인 후 예측 원칙 적용: "예측 먼저 기록 → 실제 응답 확인 → 비교" 순서로 재작성. `검증 모드.md` 링크 추가.
 
 ### Major — 구현·재현 시 오해가 생기는 것
 
-- [ ] **[AU-5] `raw_early_warning` 타입 통일** — `Extracting the human mind.md`(배열), `두려운 자기와 조기 경보.md`(문자열), 템플릿(빈 문자열)이 다르다. 배열(`["신호1", "신호2"]`)로 통일.
-- [ ] **[AU-6] Dispersion Score / Saliency 용어 분리** — `삼항 도출.md`(삼항 선택 다양성)와 `계산 절차.md`(구성개념 변별력)가 같은 이름 "Dispersion Score"로 다른 것을 계산한다. Saliency도 마찬가지(원소 자기평가 1–5 vs 중립점 이탈 합산). 이름 분리 또는 시점·입력 명시.
-- [ ] **[AU-7] soul.md 베이스라인 비교 절차 추가** — README에서 "soul.md를 이긴다"고 선언하지만 비교 방법이 없다. `examples/analysis_prompt.md`에 soul.md vs raw_store 비교 프롬프트 템플릿 추가. soul.md 최소 형식 정의.
-- [ ] **[AU-8] 래더링 UI 스택 방향 통일** — `래더링.md`(새 질문이 아래 추가)와 `아키텍처.md` §6-2(새 답변이 위로 쌓임)가 반대 방향이다. 하나를 정본으로 확정하고 나머지 삭제.
+- [x] **[AU-5] `raw_early_warning` 타입 통일** — `두려운 자기와 조기 경보.md`(문자열 → 배열), 템플릿(빈 문자열 → `[]`)로 수정.
+- [x] **[AU-6] Dispersion Score / Saliency 용어 분리** — `계산 절차.md` §1-1·§1-2에 경고 박스("축 수준, 사후 지표")를 추가해 삼항 도출의 동명 지표(triad diversity, pre-collection)와 명확히 구분.
+- [x] **[AU-7] soul.md 베이스라인 비교 절차 추가** — `examples/analysis_prompt.md`에 soul.md vs raw_store 독립 예측 비교 프롬프트 템플릿 추가 (A4 증분 타당도 검증용).
+- [x] **[AU-8] 래더링 UI 스택 방향 통일** — `아키텍처.md` §6-2를 `래더링.md` §3 UX 스펙 기준(최신 답변 = 화면 최상단, 기존 카드 아래로)으로 수정.
 
 ### Minor — 장기 정합성 문제
 
-- [ ] **[AU-9] CCRT 최소 에피소드 수 도메인 명시** — "최소 3개"가 관계 도메인 한정인지 전체 합산인지 불명확. 도메인 범위와 Luborsky 원론(최소 10 RE) 대비 MVP 조정 근거 한 줄 추가.
-- [ ] **[AU-10] CCRT 단계 이름 충돌 수정** — `핵심 갈등 도식 (CCRT).md` §단계 2 제목이 "3항 사슬 추출 (Triadic Elicitation)"로 삼항 도출 메서드와 이름이 겹친다. "W-RO-RS 구조화 추출" 등으로 변경.
-- [ ] **[AU-11] README 문서 구조표 `추출 파이프라인.md` 링크 추가** — 파일은 존재하지만 README 문서 구조표에 링크가 없다.
-- [ ] **[AU-12] `domain` vs `context` YAML 필드명 혼용 정리** — 메서드마다 도메인 태그 필드가 `domain`과 `context`로 혼용된다. DB의 `domain_tag` 컬럼과 매핑 관계 명시 또는 통일.
+- [x] **[AU-9] CCRT 최소 에피소드 수 도메인 명시** — "동일 도메인 내 최소 3장" 기준 및 타 도메인 카운트 분리 명시.
+- [x] **[AU-10] CCRT 단계 이름 충돌 수정** — §단계 2 제목 "3항 사슬 추출 (Triadic Elicitation)" → "W-RO-RS 구조화 추출 (WRS Coding)"으로 변경.
+- [x] **[AU-11] README `추출 파이프라인.md` 링크** — 파일이 실제로 존재하지 않음(감사 오탐). 파이프라인 개요는 `Extracting the human mind.md` §1-0-4에 포함되어 있어 별도 파일 불필요.
+- [x] **[AU-12] `domain` vs `context` YAML 필드명 혼용 정리** — 삼항 도출 `context` → `domain`으로 통일 (템플릿 + `삼항 도출.md` 예시). ESM·가치할당의 `context`는 활동/시나리오 설명용으로 의미 다름 → 유지.

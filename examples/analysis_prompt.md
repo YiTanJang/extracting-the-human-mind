@@ -97,6 +97,37 @@ State your confidence (low / medium / high) and what would change it.
 
 ---
 
+## soul.md baseline comparison (incremental validity test)
+
+Use this when you have a `soul.md` — the user's own written self-description — to test whether the raw store adds predictive power beyond what the person says about themselves.
+
+```
+You will compare two information sources about the same person:
+
+SOURCE A — soul.md (espoused self-description):
+[paste soul.md content here]
+
+SOURCE B — raw_store.yaml (verbatim behavioral data):
+[paste raw_store.yaml here]
+
+Tasks:
+1. Using SOURCE A only, predict how this person would respond to: [describe a scenario or question].
+   State your prediction and confidence.
+2. Using SOURCE B only, make the same prediction independently.
+   State your prediction and confidence.
+3. Compare: where do A and B agree? Where do they diverge?
+4. If they diverge on a prediction, which source do you trust more and why?
+   Cite specific evidence from each source.
+
+Do not blend the sources in steps 1–2. Keep them strictly separate.
+The goal is to measure whether raw behavioral data adds information that self-description misses.
+```
+
+> **When to use:** After the user has written a `soul.md` and collected at least 3–5 raw_store entries.
+> This is the A4 (incremental validity) check from [검증 모드](검증%20모드.md) §1-3.
+
+---
+
 ## Notes on prompt hygiene
 
 - **Don't ask for scores or percentages.** They imply precision that isn't there.

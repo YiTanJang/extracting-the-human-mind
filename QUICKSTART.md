@@ -145,13 +145,16 @@ The key principle: the `raw_*` fields store **what you actually said**, not what
 
 ## Step 5 (Optional) — Run a manual Hold-out Validation
 
-If you want to test how well the LLM can predict your behavior before seeing your analysis, try a manual validation test:
+If you want to test how well the LLM can predict your behavior before seeing your analysis, try a manual validation test. **Order matters** — the prediction must happen before you recall your own answer, or the comparison is contaminated.
 
-1. Copy your `raw_store.yaml`.
-2. Delete ONE specific field from the copy (e.g., delete the `raw_response_self` from a CCRT entry).
-3. Open a **new, clean chat window** with your LLM.
-4. Paste the modified YAML and ask: *"Based on this data, how do you predict I reacted in this specific situation? (Guess the deleted `raw_response_self`)"*.
-5. Compare the LLM's prediction with your actual deleted answer. This measures the sanity of the methodology.
+1. Open a **new, clean chat window** with your LLM.
+2. Paste your complete `raw_store.yaml` and ask: *"Based on this data, predict how I would answer: [pick a question from any method you haven't filled in yet, e.g. a new CCRT episode]. Give a specific prediction — do not ask me questions."*
+3. **Before** reading the LLM's prediction, write your actual answer independently (in a separate note).
+4. Now read the LLM's prediction and compare with what you wrote.
+
+> **Why this order?** If you see the prediction first, your memory of the "real answer" is biased. Blind prediction → then actual answer → then compare. This is the same logic as the full [검증 모드](검증%20모드.md).
+
+This is a lightweight sanity check. For rigorous validation with hold-out probes and lineup tests, see `검증 모드.md`.
 
 ---
 

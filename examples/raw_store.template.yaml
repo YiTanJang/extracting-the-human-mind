@@ -41,7 +41,7 @@ entries:
   - id: t0001
     ts: 2026-01-01T12:00:00+09:00
     method: triadic
-    context: ""                       # domain: work / relation / daily / etc.
+    domain: ""                        # work / relation / daily / self (unlock domain tag)
     round: 1
     elements_shown: ["", "", ""]      # the three elements presented
     odd_one: ""                       # which one felt different
@@ -58,7 +58,7 @@ entries:
     method: feared_self
     domain: general                   # general / work / relation
     raw_feared: ""                    # verbatim description of feared-self state
-    raw_early_warning: ""             # earliest behavioral signal you notice
+    raw_early_warning: []             # list of earliest behavioral signals you notice (verbatim)
     raw_defense: ""                   # what you do to avoid it
     raw_reality_check: ""             # [Optional] a past moment when feared-self activated — what happened
 

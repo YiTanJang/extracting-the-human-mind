@@ -259,12 +259,7 @@ raw 데이터를 망치는 것들을 통제한다 — 실험 위생과 동일.
 
 ```yaml
 # raw_store.yaml — 진실의 원천. 가공물은 전부 여기서 재생성된다.
-meta:
-  subject_id: u_001
-  mode: deep                  # casual | deep (추출 깊이만 결정, 가공 아님)
-  schema_version: raw-1.0
-
-raw_log:                      # append-only, 시간순
+entries:                      # append-only, 시간순
   - id: e0001
     ts: 2026-06-18T10:02:00+09:00
     method: triadic
