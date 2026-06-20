@@ -67,3 +67,7 @@ LLM의 요약·해석 없이, `data_type: self_report` 꼬리표와 함께 verba
 * **선택 편향:** 사용자가 *떠올린* 사건은 모든 사건의 무작위 표본이 아니라, 지금 마음에 걸리는 사건이다. 표본이 아니라 신호로 다룬다.
 
 * **Part 2 활용 원칙:** $Raw\_Problem$(문제 정의 축)을 [삼항 도출](<삼항 도출.md>)의 construct, [두려운 자기와 조기 경보](<두려운 자기와 조기 경보.md>)와 교차해 "이 사람이 위기에서 무엇을 지키려 하는가"를 추론한다. enacted 데이터(ESM)가 쌓이면 "위기 시 자기보고 대응 vs 실제 대응"의 갭 검증 대조군으로 쓴다.
+
+---
+
+**🔗 상위 맥락:** [Extracting the human mind](<Extracting the human mind.md>)
