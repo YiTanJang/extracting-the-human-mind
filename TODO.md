@@ -141,3 +141,30 @@
 - [ ] **[DR-6-1] 문화적 편향(WEIRD Bias) 및 사회적 바람직성 통제** — 서구권 중심의 가치관 편향과 LLM의 사회적 바람직성(Social Desirability) 위장 편향을 억제하기 위해, 한국적 맥락을 보호하고 날것의 본능을 추출하는 전용 프롬프팅(CultureSteer 등) 도입 및 문화적 타당도 점검 파이프라인 신설.
 - [ ] **[DR-6-2] 심판으로서의 LLM(LLM-as-a-judge) 편향 교정** — 채점 및 게이팅 시 LLM이 보이는 위치 편향(Positional Bias), 자기 선호 편향 등을 상쇄하기 위해 위치 교환(Position Swapping) 기반 교차 검증 및 점수 보정(Bayesian Calibration) 알고리즘 적용.
 - [ ] **[DR-6-3] 최신 멀티 에이전트 사회 시뮬레이션(MASS) 아키텍처 차용** — 단순 챗봇 대화 구조를 넘어, Micro(개인 인지) - Meso(상호작용, Belief State) - Macro(집단 창발)의 3단계 티어(Tier) 구조를 시뮬레이션 파이프라인에 반영하여 모델의 현실 모사력 강화.
+
+---
+
+## 트랙 9 — 독립 감사 결과 수정 (Audit Fixes)
+
+독립 감사(2026-06-20)에서 발견된 문서 간 충돌·불일치·누락을 수정한다. Critical → Major → Minor 순으로 처리.
+
+### Critical — 사용자나 구현자가 즉시 막히는 것
+
+- [ ] **[AU-1] YAML 최상위 키 표준 확정** — `Extracting the human mind.md`는 `raw_log:`, `QUICKSTART.md`·`raw_store.template.yaml`은 `entries:`를 쓴다. 하나로 확정하고 세 문서 동기화. `meta:` 블록(schema_version 등) 포함 여부도 결정.
+- [ ] **[AU-2] 판단 스타일 필드명 통일** — `판단 스타일 시나리오.md`의 `raw_tie_breaker` → 템플릿 기준 `raw_tiebreaker`로 수정.
+- [ ] **[AU-3] 검증 관문 통과 조건 단일화** — `아키텍처.md`(임계 점수 도달), `MVP 기획.md`(오차율 "폭발"), `검증 모드.md`(적재 완료)가 각각 다른 조건을 제시한다. 세 문서를 하나의 기준으로 동기화.
+- [ ] **[AU-4] QUICKSTART Step 5 검증 절차 수정** — 현재 "필드를 삭제하고 LLM 예측과 비교"는 사후합리화 오염을 허용한다. "예측 봉인 먼저 → 이후 실제 응답" 순서로 수정하거나, 약식 버전임을 명시하고 `검증 모드.md` 링크 제공.
+
+### Major — 구현·재현 시 오해가 생기는 것
+
+- [ ] **[AU-5] `raw_early_warning` 타입 통일** — `Extracting the human mind.md`(배열), `두려운 자기와 조기 경보.md`(문자열), 템플릿(빈 문자열)이 다르다. 배열(`["신호1", "신호2"]`)로 통일.
+- [ ] **[AU-6] Dispersion Score / Saliency 용어 분리** — `삼항 도출.md`(삼항 선택 다양성)와 `계산 절차.md`(구성개념 변별력)가 같은 이름 "Dispersion Score"로 다른 것을 계산한다. Saliency도 마찬가지(원소 자기평가 1–5 vs 중립점 이탈 합산). 이름 분리 또는 시점·입력 명시.
+- [ ] **[AU-7] soul.md 베이스라인 비교 절차 추가** — README에서 "soul.md를 이긴다"고 선언하지만 비교 방법이 없다. `examples/analysis_prompt.md`에 soul.md vs raw_store 비교 프롬프트 템플릿 추가. soul.md 최소 형식 정의.
+- [ ] **[AU-8] 래더링 UI 스택 방향 통일** — `래더링.md`(새 질문이 아래 추가)와 `아키텍처.md` §6-2(새 답변이 위로 쌓임)가 반대 방향이다. 하나를 정본으로 확정하고 나머지 삭제.
+
+### Minor — 장기 정합성 문제
+
+- [ ] **[AU-9] CCRT 최소 에피소드 수 도메인 명시** — "최소 3개"가 관계 도메인 한정인지 전체 합산인지 불명확. 도메인 범위와 Luborsky 원론(최소 10 RE) 대비 MVP 조정 근거 한 줄 추가.
+- [ ] **[AU-10] CCRT 단계 이름 충돌 수정** — `핵심 갈등 도식 (CCRT).md` §단계 2 제목이 "3항 사슬 추출 (Triadic Elicitation)"로 삼항 도출 메서드와 이름이 겹친다. "W-RO-RS 구조화 추출" 등으로 변경.
+- [ ] **[AU-11] README 문서 구조표 `추출 파이프라인.md` 링크 추가** — 파일은 존재하지만 README 문서 구조표에 링크가 없다.
+- [ ] **[AU-12] `domain` vs `context` YAML 필드명 혼용 정리** — 메서드마다 도메인 태그 필드가 `domain`과 `context`로 혼용된다. DB의 `domain_tag` 컬럼과 매핑 관계 명시 또는 통일.
