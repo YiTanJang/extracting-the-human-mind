@@ -1,0 +1,25 @@
+services:
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000
+    depends_on:
+      - backend
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data   # Persistent volume for raw_store.yaml and SQLite DB
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ADMIN_PASSCODE=${ADMIN_PASSCODE:-1234}
+      - ENVIRONMENT=production
+    restart: always
