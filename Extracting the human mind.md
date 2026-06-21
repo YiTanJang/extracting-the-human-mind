@@ -81,26 +81,28 @@ LLM의 컨텍스트 윈도우 한계와 비용 문제를 해결하는 것이 본
 graph TD
     classDef startNode fill:#d4edda,stroke:#28a745,stroke-width:2px;
     classDef depNode fill:#cce5ff,stroke:#007bff,stroke-width:2px;
-    classDef verifyNode fill:#fff3cd,stroke:#ffc107,stroke-width:3px,stroke-dasharray: 5 5;
-    classDef outputNode fill:#f8d7da,stroke:#dc3545,stroke-width:2px;
+    classDef standaloneNode fill:#e2e3e5,stroke:#6c757d,stroke-width:2px;
 
-    subgraph "독립 추출 모듈"
+    subgraph "단독 추출 모듈 (의존성 없음)"
+        M4["판단 스타일 시나리오"]:::standaloneNode
+        M5["자기-타자 (메타 지각 갭)"]:::standaloneNode
+        M6["자기 보고식 사건 분석 (CIT)"]:::standaloneNode
+        M7["핵심 갈등 도식 (CCRT)"]:::standaloneNode
+        M9["자동화 TAT (암묵 동기)"]:::standaloneNode
+        M10["EFT 미래 사고"]:::standaloneNode
+        M11["애착 서사 완성"]:::standaloneNode
+    end
+
+    subgraph "연계형 독립 추출"
         M1["생성 은유와 문장 완성"]:::startNode
         M2["맥락 속 가치 할당"]:::startNode
         M3["두려운 자기와 조기 경보"]:::startNode
-        M4["판단 스타일 시나리오"]:::startNode
-        M5["자기-타자 (메타 지각 갭)"]:::startNode
-        M6["자기 보고식 사건 분석 (CIT)"]:::startNode
-        M7["핵심 갈등 도식 (CCRT)"]:::startNode
         M8["삼항 도출 (Triadic)"]:::startNode
-        M9["자동화 TAT (암묵 동기)"]:::startNode
-        M10["EFT 미래 사고"]:::startNode
-        M11["애착 서사 완성 (가설-투사)"]:::startNode
     end
 
     subgraph "의존 추출 모듈"
         D1["래더링 (Laddering)"]:::depNode
-        D2["대표 인생 장면 (+기원 장면)"]:::depNode
+        D2["대표 인생 장면"]:::depNode
         D3["행동 흔적 + 미니 ESM"]:::depNode
         D4["DRM 어제 재구성"]:::depNode
         D5["클린 랭귀지 (상징 풍경)"]:::depNode
@@ -111,8 +113,8 @@ graph TD
     D1 -->|종착 가치| D2
     M2 -->|투자 1위 가치| D2
     M3 -->|조기 경보 지표 제공| D3
-    D3 -->|같은 날 경험 자아| D4
-    M1 -->|정서 실린 은유 시드| D5
+    D3 -->|경험 자아| D4
+    M1 -->|은유 시드| D5
     M3 -->|상태 심상 시드| D5
 ```
 
