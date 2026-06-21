@@ -79,34 +79,30 @@ LLM의 컨텍스트 윈도우 한계와 비용 문제를 해결하는 것이 본
 
 ```mermaid
 graph TD
-    classDef startNode fill:#d4edda,stroke:#28a745,stroke-width:2px;
-    classDef depNode fill:#cce5ff,stroke:#007bff,stroke-width:2px;
-    classDef standaloneNode fill:#e2e3e5,stroke:#6c757d,stroke-width:2px;
-
     subgraph "단독 추출 모듈 (의존성 없음)"
-        M4["판단 스타일 시나리오"]:::standaloneNode
-        M5["자기-타자 (메타 지각 갭)"]:::standaloneNode
-        M6["자기 보고식 사건 분석 (CIT)"]:::standaloneNode
-        M7["핵심 갈등 도식 (CCRT)"]:::standaloneNode
-        M9["자동화 TAT (암묵 동기)"]:::standaloneNode
-        M10["EFT 미래 사고"]:::standaloneNode
-        M11["애착 서사 완성"]:::standaloneNode
+        M4["판단 스타일 시나리오"]
+        M5["자기-타자 (메타 지각 갭)"]
+        M6["자기 보고식 사건 분석 (CIT)"]
+        M7["핵심 갈등 도식 (CCRT)"]
+        M9["자동화 TAT (암묵 동기)"]
+        M10["EFT 미래 사고"]
+        M11["애착 서사 완성"]
     end
 
     subgraph "의존성 파이프라인"
         subgraph "연계형 독립 추출"
-            M1["생성 은유와 문장 완성"]:::startNode
-            M2["맥락 속 가치 할당"]:::startNode
-            M3["두려운 자기와 조기 경보"]:::startNode
-            M8["삼항 도출 (Triadic)"]:::startNode
+            M1["생성 은유와 문장 완성"]
+            M2["맥락 속 가치 할당"]
+            M3["두려운 자기와 조기 경보"]
+            M8["삼항 도출 (Triadic)"]
         end
 
         subgraph "의존 추출 모듈"
-            D1["래더링 (Laddering)"]:::depNode
-            D2["대표 인생 장면"]:::depNode
-            D3["행동 흔적 + 미니 ESM"]:::depNode
-            D4["DRM 어제 재구성"]:::depNode
-            D5["클린 랭귀지 (상징 풍경)"]:::depNode
+            D1["래더링 (Laddering)"]
+            D2["대표 인생 장면"]
+            D3["행동 흔적 + 미니 ESM"]
+            D4["DRM 어제 재구성"]
+            D5["클린 랭귀지 (상징 풍경)"]
         end
     end
 
