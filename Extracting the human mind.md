@@ -93,19 +93,21 @@ graph TD
         M11["애착 서사 완성"]:::standaloneNode
     end
 
-    subgraph "연계형 독립 추출"
-        M1["생성 은유와 문장 완성"]:::startNode
-        M2["맥락 속 가치 할당"]:::startNode
-        M3["두려운 자기와 조기 경보"]:::startNode
-        M8["삼항 도출 (Triadic)"]:::startNode
-    end
+    subgraph "의존성 파이프라인"
+        subgraph "연계형 독립 추출"
+            M1["생성 은유와 문장 완성"]:::startNode
+            M2["맥락 속 가치 할당"]:::startNode
+            M3["두려운 자기와 조기 경보"]:::startNode
+            M8["삼항 도출 (Triadic)"]:::startNode
+        end
 
-    subgraph "의존 추출 모듈"
-        D1["래더링 (Laddering)"]:::depNode
-        D2["대표 인생 장면"]:::depNode
-        D3["행동 흔적 + 미니 ESM"]:::depNode
-        D4["DRM 어제 재구성"]:::depNode
-        D5["클린 랭귀지 (상징 풍경)"]:::depNode
+        subgraph "의존 추출 모듈"
+            D1["래더링 (Laddering)"]:::depNode
+            D2["대표 인생 장면"]:::depNode
+            D3["행동 흔적 + 미니 ESM"]:::depNode
+            D4["DRM 어제 재구성"]:::depNode
+            D5["클린 랭귀지 (상징 풍경)"]:::depNode
+        end
     end
 
     M8 -->|타깃 축 제공| D1
