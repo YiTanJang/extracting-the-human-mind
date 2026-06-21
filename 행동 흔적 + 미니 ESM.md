@@ -40,15 +40,15 @@
 ESM은 **시간순 append가** 본질이다. 매 표집이 하나의 행으로 누적된다. 회고 모듈과 달리 `data_type`을 명시적으로 `enacted_proximal`로 표기해 격리한다.
 
 ```yaml
-  - id: esm0007
-    ts: 2026-06-20T21:00:00+09:00
-    method: esm
+  - id: esm0005
+    ts: 2026-06-20T14:32:00+09:00
+    method: mini_esm
+    domain: general                       # 특정 사건 기반이 아닐 경우 기본 general
     data_type: enacted_proximal          # 회고 자기보고와 격리 (장면/할당과 다름)
     trigger: calendar_event              # 타겟팅된 일정 기반 트리거
     prompt: "오늘 회의에서 내 의견을 얼마나 강하게 밀어붙였는가? (1: 접음 ~ 5: 밀어붙임)"
     scale: [1, 5]                        # 고정 척도
     raw_choice: 2
-    raw_freeform: "팀 미팅에서 방향이 계속 바뀌어서 답답했는데 말 안 함"
 
   - id: esm0008
     ts: 2026-06-20T21:00:30+09:00
