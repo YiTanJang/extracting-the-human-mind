@@ -22,3 +22,12 @@
 | [attachment_narrative.md](attachment_narrative.md) | L4 | 관계 단절 줄기 이어쓰기로 유기 상황 디폴트 반응 |
 
 추출 원칙(verbatim·무프로빙·투사 구조 보존·무오염·생태학적 타당성)과 추출 위생은 [../overview/principles.md](../overview/principles.md) §1-0·§1-2에 있다.
+
+## 후보 모듈 (탐색중)
+> 탐색중
+
+아직 16종 배터리에 정식 편입되지 않은 제안 모듈. 검증 모드 A4(증분 타당도) 통과를 편입 조건으로 둔다(EFT·애착 서사 선례).
+
+| 문서 | 층위 | 내용 | 편입 조건 |
+|------|------|------|------|
+| [free_association.md](free_association.md) | L1 | 자유연상 — 자극어에 대한 즉발 연상어·막힘을 verbatim 수집(RT 제외) | 자극어 출처 결정(무오염 긴장) + A4 증분 타당도 |

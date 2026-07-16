@@ -209,6 +209,8 @@ YAML
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 본 문서는 원본 verbatim을 보존하며 새 미결 사항은 없다. 선행 개념 `triad_elicitation.md`가 아직 이관 대기이므로 상단 링크는 이관 완료 시 유효해진다.
+- [User Review] §4-1 중단 신호 "그냥"의 이중 정의 충돌. **현재**: 시스템 프롬프트의 *중단 조건 2*는 "그냥"을 방어적 회피(Early Exit, 회피 행동을 raw로 보존)로 규정하나, 같은 절의 `should_stop_laddering` 코드는 `terminal_signals`에 "그냥"을 넣어 *종착 가치(terminal_value)* 도달로 분류한다. **문제**: 동일 토큰이 상반된 stop_reason(회피 종료 vs 가치 도달)에 매핑돼, `selection_reason`/검증 로깅과 사슬 해석이 오염된다("입 닫음"을 "궁극 가치 도달"로 오기록). **제안**: 두 경로를 분리 — 회피 신호("그냥/원래/모르겠다" 2회)는 `defensive_exit`로, 종착 가치는 동어반복·의미포화 기준으로만 판정하고 "그냥"을 terminal_signals에서 제거. 결정 필요.
+- [TODO] §4-1 반복 감지 코드-주석 불일치. `if new_response.strip() in chain`은 **정확 문자열 일치**만 보는데, 바로 위 주석은 의도를 "embedding similarity > 0.92"(의미적 반복)로 명시한다. MVP 구현에서 의미적 동어반복을 놓쳐 상향 연쇄가 불필요하게 MAX_DEPTH까지 길어질 수 있다. 구현 시 임베딩 유사도 판정으로 교체.
+- 본문은 원본 verbatim 보존.
 
 **🔗 상위 맥락:** [번들 index](../index.md)

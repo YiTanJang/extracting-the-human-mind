@@ -1,5 +1,14 @@
 # 변경 이력
 
+## 2026-07-16 (리뷰 마커 + 자유연상 후보 추가)
+
+- **문제 마커(리뷰)**: 이관 중 발견한 실제 결함에 OKF 마커 부착(본문 verbatim 불변, `## 미결 사항`에만 기재).
+  - `architecture.md`: [User Review] 가명화 "NER 기반 + 결정론적" 모순(NER은 비결정론적 → PII 유출/verbatim 훼손 위험) · [TODO] `current_xp` 임계치 100 매직 넘버.
+  - `extraction/laddering.md`: [User Review] 중단신호 "그냥"이 방어적 회피(프롬프트)와 종착 가치(코드)로 이중 매핑 · [TODO] 반복감지 코드(정확 일치)-주석(임베딩 유사도) 불일치.
+- **신규 후보 모듈**: `extraction/free_association.md`(자유연상, 탐색중) 추가. RT는 프로젝트 결정대로 제외, 내용·자기보고로 대체. 자극어 출처(표준/raw파생/중립시드) 미결 → [User Review]. `extraction/index.md`에 '후보(탐색중)' 표로 분리 등재(16종 확정 카운트는 불변).
+- **open_questions**: Q4 운영 결정 종결 표기, Q5(자유연상 편입 여부) 신설.
+- **다음 단계**: Q5 자극어 출처 결정 후 free_association 진행 가능. architecture·laddering의 [User Review] 2건은 사용자 컨펌 대기.
+
 ## 2026-07-16 (OKF 마이그레이션 — 전체 이관 완료)
 
 원본 34개 문서를 OKF 개념 문서로 **전부 이관 완료**(스켈레톤 3종 이후 나머지 31종을 병렬 서브에이전트로 변환).
