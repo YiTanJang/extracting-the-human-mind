@@ -5,6 +5,13 @@ my-data/
 private/
 personal/
 
+# OKF inbox/outbox — local-only source & export staging (see okf-system/bundle_design.md)
+inbox/
+outbox/
+
+# OKF methodology folder — local-only meta docs (작업 방식 문서, 프로젝트 산출물 아님)
+okf-system/
+
 # OS / editor cruft
 .DS_Store
 Thumbs.db

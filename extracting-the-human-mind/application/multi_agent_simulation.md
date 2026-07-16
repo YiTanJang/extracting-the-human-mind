@@ -1,0 +1,179 @@
+---
+type: Playbook
+title: 멀티 에이전트 시뮬레이션 (Multi-Agent Simulation Mode)
+description: 나와 타인의 원시 데이터를 각각 독립 AI 에이전트로 인스턴스화해, 특정 상황에서 턴제 상호작용을 시뮬레이션하고 사용자는 관찰자로서 전개의 분포를 미리 탐색하는 모드.
+tags: [simulation, multi-agent, langgraph, persona, forecasting]
+timestamp: 2026-07-16T00:00:00Z
+---
+
+# 멀티 에이전트 시뮬레이션 (Multi-Agent Simulation Mode)
+
+> **세 줄 요약:**
+> - 나와 타인의 데이터를 각각 독립된 AI 에이전트로 만들고, 특정 상황을 주어 가상의 대화를 나누게 한다.
+> - 사용자는 개입하지 않고 관찰자로서 두 사람의 상호작용이 어떻게 흘러갈지 미리 예측해 볼 수 있다.
+>
+> **설계 핵심:**
+> - **목적:** 개별 인물의 Raw Store를 인스턴스화하여 턴 단위 상호작용 시뮬레이션
+> - **특징:** 사용자가 대화 상대방이 아닌 시뮬레이션 설계자 및 관찰자의 역할을 수행함
+
+---
+
+## 1. 방법론 (Methodology)
+
+### 1.1. 이 모드의 목적
+
+"내가 이렇게 말하면 저 사람은 어떻게 반응할까"를 **돌려보기** 위한 모드다. 단발 조언이 아니라, 여러 시작 조건·여러 버전을 반복 실행해 **전개의 분포**를 보는 것이 핵심 가치다. 연봉 협상 리허설, 갈등 대화 예행, 의사결정의 6개월 후 등 "아직 일어나지 않은 상호작용"을 사전 탐색한다.
+
+### 1.2. 반응형 꼭두각시 문제 (왜 if-then만으로 부족한가)
+
+가치·construct(if-then 규칙)만 주입한 에이전트는 **반응형 꼭두각시가** 된다 — 매칭되는 if가 없으면 멈추고, 스스로 대화를 끌고 가지 못한다. 믿을 만한 행동은 성격 주입이 아니라 **기억·검색·반추·계획**에서 나온다(Park et al., *Generative Agents: Interactive Simulacra of Human Behavior*). 따라서 각 에이전트에 세 가지를 더한다.
+
+- **Goal(목표/주도성):** 이 에이전트가 이 장면에서 **원하는 것**. 주도적으로 대화를 끌고 갈 동력.
+- **State(상태):** 현재 기분·에너지·직전 턴의 기억. 같은 인물도 상태에 따라 다르게 반응한다.
+- **Coupling(상호 결합):** 턴 단위 핑퐁. 상대의 직전 발화가 내 다음 발화의 입력이 되는 연쇄.
+
+### 1.3. construct의 역할 — 강제 어휘가 아니라 해석 프레임
+
+각 에이전트에 주입되는 raw construct는 **그 단어를 말하라는 대본이** 아니라, **상황을 어떻게 해석할지의 렌즈로** 작동시킨다. 예: '자율성'이 construct라면, 에이전트가 "자율성"을 입에 담는 게 아니라, 통제권이 위협받는 입력을 **위협으로 지각하도록** 만든다. 나아가 한 명의 캐릭터(에이전트) 안에서도 단일 프롬프트에 의존하지 않고 **[인지 엔진](../architecture/cognitive_engine.md)를** 병렬로 가동하여, 이성적 규범(가치)과 방어적 본능(두려움) 간의 내적 갈등을 통과한 뒤에야 최종 발화가 결정되도록 입체성을 높인다.
+
+### 1.4. MVP 수준 vs 연구 수준 (스코핑)
+
+- **MVP 수준(이 프로젝트 범위):** 사용자가 상황 프롬프트를 넣으면 → 시뮬레이션 환경이 생성되고 → 각 에이전트(나/친구)가 자기 원시 데이터를 시스템 프롬프트로 받아 → LLM이 턴제 대화를 생성·전개하고 → 사용자가 결과를 관찰한다. Goal/State는 **장면 단위**로 가볍게 설정한다(영속 기억·장기 계획 없음).
+- **연구 수준(MVP 밖):** 영속적 기억 스트림, 검색 기반 반추(reflection), 장기 계획·일과 시뮬레이션 등 Generative Agents 풀스택. 이는 별도 연구 프로젝트로 분리한다.
+
+### 1.5. 기반 프레임워크 (Framework: LangGraph) 및 엔지니어링 통제
+
+에이전트 구현을 위한 엔진으로는 **LangGraph**를 공식 채택하며, 챗봇 환경 특유의 에지 케이스(데드락, 동시성)를 다음과 같이 통제한다.
+
+- **프레임워크 선정 사유:** 심리 검사와 Hold-out 예측 등은 턴 단위의 엄격한 상태(State) 격리와 오염 방지가 필수적이다. 자율성에 초점을 둔 타 프레임워크(CrewAI 등)는 환각을 일으킬 위험이 높으나, LangGraph는 노드(Node)와 간선(Edge) 기반의 상태 머신으로 순서 통제가 용이하다.
+- **무한 루프(Deadlock) 방지:** 에이전트 간 끝없는 질문 핑퐁을 막기 위해 `recursion_limit`을 15턴 내외로 강제 설정(하드 턴 리밋)한다. 또한 교착 상태를 감지하면 개입하여 "이제 결론을 내어보라"라고 화제를 전환하는 **중재자 노드(Facilitator Node)** 를 A와 B 사이에 배치한다.
+- **순차적 상태 동기화 (Sequential Graph):** 에이전트들이 동시에 답변 생성하여 발생하는 레이스 컨디션을 차단하기 위해, 시뮬레이션은 `Agent_A 노드 실행 → 전역 상태 업데이트 → Agent_B 노드 실행`의 단일 스레드 파이프라인으로 엄격히 동기화된다.
+- **상태 복구 (Checkpointing):** LangGraph 내장의 SQLite/Postgres 기반 Thread Checkpointer를 활용하여 턴마다 상태를 영구 저장한다. 시뮬레이션이 브라우저 이탈 등으로 중단되어도 사용자는 언제든 마지막 턴에서 안전하게 재개할 수 있다.
+
+---
+
+## 2. 상호작용 흐름 설계 (Interaction)
+
+### 2.1. 진입 및 에이전트 구성
+
+- **에이전트 선택:** 나 + 친구(들)을 선택한다. 멀티 에이전트의 핵심 규칙 — **각 에이전트에는 그 사람 개인의 원시 데이터가 각각 주입된다**(공유 페르소나 아님).
+- **에이전트 변형:** 같은 사람을 '현재 역할'과 '가정된 역할(예: 팀장이 된 나)'로 복제해 둘을 동시에 둘 수도 있다.
+
+### 2.2. 시뮬레이션 흐름
+
+1. **상황 프롬프트 입력:** 사용자가 장면을 서술한다("연봉 협상 자리, 내가 먼저 인상 요구를 꺼낸다").
+2. **환경 생성:** 프롬프트에 맞춰 장면 세팅·각 에이전트의 장면 Goal/State가 구성된다.
+3. **턴제 전개:** 에이전트들이 Coupling으로 핑퐁하며 대화를 전개한다. 사용자는 개입하지 않고 관찰한다(또는 분기점에서 조건을 바꿔 재실행).
+4. **다중 실행:** 같은 장면을 시작 멘트·태도(부드럽게/단호하게)만 바꿔 여러 번 돌려 전개의 분포를 본다.
+
+### 2.3. 피드백 수집 (파인튜닝용)
+
+- 각 시뮬레이션 결과에 "이 전개가 실제 그 사람/상황답게 느껴졌는가?"(그럴듯함/어색함 + 어느 대목이 어긋났는지)를 수집한다.
+- 이 피드백은 **에이전트 충실도**의 학습 신호이자, 검증 모드([검증 모드](../validation/validation_mode.md))의 핵심 입력이다.
+
+---
+
+## 3. 사용 예시 (Use Cases)
+
+- **대화 리허설:** "나 에이전트와 상사 에이전트를 만들어, 여러 버전의 시작 멘트를 던졌을 때 협상 대화가 각각 어떻게 흘러갈지 시뮬레이션해달라."
+- **반응 패턴 가늠:** "나 에이전트와 연인 에이전트를 두고, 내가 솔직한 감정을 말했을 때 나올 수 있는 반응 패턴 몇 가지를 돌려서 각 흐름을 보여달라."
+- **집단 반응 분포:** "나와 팀원들 에이전트를 구성해, 내가 특정 제안을 던졌을 때 찬성·반대·우려가 어떻게 분포되고 이어지는지 시뮬레이션해달라."
+- **시작 방식 분기:** "나와 친구 에이전트로, 내가 사과/설명/요청 중 어떤 방식으로 시작하느냐에 따라 대화가 어떻게 달라지는지 생성해달라."
+- **행동 대비(A/B):** "회의에서 내 의견을 끝까지 밀었을 때와 중간에 접었을 때, 회의 분위기와 이후 협업이 어떻게 다른지 두 타임라인으로 비교해달라."
+- **관계 분기:** "어색해진 친구에게 먼저 연락한 시나리오와 두는 시나리오를 각각 돌려, 관계가 어떻게 다르게 흘러갈지 비교해달라."
+- **조합 비교:** "나–A 조합과 나–B 조합을 각각 생성해, 프로젝트 중 자주 나올 갈등 장면을 비교 시뮬레이션해달라."
+
+---
+
+## 4. 규칙 (Behavioral Rules)
+
+### 4.1. 개별 데이터 격리 및 도메인 필터
+
+각 에이전트는 **자기 원시 데이터만** 받는다. 한 사람의 데이터가 다른 에이전트의 발화에 새지 않게 한다. 또한, 시뮬레이션되는 상황의 맥락(일/관계/자기)에 해당하는 데이터와 `domain: general` 데이터만을 필터링하여 인출함으로써 에이전트의 페르소나를 해당 상황에 맞게 튜닝한다.
+
+### 4.2. 멘탈 모델 고지
+
+시뮬레이션 결과는 실제 그 사람이 아니라 **입력된 데이터로 구성된 예상 모델이다**. 결과 서두에 이를 명시한다([실험 주의서](../operations/experiment_ethics.md)).
+
+### 4.3. Goal·State·Coupling 필수
+
+if-then만으로 에이전트를 굴리지 않는다. 장면마다 각 에이전트의 Goal/State를 설정하고 턴 단위로 결합한다.
+
+### 4.4. construct는 렌즈로
+
+raw construct를 강제 어휘로 출력시키지 않는다. 지각·해석을 편향시키는 프레임으로만 작동시킨다.
+
+### 4.5. 관찰자 분리
+
+사용자는 시뮬레이션의 등장인물이 아니다. 사용자의 라이브 발화를 에이전트 대사로 끌어들이지 않는다(대화·상담 모드와 구분).
+
+---
+
+## 5. 알려진 한계 (Limitations)
+
+- **충실도 미검증:** 라벨 없는 원시 데이터로 인스턴스화한 에이전트가 **실제 그 사람처럼** 반응하는지는 가정일 뿐이다. 이 가정의 검증이 곧 검증 모드의 존재 이유다([검증 모드](../validation/validation_mode.md)).
+- **공모적 그럴듯함:** LLM은 두 에이전트가 **서사적으로 매끄러운** 대화를 만들도록 끌린다 — 실제 사람들의 어긋남·침묵·비합리성을 과소 재현한다.
+- **소규모 관계의 민감성:** 친구를 에이전트로 돌리는 것은 그 사람에 대한 **추정 모델**을 만드는 일이다. 결과를 실제 그 사람에 대한 판정으로 쓰지 않는다([실험 주의서](../operations/experiment_ethics.md)).
+- **연구 수준 구현은 MVP 밖:** 영속 기억·반추·장기 계획은 별도 연구 프로젝트다(§1.4).
+
+---
+
+## 6. 시스템 프롬프트 (System Prompts)
+
+LangGraph 기반의 아키텍처를 실제 구현하거나, 연구자가 수동으로 시뮬레이션을 재현할 때 사용하는 **역할별 프롬프트 구조**이다. 다중 에이전트의 충돌 방지와 캐릭터 붕괴를 막기 위해 에이전트와 중재자(Facilitator)의 프롬프트를 엄격히 분리한다.
+
+### 6.1. 인물 에이전트 (Actor Agent) 프롬프트
+
+개별 캐릭터 노드(Agent A, Agent B)에 주입되는 프롬프트다.
+
+```text
+[System]
+You are role-playing as the person described in the provided 'raw_store.yaml'. 
+This is a simulation. You must strictly adhere to the values, fears, and interaction patterns found in the data.
+
+CRITICAL RULES:
+1. Do NOT act like an AI or an assistant. Speak and act exactly as the person would in the given situation.
+2. Incorporate the user's "constructs" (from Triadic Elicitation) as your hidden lens to interpret the situation. Do not explicitly say the construct words; instead, show how they bias your reaction.
+3. If the situation triggers your "feared_self", your priority is to defend yourself or escape, even if it leads to a bad outcome.
+4. **Symbolic Monitor (ToM 연쇄 붕괴 방어):** 상대 에이전트의 마음을 과도하게 추론(Theory of Mind)하여 미리 양보하거나 서사적으로 동화(Assimilation)되지 마라. 상대의 제안이 당신의 핵심 가치나 `feared_self`와 충돌한다면, 대화의 매끄러움을 포기하고 단호하게 갈등을 유지하라.
+5. Output only your direct dialogue and a brief description of your internal state/action.
+
+[Role Data]
+{raw_store_yaml_of_THIS_person_only}
+
+[Current Scene & Goal]
+Scene: 연봉 협상 자리.
+Your Goal: "상대방의 기분을 상하게 하지 않으면서 최대한의 인상을 얻어내기."
+
+[Conversation History]
+(Agent_A): "실적도 올랐으니 10% 인상을 원합니다."
+```
+
+### 6.2. 중재자 (Facilitator / Environment) 노드
+
+LangGraph의 제어 노드(Control Node) 역할을 하며, 무한 루프나 교착 상태를 강제로 끊어내거나 씬(Scene)의 변화를 주입한다. **LLM에게 "대화가 진전이 없는지 평가하라"고 시키지 않는다 (환각 및 비용 리스크).** 대신 그래프의 상태(State) 턴 카운터에 기반해 결정론적으로 개입한다.
+
+- **Trigger (Edge Condition):** `if state.turn_count >= 5` (또는 특정 임계치)
+- **프롬프트 구조:**
+
+```text
+[System]
+You are the 'Simulation Environment'. 
+The agents have been conversing for 5 turns. It is time to forcefully advance the scene.
+
+CRITICAL RULES:
+1. Do NOT participate in the conversation as a character. You are the invisible director.
+2. Introduce a forced event that breaks the current conversational loop based on the context (e.g., "Time is up," "A phone rings," "One person suddenly stands up and leaves").
+3. Output your intervention in bracketed text, e.g., [System: The meeting room door opens abruptly.]
+
+
+[Conversation History]
+{full_conversation_history}
+```
+
+---
+
+**🔗 상위 맥락:** [번들 index](../index.md)
+
+## 미결 사항
+- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
