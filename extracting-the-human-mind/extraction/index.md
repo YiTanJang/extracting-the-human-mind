@@ -30,4 +30,4 @@
 
 | 문서 | 층위 | 내용 | 편입 조건 |
 |------|------|------|------|
-| [free_association.md](free_association.md) | L1 | 자유연상 — 자극어에 대한 즉발 연상어·막힘을 verbatim 수집(RT 제외) | 자극어 출처 결정(무오염 긴장) + A4 증분 타당도 |
+| [free_association.md](free_association.md) | L1 | 순수 자유연상(자극어 없음) — 떠오르는 단어 스트림·막힘 verbatim, RT는 §1-2 예외로 수집, 같은 날 타 검사 격리 | A4 증분 타당도 (자극어·RT·격리 결정은 해소) |
