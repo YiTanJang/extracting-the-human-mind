@@ -137,16 +137,24 @@ MAX_DEPTH = 4
 
 def should_stop_laddering(
     chain: list[str],
-    new_response: str
+    new_response: str,
+    defensive_streak: int,   # 직전까지 연속된 방어적 단답 횟수
 ) -> tuple[bool, str]:
-    """Returns (stop, reason)."""
+    """Returns (stop, reason).
+    reason ∈ {max_depth, repetition, defensive_exit, terminal_value, ''}.
+    회피(defensive_exit)와 가치 도달(terminal_value)을 분리 기록한다."""
     if len(chain) >= MAX_DEPTH:
         return True, "max_depth"
-    # 반복 감지: 의미 유사 응답 (구현 시 embedding similarity > 0.92)
+    # 반복 감지: 현재는 정확 일치(임시). 구현 시 embedding similarity > 0.92로 교체 — 미결 사항 [TODO] 참조
     if new_response.strip() in chain:
         return True, "repetition"
-    # 종착 가치 신호 감지 (LLM이 판단)
-    terminal_signals = ["그냥", "그게 삶의", "이게 제 전부", "더 이유가 없어요"]
+    # 방어적 회피 조기 종료: "그냥/모르겠다" 등 내용 없는 단답이 2회 이상.
+    # 회피 자체는 raw로 보존하되 '가치 도달'로 오기록하지 않는다("그냥"은 종착 신호가 아님).
+    defensive_signals = ["그냥", "원래 그러니까", "모르겠다", "모르겠어"]
+    if any(sig in new_response.strip() for sig in defensive_signals) and defensive_streak + 1 >= 2:
+        return True, "defensive_exit"
+    # 종착 가치 신호: 내용을 동반한 궁극 가치 표현만("그냥"은 제외)
+    terminal_signals = ["그게 삶의", "이게 제 전부", "더 이유가 없어요"]
     if any(sig in new_response for sig in terminal_signals):
         return True, "terminal_value"
     return False, ""
@@ -179,6 +187,7 @@ YAML
       - "남이 정한 길은 내 것 같지 않음"
       - "내 인생이 내 것이 아니게 되는 것에 대한 두려움"
     boundary_exception: "팀 전체가 물리적으로 붕괴될 위기일 때"
+    stop_reason: "terminal_value"    # terminal_value | defensive_exit | repetition | max_depth (회피와 가치 도달을 구분해 기록)
 ```
 
 ## 6. 알려진 한계 (Limitations)
@@ -207,10 +216,13 @@ YAML
 
 ---
 
+## 결정 사항 (Decisions)
+
+- [해결됨: 2026-07-16] §4-1 중단 신호 "그냥"의 이중 정의 충돌 → **회피(defensive_exit)로 재분류 확정**(사용자 결정). "그냥/모르겠다"를 `terminal_signals`에서 제거하고 방어적 회피 경로(`defensive_exit`)로만 분류하며, 종착 가치는 내용 동반·의미 포화로만 판정한다. `should_stop_laddering`에 `defensive_streak` 인자와 `defensive_exit` 사유를 추가하고 §5 산출물에 `stop_reason` 필드를 신설(회피 사슬은 raw로 보존하되 '가치 도달'로 오기록하지 않음). 본문 §4-1 코드·§5 YAML 리팩토링 반영 완료. (이유: 진짜 종착 가치는 내용을 동반하나 "그냥"은 내용이 없어, 회피를 가치 도달로 오기록하면 사슬 깊이가 부풀고 `selection_reason` 로그가 오염됨.)
+
 ## 미결 사항
 
-- [User Review] §4-1 중단 신호 "그냥"의 이중 정의 충돌. **현재**: 시스템 프롬프트의 *중단 조건 2*는 "그냥"을 방어적 회피(Early Exit, 회피 행동을 raw로 보존)로 규정하나, 같은 절의 `should_stop_laddering` 코드는 `terminal_signals`에 "그냥"을 넣어 *종착 가치(terminal_value)* 도달로 분류한다. **문제**: 동일 토큰이 상반된 stop_reason(회피 종료 vs 가치 도달)에 매핑돼, `selection_reason`/검증 로깅과 사슬 해석이 오염된다("입 닫음"을 "궁극 가치 도달"로 오기록). **제안**: 두 경로를 분리 — 회피 신호("그냥/원래/모르겠다" 2회)는 `defensive_exit`로, 종착 가치는 동어반복·의미포화 기준으로만 판정하고 "그냥"을 terminal_signals에서 제거. 결정 필요.
 - [TODO] §4-1 반복 감지 코드-주석 불일치. `if new_response.strip() in chain`은 **정확 문자열 일치**만 보는데, 바로 위 주석은 의도를 "embedding similarity > 0.92"(의미적 반복)로 명시한다. MVP 구현에서 의미적 동어반복을 놓쳐 상향 연쇄가 불필요하게 MAX_DEPTH까지 길어질 수 있다. 구현 시 임베딩 유사도 판정으로 교체.
-- 본문은 원본 verbatim 보존.
+- 본문은 §4-1 중단 로직(그냥 재분류)을 제외하면 원본 verbatim 보존.
 
 **🔗 상위 맥락:** [번들 index](../index.md)

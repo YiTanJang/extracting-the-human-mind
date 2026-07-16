@@ -1,5 +1,11 @@
 # 변경 이력
 
+## 2026-07-16 (리뷰 [User Review] 2건 해결 — 사용자 판정)
+
+- **architecture.md 가명화**: "NER 기반 + 결정론적" 모순 → **2계층 설계 확정**(실명 유출 0 지향). 1계층=결정론적 사전·정규식 자동 치환, 2계층=NER 후보 최초 전송 전 사용자 확인. §2 Module 1 본문·frontmatter 리팩토링, `## 결정 사항`에 [해결됨] 기록.
+- **laddering.md 중단 신호 "그냥"**: 이중 매핑 → **회피(defensive_exit) 재분류 확정**. `terminal_signals`에서 "그냥" 제거, `should_stop_laddering`에 `defensive_streak`·`defensive_exit` 추가, §5 산출물에 `stop_reason` 필드 신설. `## 결정 사항`에 [해결됨] 기록.
+- 두 파일 모두 확정 본문을 사용자 결정에 따라 리팩토링(OKF 결정 기록 규칙 3). 남은 로컬 미결: laddering 반복감지 임베딩 교체 [TODO], architecture XP 임계치 [TODO].
+
 ## 2026-07-16 (자유연상 재설계 — 순수·RT예외·격리)
 
 사용자 지시로 `extraction/free_association.md` 재설계(설계 결정 3건 확정, `## 결정 사항`에 기록):
