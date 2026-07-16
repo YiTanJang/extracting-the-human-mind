@@ -26,7 +26,7 @@ timestamp: 2026-07-16T00:00:00Z
 
 - **이론적 기원:** Jung의 단어연상검사(Word Association Test)와 정신분석의 자유연상. 단, 본 모듈은 규준(nomothetic) 점수화를 목표로 하지 않고 **idiographic** — 개인 고유의 연상 내용을 raw로 보존한다.
 
-> 가설: 자극어에 대한 즉발 연상(및 막힘의 위치)이, 이미 L1을 담당하는 [삼항 도출](triad_elicitation.md)·[생성 은유와 문장 완성](generative_metaphor.md)·[클린 랭귀지](clean_language.md) 위로 *증분* 예측 신호를 준다. — 이 가설이 참이어야만 배터리에 편입한다([../validation/validation_mode.md] A4).
+> 가설: 자극어에 대한 즉발 연상(및 막힘의 위치)이, 이미 L1을 담당하는 [삼항 도출](triad_elicitation.md)·[생성 은유와 문장 완성](generative_metaphor.md)·[클린 랭귀지](clean_language.md) 위로 *증분* 예측 신호를 준다. — 이 가설이 참이어야만 배터리에 편입한다([검증 모드](../validation/validation_mode.md) A4).
 
 - **반응시간(RT) 제외:** 전통 WAT는 반응지연을 콤플렉스 지표로 쓰나, 본 프로젝트는 밀리초 단위 반응속도 측정을 웹 환경 제약으로 **기각**했다([../overview/principles.md](../overview/principles.md) §1-2 주). 따라서 RT 대신 ① 연상의 *내용*, ② 사용자가 **자기보고**한 막힘·거부·정서("잘 안 떠올라요", "이 단어 불편해요")를 verbatim으로 포착한다. 시스템이 지연시간을 몰래 측정하지 않는다.
 - **Verbatim·무프로빙:** 연상어는 정규화·요약 없이 그대로. 답이 짧거나 비었어도 꼬리질문하지 않는다(막힘 자체가 데이터).
