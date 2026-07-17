@@ -1,5 +1,14 @@
 # 변경 이력
 
+## 2026-07-17 (데스크 리서치 편입 [2/3] — 소스 공백 2차 패스)
+
+- `desk_research_2026-07.md`에 **§7** 추가 — Q6/Q3/Q8 공백을 집중 웹 검색으로 재조사(citations [12]–[20]).
+- **Q8 웹 RT**: Reimers&Stewart(2015, PMC4427652) ✅fetch — 웹 RT는 상수 오프셋(30–100ms) + 낮은 랜덤노이즈 → within-subject 상대 신호로 유효, cross-person 절대비교 부적합. **free_association §1 RT 예외 설계를 정확히 뒷받침.**
+- **Q6 자유연상 의미망**: Aeschbach·Mata·Wulff(2024, 2410.18326) ✅fetch — 개인 의미망 추정법. 단 **cue-based 전제** → 프로젝트 "자극어 없음"과 긴장(Q5 직교성 방법에 영향). 암묵동기 코더(~.85), 서사 STM은 활용측 코딩 도구.
+- **Q3**: cross-cultural 프레임 확보([17][18]), 한국 특정 수치 미확보 → open_questions Q3 부분 해소 표기.
+- **잔존 공백**: 한국 경제게임 규준, 레퍼토리 그리드 NLP 자동화(desk_research 미결 [TODO]).
+- **다음**: [3] validation_mode·free_association 개선 제안 마커.
+
 ## 2026-07-17 (데스크 리서치 편입 [1/3] — Reference 문서 + 미답 질문 재구성)
 
 - **신규**: `research/desk_research_2026-07.md`(Reference) — 2024–26 문헌 데스크 리서치, 적대적 검증 통과 21 클레임 + 기각 4건 + 한계 + 소스 공백. 검증 표(vote) 병기.
