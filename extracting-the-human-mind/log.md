@@ -1,5 +1,13 @@
 # 변경 이력
 
+## 2026-07-17 (데스크 리서치 편입 [1/3] — Reference 문서 + 미답 질문 재구성)
+
+- **신규**: `research/desk_research_2026-07.md`(Reference) — 2024–26 문헌 데스크 리서치, 적대적 검증 통과 21 클레임 + 기각 4건 + 한계 + 소스 공백. 검증 표(vote) 병기.
+- **테제 위협 3대**: ① 무-요약이 법칙 아니라 과업 의존적(BehaviorBench 2606.02798) ② 자율 생성 시 raw가 모델 prior로 붕괴(Habermolt 2605.24413) ③ 정규화 공식 문헌(비율 87.67%) vs 프로젝트(바닥차감 ~55.7%) 혼동 금지(Twin-2K 2505.17479).
+- **open_questions**: Q1 재구성(무-요약→모듈별 검증 가설, 3-arm A4), Q2 증강(2604.02460·MAS-ZERO·Confident Liar), **Q6 신설**(활용 elicitation 자율생성 vs 타깃질의 prior-collapse). 상태요약 5→6.
+- **[User Review] 마커**: `principles.md`(무-요약 법칙→모듈별 가설 재구성 제안), `cognitive_engine.md`(Habermolt 붕괴 → 타깃 질의 프로토콜 + 예산매칭/역할셔플/역할별 judge 보정).
+- **다음**: [2] 소스 공백(Q6전산조작화·Q3한국경제게임·Q8웹RT) 2차 검색 → desk_research §7. [3] validation_mode 개선 제안 마커.
+
 ## 2026-07-16 (리뷰 [User Review] 2건 해결 — 사용자 판정)
 
 - **architecture.md 가명화**: "NER 기반 + 결정론적" 모순 → **2계층 설계 확정**(실명 유출 0 지향). 1계층=결정론적 사전·정규식 자동 치환, 2계층=NER 후보 최초 전송 전 사용자 확인. §2 Module 1 본문·frontmatter 리팩토링, `## 결정 사항`에 [해결됨] 기록.

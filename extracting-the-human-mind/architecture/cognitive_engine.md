@@ -150,4 +150,6 @@ flowchart TD
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] 활용 시점 elicitation 프로토콜 재검토 — **자율 생성 → 사전분포 붕괴 리스크**. **근거**: Habermolt(arXiv:2605.24413)는 저장 프로필에서 의견을 *자율 생성*하면 개성이 모델의 generic prior로 붕괴(자율 0.745 vs 신선 인터뷰 0.649; 54개 중 36개 동일 문구 시작)하고, **프로필 길이 ↔ 충실도 상관 ≈ 0(ρ=0.15)**임을 보임([desk_research_2026-07 §1-2](../research/desk_research_2026-07.md)). **함의**: "raw store 통째 주입 → 4+1 자율 생성" 설계가 개성을 잃을 수 있다(이 문서 §3의 통합자 Self가 raw를 재해석해 렌더링하는 전제에 하중). **제안**: 활용 시 매 맥락마다 *타깃 질의*(신선한 인터뷰처럼)로 끌어내는 프로토콜을 기본값으로 검토. 결정 필요. → [open_questions Q6](../research/open_questions.md)
+- [User Review] §5-1 kill-criterion 강화 — 4+1을 **예산매칭 단일 에이전트 baseline**과 대조 필수. **근거**: Tran&Kiela(arXiv:2604.02460)는 동일 thinking-token 예산에서 단일 에이전트가 멀티를 매치/능가, MAS 이득은 대개 연산·맥락 산물이라 보고([desk_research §1-4](../research/desk_research_2026-07.md)). MAS-ZERO(arXiv:2505.14996)는 최적 분해가 인스턴스 의존이라 *필요없으면 단일로 축소*하라 제안 → 엔진이 4+1 확장을 스스로 게이팅. 추가로 The Confident Liar(arXiv:2606.10296)는 역할별 신뢰도 비대칭을 보여, 통합자 Self가 하위 에이전트 confidence를 **균일 가중하면 안 됨**(역할별 보정). 결정 필요.
+- 이관 시점(2026-07-16) 기준 그 외 원문 verbatim 보존.

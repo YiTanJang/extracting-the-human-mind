@@ -3,5 +3,6 @@
 | 문서 | 내용 |
 |------|------|
 | [related_research.md](related_research.md) | 학술 토대·인접 연구·비판 문헌·각 기법의 배경 심리학·경쟁 환경 |
+| [desk_research_2026-07.md](desk_research_2026-07.md) | 2026-07 데스크 리서치 — 2024–26 최신 문헌(검증 통과 21 클레임)을 미답 질문에 매핑. 테제 위협/도구/foil |
 | [paper_strategy.md](paper_strategy.md) | 논문화 전략 |
 | [open_questions.md](open_questions.md) | 프로젝트 전역 미답 질문(Q1~) |
