@@ -1,5 +1,14 @@
 # 변경 이력
 
+## 2026-07-17 (데스크 리서치 편입 [3/3] — 개선 제안 마커)
+
+문헌이 확증한 개선 제안을 각 문서 `[User Review]`로 심음(확정 본문은 미수정, 컨펌 대기).
+
+- `validation_mode.md`: ① 3-arm A4(구조 고립) ② 다중턴 적대 심문(PICon) ③ 정규화 공식 명확화·퇴화 케이스 ④ 문체통제 역-튜링(TwinVoice).
+- `free_association.md`: 직교성 측정법(cue-based)과 "자극어 없음" 설계의 긴장 → 소규모 cue 별도 세션 vs cue 없는 대안 지표.
+- (cognitive_engine·principles 마커는 [1/3]에서 완료.)
+- **열린 [User Review] 총계**: principles 1, cognitive_engine 2, validation_mode 4, free_association 1 = 사용자 판단 대기 8건. 열린 [TODO]도 다수(각 문서 미결 참조).
+
 ## 2026-07-17 (데스크 리서치 편입 [2/3] — 소스 공백 2차 패스)
 
 - `desk_research_2026-07.md`에 **§7** 추가 — Q6/Q3/Q8 공백을 집중 웹 검색으로 재조사(citations [12]–[20]).

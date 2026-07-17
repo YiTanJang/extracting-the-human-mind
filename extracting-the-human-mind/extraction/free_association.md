@@ -96,6 +96,7 @@ timestamp: 2026-07-16T00:00:00Z
 ## 미결 사항
 
 - [TODO] [생성 은유와 문장 완성](generative_metaphor.md)·[클린 랭귀지](clean_language.md)와의 L1 직교성을 [검증 모드](../validation/validation_mode.md) A4 증분 타당도로 실증(이론상 순수 단어로 구분되나 데이터로 확인).
+- [User Review] 직교성 측정법 ↔ "자극어 없음" 설계의 긴장(2026-07 데스크 리서치). Aeschbach·Mata·Wulff(2024, arXiv:2410.18326)의 **개인 의미망 추정법은 cue-based 연상(SWOW식)을 전제**(~100 cue × 30 응답)하는데, 본 모듈은 §1에서 *자극어를 제거*했다. 따라서 "자유연상 응답을 의미망으로 만들어 은유·클린과 겹침을 잰다"는 직교성 검증이 순수 설계에선 직접 적용 안 될 수 있다. **선택지**: (a) 직교성 검증용으로만 소규모 표준 cue 세트를 *별도 세션*에 두되 본 추출은 순수 유지, 또는 (b) cue 없는 스트림에 적용 가능한 대안 지표(연쇄 전이확률·임베딩 분포) 사용. 근거: [desk_research §7-1](../research/desk_research_2026-07.md). 결정 필요.
 - [TODO] 배터리 정식 편입은 A4 증분 타당도 통과 조건(EFT·애착 서사 선례). 통과 전까지 '후보(탐색중)'. 편입 확정 시 [번들 index](../index.md)·[../overview/principles.md](../overview/principles.md)의 "16종" 카운트를 갱신해야 함(현재는 16종 확정 상태 유지).
 
 **🔗 상위 맥락:** [번들 index](../index.md)
