@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 맥락 기반 제로섬 가치 할당 파이프라인 (Context-Based Zero-Sum Value Allocation)"
 description: 극단적 위기 씬을 제시하고 개방형으로 기입한 가치들에 100포인트를 강제 제로섬 배분하여 우선순위 위계를 드러내고, 1위↔최하위가 뒤집히는 전환 조건까지 추출하는 방법론.
 tags: [values, zero-sum, elicitation, schwartz, tetlock]
-timestamp: 2026-10-01T00:00:00Z
+timestamp: 2026-10-01T12:00:00Z
 ---
 # Methodology: 맥락 기반 제로섬 가치 할당 파이프라인 (Context-Based Zero-Sum Value Allocation)
 
@@ -129,8 +129,10 @@ timestamp: 2026-10-01T00:00:00Z
 
 ## 미결 사항
 
-- [User Review] 파일럿 구현 기본값 — 세 시나리오 모두 진행(B→self), 가치 2개 필수·4개 권장·최대 6개, 할당 화면 문구는 §2-2 서술에서 작성, 1위·최하위 동점 규칙(1위=먼저 적은 것·최하위=나중에 적은 것), allocations 입력 순서 보존. 이유: 할당 화면 문구·동점 규칙·B의 도메인이 문서에 없음. [파일럿 설계](../architecture/pilot.md) 「S1 파일럿 기본값」에서 확정(런칭 전).
+- [User Review] 파일럿 구현 기본값 — 가치 2개 필수·4개 권장·최대 6개, 할당 화면 문구는 §2-2 서술에서 작성, 1위·최하위 동점 규칙(1위=먼저 적은 것·최하위=나중에 적은 것), allocations 입력 순서 보존. 이유: 할당 화면 문구와 동점 규칙이 문서에 없음. [파일럿 설계](../architecture/pilot.md) 「S1 파일럿 기본값」에서 확정(런칭 전).
 
 ## 결정 사항 (Decisions)
+
+- [해결됨: 2026-10-01] 파일럿의 세션 도메인 → **도메인 A 업무/성취 시나리오 하나**(사용자 — 도메인 결합 모듈은 모듈마다 한 도메인, 모듈 간 순환: 은유=자기·가치 할당=일·두려운 자기=관계, [파일럿 설계](../architecture/pilot.md)).
 
 - [해결됨: 2026-09-30] §1-2 일반어 재유도(1회 구체화 권장) → **재유도 없이 추상어를 그대로 수용·저장**(사용자 — 파일럿 구현 규칙: 재질문·꼬리질문 없음, [principles §1-0](../overview/principles.md) 조건 2).

@@ -3,8 +3,15 @@ import type { Ctx, Domain, ModuleDef, Stimulus } from "./types";
 // Prompts verbatim from extracting-the-human-mind/extraction/{generative_metaphor,contextual_value_allocation,
 // feared_self,episodic_future_thinking}.md. Doc gaps are filled with pilot defaults listed in
 // architecture/pilot.md 「S1 파일럿 기본값」 ([User Review] — decide before launch).
-// Pilot default: domain-bound modules run once per domain (work → relation → self) so every participant
-// gets the same battery (the docs fix one domain "at session entry" without saying how it is chosen).
+// Domain-bound modules run in ONE domain each, rotated so the battery still covers all three and is identical
+// for every participant (user decision 2026-10-01, architecture/pilot.md 결정 사항). The other decks/scenarios stay
+// here as data so the assignment can change in one place.
+type PilotDomain = "work" | "relation" | "self";
+export const PILOT_DOMAIN: Record<"metaphor" | "value_allocation" | "feared_self", PilotDomain> = {
+  metaphor: "self",
+  value_allocation: "work",
+  feared_self: "relation",
+};
 
 // ── 생성 은유와 문장 완성 ───────────────────────────────────────────────────────────
 type Card = { kind: "metaphor" | "sct"; key: string; text: string };
@@ -57,21 +64,22 @@ function interleave(cards: Card[]): Card[] {
   return out;
 }
 
-const DOMAINS: ("work" | "relation" | "self")[] = ["work", "relation", "self"];
 const DOMAIN_TITLE = { work: "일·커리어", relation: "인간관계", self: "개인적인 삶·내면" } as const;
 
 export const metaphor: ModuleDef = {
   id: "metaphor",
   title: "생성 은유와 문장 완성",
-  minutes: "10~15",
+  minutes: "3~8",
   intro:
-    "끝나지 않은 문장이 한 장씩 나와요. 빈칸 [ ]에 가장 먼저 떠오르는 말을 채워 주세요. 오래 고민하지 않아도 돼요. 일, 관계, 나 자신에 관한 문장이 차례로 나와요.",
+    "끝나지 않은 문장이 한 장씩 나와요. 빈칸 [ ]에 가장 먼저 떠오르는 말을 채워 주세요. 오래 고민하지 않아도 돼요.",
   stimulusAsPrompt: true,
   stimulusField: "card_id",
   stimulusBodyField: "prompt",
-  stimuli: DOMAINS.flatMap((d) =>
-    interleave(DECKS[d]).map<Stimulus>((c) => ({ id: `${d}_${c.kind}_${c.key}`, body: c.text, domain: d })),
-  ),
+  stimuli: interleave(DECKS[PILOT_DOMAIN.metaphor]).map<Stimulus>((c) => ({
+    id: `${PILOT_DOMAIN.metaphor}_${c.kind}_${c.key}`,
+    body: c.text,
+    domain: PILOT_DOMAIN.metaphor,
+  })),
   shape: (payload, ctx: Ctx) => ({
     method: ctx.stimulus?.id.includes("_metaphor_") ? "metaphor" : "sct",
     ...payload,
@@ -104,11 +112,11 @@ function topBottom(ctx: Ctx): [string, string] {
 export const valueAllocation: ModuleDef = {
   id: "value_allocation",
   title: "맥락 속 가치 할당",
-  minutes: "15~20",
+  minutes: "5~8",
   intro:
-    "긴장감 있는 상황을 하나 읽고, 그 상황에서 지키거나 얻고 싶은 것을 당신의 말로 적은 뒤 100점을 나눠 줘요. 상황은 세 가지가 차례로 나와요.",
+    "긴장감 있는 상황을 하나 읽고, 그 상황에서 지키거나 얻고 싶은 것을 당신의 말로 적은 뒤 100점을 나눠 줘요.",
   stimulusField: "context",
-  stimuli: [
+  stimuli: ([
     {
       id: "work_crisis_scenario",
       title: "업무/성취",
@@ -127,7 +135,7 @@ export const valueAllocation: ModuleDef = {
       domain: "self",
       body: "지금 당신에게 기존의 안정적인 삶의 기반(직장, 거주지, 익숙한 관계)을 모두 버리고 맨몸으로 떠나야만 얻을 수 있는, 일생일대의 모험적인 기회가 주어졌습니다. 단 하루의 시간 내에 모든 것을 포기할지 남을지 결정해야 합니다.",
     },
-  ],
+  ] satisfies Stimulus[]).filter((s) => s.domain === PILOT_DOMAIN.value_allocation),
   steps: [
     {
       id: "values",
@@ -183,10 +191,17 @@ const FEARED_PROMPT: Record<"work" | "relation" | "self", string> = {
 export const fearedSelf: ModuleDef = {
   id: "feared_self",
   title: "두려운 자기와 조기 경보",
-  minutes: "15~20",
+  minutes: "5~8",
   intro:
-    "되고 싶지 않은 모습을 떠올리고, 그 모습에 가까워질 때 나타나는 신호를 적어요. 일, 관계, 나 자신에 대해 한 번씩 해요. 마음이 불편해지면 언제든 멈춰도 괜찮아요.",
-  stimuli: DOMAINS.map<Stimulus>((d) => ({ id: d, title: DOMAIN_TITLE[d], body: "", domain: d as Domain })),
+    "되고 싶지 않은 모습을 떠올리고, 그 모습에 가까워질 때 나타나는 신호를 적어요. 마음이 불편해지면 언제든 멈춰도 괜찮아요.",
+  stimuli: [
+    {
+      id: PILOT_DOMAIN.feared_self,
+      title: DOMAIN_TITLE[PILOT_DOMAIN.feared_self],
+      body: "",
+      domain: PILOT_DOMAIN.feared_self as Domain,
+    },
+  ],
   steps: [
     {
       id: "feared",

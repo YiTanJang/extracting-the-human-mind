@@ -1,5 +1,5 @@
 # Weekly update PRs for the pilot service. Security fixes arrive immediately regardless of this schedule
-# (Dependabot security updates are enabled in the repository settings).
+# (Dependabot security updates are enabled in the repository settings). CI tests every PR (pilot-images.yml).
 # Minor/patch bumps are grouped so each ecosystem opens at most one routine PR a week.
 version: 2
 updates:
@@ -10,6 +10,11 @@ updates:
       web-minor-patch:
         update-types: [minor, patch]
     open-pull-requests-limit: 5
+    # Majors (TypeScript, ESLint, @types/node beyond the Node 24 runtime) are upgraded deliberately, not by bot.
+    # Security updates still arrive regardless of this rule.
+    ignore:
+      - dependency-name: "*"
+        update-types: [version-update:semver-major]
 
   - package-ecosystem: pip
     directory: /src/api

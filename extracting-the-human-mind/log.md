@@ -2,6 +2,12 @@
 
 ## 2026-10-01
 
+- **세션**: S1 결정 2건 반영 + 의존성 정리
+- **수정 파일**: `architecture/pilot.md`(사용자 결정 표 2행·결정 사항 2건, 기본값 표 정리), `validation/validation_mode.md`(B-08 매칭 방향 본문 + 결정 사항), `extraction/`의 generative_metaphor·contextual_value_allocation·feared_self(파일럿 도메인 [해결됨], 남은 기본값 [User Review] 축소), `index.md`(활성 성분 행에 매칭 방법). 코드: `src/web/lib/modules/battery_a.ts`(`PILOT_DOMAIN`), `src/web/package.json`(@types/node ^24), `.github/dependabot.yml`(npm 메이저 제외), `.github/workflows/pilot-images.yml`(CI Python 3.14 — 이미지와 일치).
+- **핵심 결정**(사용자): 도메인 결합 모듈은 모듈마다 한 도메인 순환(은유=자기·가치 할당=일·두려운 자기=관계). B-08은 자유서술 분량에 맞춘 배터리 모듈 무작위 부분집합(여러 번 평균)과 비교. Dependabot PR 정리 — #5(pytest 보안 수정)·#4·#6·#9·#3 머지, #7·#8·#10 닫음.
+- **검증**: 업그레이드된 FastAPI 0.141·SQLAlchemy 2.1·Uvicorn 0.54로 API 테스트 12개 통과, 로컬 브라우저로 10개 과제 완주(참가자당 raw 44 → 22건), 도메인 저장 확인.
+- **다음 단계**: 사용자 — 남은 「S1 파일럿 기본값」 표 확정. 개발 — S2.
+
 - **세션**: 파일럿 S0 배포 확인 + 스프린트 S1 구현
 - **수정 파일**: `architecture/pilot.md`(진행, 분량 매칭 방식, 「S1 파일럿 기본값」 표, 미결 3건), `index.md`(현재 단계), `extraction/` 8개(generative_metaphor·contextual_value_allocation·judgment_scenarios·attachment_narrative·core_conflict·feared_self·episodic_future_thinking·critical_incident — 파일럿 기본값 [User Review] 한 줄씩). 코드: `src/api`(고정 순서 `battery.py`, `module_completions` 테이블, `/api/progress`, raw 쓰기의 순서·잠금 강제, item id에 하이픈 허용, 테스트 12개), `src/web`(선언형 모듈 엔진 `components/engine`, 모듈 정의 `lib/modules`, `/m/[module]`, 순서형 홈).
 - **핵심 결정**: 없음(사용자 확정 없음). 제안: 서버가 순서를 강제(arm 2개 → 배터리 8개, 앞 과제를 마쳐야 다음이 열림), 완료 기록은 raw 밖 별도 테이블, 자유서술은 30초 길이 스냅샷으로 B-08 사후 매칭. 문서 빈칸은 코드에 임시 기본값으로 넣고 전부 pilot.md 표와 각 모듈 [User Review]로 올림.
