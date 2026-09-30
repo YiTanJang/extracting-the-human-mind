@@ -1,9 +1,9 @@
 ---
 type: Design
 title: 파일럿 서비스 설계 (Q1 실험 앱)
-description: 친구 대상 파일럿 웹 서비스 — Q1("구조가 활성 성분인가") 3-arm 실험을 겸한다. 사용자 결정(2026-09-30) = 16종 전 모듈(LLM 동적 모듈 포함)·Q1 실험 포함·Next.js+FastAPI·홈랩 k3s(192.168.0.4)+Cloudflare Tunnel. 제안(탐색중) = 초대 코드→동의→자유서술 arm(i)(ii)→고정 배터리 arm(iii)→수일 뒤 hold-out 프로브→1~2주 뒤 재검사(안정 천장), 예측·채점은 오프라인 단일 프롬프트. 스프린트 S0~S6, 런칭 게이트는 Q1 패키지 완성 시.
+description: 친구 대상 파일럿 웹 서비스 — Q1("구조가 활성 성분인가") 3-arm 실험을 겸한다. 사용자 결정(2026-09-30) = 16종 전 모듈(LLM 동적 모듈 포함)·Q1 실험 포함·Next.js+FastAPI·홈랩 k3s(192.168.0.4, 노드에서 kubectl, cloudflared는 호스트 → Traefik Ingress)·LLM은 Claude API·Q1 패키지(자유서술 arm·고정 배터리·프로브·재검사) 완성 후에만 초대·UI 명세가 방법 절과 어긋나면 방법 절 기준. 제안(탐색중) = 앱 안에는 LLM 없이 수집(동적 모듈 제외), 예측·채점은 오프라인 단일 프롬프트, SQLite+PVC 단일 레플리카, 스프린트 S0~S6. S0 완료.
 tags: [pilot, q1, architecture, deployment, k3s, sprint]
-timestamp: 2026-09-30T12:00:00Z
+timestamp: 2026-09-30T13:00:00Z
 ---
 
 # 파일럿 서비스 설계 (Q1 실험 앱)
@@ -16,13 +16,16 @@ timestamp: 2026-09-30T12:00:00Z
 |------|------|
 | 추출 범위 | 16종 전 모듈. LLM이 루프에 있는 동적 모듈(래더링·클린 랭귀지) 포함 |
 | 목적 | Q1 실험 포함 — 3-arm A4 + hold-out 프로브 + 재검사 |
-| 호스팅 | 사용자 홈랩 k3s 클러스터(192.168.0.4) + Cloudflare Tunnel |
+| 런칭 게이트 | 친구 초대는 Q1 패키지(자유서술 arm·arm (iii) 고정 배터리 전체·프로브·재검사) 완성 뒤. arm (iii)이 참가자마다 같아야 Q1 비교가 성립한다 |
+| 호스팅 | 사용자 홈랩 k3s 클러스터(192.168.0.4). 매니페스트는 노드에서 `kubectl`로 적용. cloudflared는 호스트에서 돌며 k3s 기본 Traefik Ingress로 들어온다 |
 | 스택 | Next.js(웹) + FastAPI(API) — [architecture.md](architecture.md) §5-1 |
+| LLM 제공자 | Anthropic Claude API(동적 모듈·오프라인 예측). 동의 문구에 제공자를 명시한다 |
+| 모듈 구현 기준 | UI 명세 절이 같은 문서의 방법 절과 어긋나면 방법 절을 따른다 — LLM 꼬리질문·재질문·자유 서술 대신 슬라이더 없음([principles](../overview/principles.md) §1-0 조건 2·3) |
 
 ## 참가 흐름
 > 탐색중
 
-1. **초대 코드 → 온보딩**: 실명 대신 닉네임. 참가자 토큰은 httpOnly 쿠키.
+1. **초대 코드 → 온보딩**: 실명 대신 닉네임. 참가자 토큰은 httpOnly 쿠키, 기기 이동은 재접속 코드.
 2. **동의**: [실험 주의서](../operations/experiment_ethics.md)의 동의 문구·용도별 토글(분석·시뮬레이션·검증·연구 수확, 기본 꺼짐·철회 가능)을 그대로 쓴다. 위기 상황 안내 상시 노출.
 3. **arm (i)·(ii) 자유서술**: 배터리보다 *먼저* 받는다(배터리가 점화하면 대조군이 오염됨). (i) 순수 자유 자기개방, (ii) 일반 심화 프롬프트.
 4. **arm (iii) 고정 배터리**: 전 참가자 동일 구성·동일 순서 규칙. 세션을 나눠 진행([principles](../overview/principles.md) §1-0-5 피로 관리).
@@ -33,38 +36,43 @@ timestamp: 2026-09-30T12:00:00Z
 ## Q1 설계 쟁점
 > 탐색중
 
-- **런칭 게이트**: arm (iii)은 모든 참가자에게 같은 고정 배터리여야 비교가 성립한다. 따라서 모듈을 스프린트로 쌓더라도 **친구 초대는 Q1 패키지(자유서술 arm·arm (iii) 구성 전체·프로브·재검사)가 완성된 뒤**에 한다. 이후 추가되는 모듈 데이터는 Q1 arm (iii) 밖의 추가 수집으로 분리 표기한다.
 - **분량 매칭**: arm (i)(ii)는 arm (iii) 산출 raw와 토큰 수를 맞춰 분석 시 절단·정렬한다. 수집 시에는 시간 기준(자유서술 세션 ≈ 20분)으로 충분한 분량을 확보한다.
 - **부담**: 16종 전체 ≈ 2.5시간 + ESM 14일. 이탈 위험이 크므로 진행률·재개·세션 분할을 1급 기능으로 둔다.
+- **게이트 이후 추가 모듈**: 런칭 뒤에 넣는 모듈의 데이터는 Q1 arm (iii) 밖의 추가 수집으로 분리 표기한다.
 
 ## 스택·배포
 > 탐색중
 
 - **저장소 구조**: `src/api`(FastAPI·SQLAlchemy), `src/web`(Next.js App Router·TypeScript), `deploy/k8s`(매니페스트). 코드는 OKF 규칙 밖(`bundle_design.md` 「전형적인 저장소 구조」).
 - **DB**: SQLite(WAL) + PVC, API 단일 레플리카. 참가자 수십 명 규모에 충분하고 백업은 파일 복사. raw 테이블은 append-only(수정·삭제는 참가자 본인 "내 데이터 삭제"만).
-- **이미지**: GitHub Actions가 빌드해 GHCR에 푸시, k3s가 pull. 이미지에 비밀값·데이터 없음.
-- **노출**: Cloudflare Tunnel이 웹 서비스만 외부 공개. API는 클러스터 내부에서 웹(Next.js 서버)을 거쳐서만 호출.
+- **이미지**: GitHub Actions가 테스트 후 빌드해 GHCR(공개 패키지)에 푸시, k3s가 pull. 이미지에 비밀값·데이터 없음.
+- **노출**: Cloudflare Tunnel(호스트) → Traefik Ingress → `web`. API는 NetworkPolicy로 `web` 파드에서만 접근.
 - **LLM**: 추출 단계 LLM은 동적 모듈(래더링·클린 랭귀지)에만. 외부 전송 전 2계층 가명화([architecture.md](architecture.md) §2 Module 1). 예측·채점은 앱 밖(오프라인).
 
 ## 스프린트
 > 탐색중
 
-진행: **S0 코드 완료(2026-09-30)** — `src/api`(테스트 11개)·`src/web`·`deploy/k8s`·CI. 로컬에서 초대→동의→토글→raw 저장→내보내기→삭제 흐름 확인. 홈랩 배포는 아래 미결(배포 방식) 확인 후.
+진행: **S0 완료(2026-09-30)** — `src/api`(테스트 11개)·`src/web`·`deploy/k8s`·CI(테스트→GHCR 이미지). 로컬에서 초대→동의→토글→raw 저장→내보내기→삭제 흐름 확인.
 
 | 스프린트 | 산출 | 배포 가능 상태 |
 |---|---|---|
 | S0 기반 | API·웹 골격, 초대 코드 인증, 동의·토글, raw append-only 저장, 본인 내보내기·삭제, 관리자 내보내기, Dockerfile·CI·k8s 매니페스트 | 동의까지 동작 |
 | S1 Q1 arm + 정적 모듈 1 | 자유서술 arm (i)(ii), 선언형 모듈 엔진(모듈 = 단계 정의 데이터), 은유·가치 할당·두려운 자기·EFT·CCRT·CIT·애착 서사·판단 시나리오 | 일부 수집 가능(내부 테스트) |
 | S2 정적 모듈 2 | 인생 장면(타임라인 드래그)·자기–타자·TAT(텍스트 자극)·삼항(BIBD 24라운드)·자유연상(RT, 후보) | 정적 모듈 전부 |
-| S3 동적 모듈 | 2계층 가명화, 래더링, 클린 랭귀지(12 템플릿·슬롯 부분문자열 기계 검증) | LLM 모듈 |
+| S3 동적 모듈 | 2계층 가명화, Claude API 연동, 래더링, 클린 랭귀지(12 템플릿·슬롯 부분문자열 기계 검증) | LLM 모듈 |
 | S4 ESM·DRM | PWA 설치 + Web Push 고정 슬롯, "방금 일 있었어", DRM(ESM 의존) | 종단 수집 |
 | S5 프로브·재검사 | 프로브 세트, 일정 게이트(수일 뒤 개방·1~2주 뒤 재검사), 라인업 동의 | **Q1 패키지 완성 → 런칭** |
 | S6 오프라인 분석 | arm별 단일 프롬프트 예측·채점·정규화 정확도 리포트, 라인업 | Q1 판정 |
 
 ## 미결 사항
 
-- [User Review] LLM 제공자(동적 모듈·오프라인 예측): 현재 `.env.example`는 OpenAI 키를 가정 → 교체안: 제공자 확정(예: Claude API) 후 S3 착수 전 설정. 이유: 동적 모듈은 참가자 raw를 외부로 보내므로 동의 문구에 제공자를 명시해야 한다.
-- [User Review] 런칭 게이트(§Q1 설계 쟁점): Q1 패키지 완성 전에는 초대하지 않는다 → 동의 여부. 이유: arm (iii) 구성이 참가자마다 다르면 Q1 비교가 성립하지 않는다.
-- [User Review] 배포 방식: 홈랩에 매니페스트를 적용하는 수단(kubectl 직접 / ArgoCD·Flux 등 GitOps), 네임스페이스, 스토리지 클래스(k3s 기본 `local-path`), Cloudflare Tunnel 호스트명·cloudflared 위치(클러스터 내 / 호스트).
-- [User Review] 모듈 구현 기준: 방법 절과 UI 명세 절이 모순된 모듈(CCRT·판단 시나리오·EFT·CIT·가치 할당·TAT — 각 파일 미결 참조)은 **방법 절 기준**으로 구현(LLM 꼬리질문·재유도·슬라이더 없음) → 동의 여부. 이유: [principles](../overview/principles.md) §1-0 조건 2·3.
 - [TODO] 프로브 세트 내용(딜레마·강제 선택·자기 행동 예측·경제 게임) 초안 작성 — S5 전, 사용자 검토 필요.
+- [TODO] Cloudflare Tunnel 공개 호스트명 확정 → `deploy/k8s/ingress.yaml`의 `host` 설정.
+- [TODO] TAT 입력 폼: 방법 절 자체가 4개 발문을 단계별 입력으로 나누는데 [principles](../overview/principles.md) §1-0 조건 3은 폼 분할을 금지한다(방법 절 vs 원칙이라 '모듈 구현 기준'으로 풀리지 않음) — S2에서 TAT를 만들 때 사용자에게 묻는다([automated_tat.md](../extraction/automated_tat.md) 미결).
+
+## 결정 사항 (Decisions)
+
+- [해결됨: 2026-09-30] LLM 제공자 → **Claude API**(사용자). 동의 화면 '검증 허용' 설명과 데이터 안내에 제공자 명시.
+- [해결됨: 2026-09-30] 런칭 게이트 → **Q1 패키지 완성 뒤에만 초대**(사용자).
+- [해결됨: 2026-09-30] 배포 방식 → **노드에서 kubectl, cloudflared는 호스트 → Traefik Ingress**(사용자). 네임스페이스 `ethm-pilot`, 스토리지는 k3s 기본 `local-path`.
+- [해결됨: 2026-09-30] 모듈 구현 기준 → **방법 절 기준**(사용자). CCRT·판단 시나리오·EFT·CIT·가치 할당의 [User Review]를 이 기준으로 해결하고 각 문서 본문을 고침. TAT는 성격이 달라 미결로 남김.

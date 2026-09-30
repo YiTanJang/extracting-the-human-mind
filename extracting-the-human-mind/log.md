@@ -2,6 +2,11 @@
 
 ## 2026-09-30
 
+- **세션**: 파일럿 결정 4건 반영
+- **수정 파일**: `architecture/pilot.md`(사용자 결정 표·결정 사항), `index.md`(결정표), `extraction/`의 `core_conflict`·`judgment_scenarios`·`episodic_future_thinking`·`critical_incident`·`contextual_value_allocation`(UI 명세를 방법 절에 맞춰 고침, [User Review]→[해결됨]). 코드: 동의 안내에 Claude API 명시(동의 버전 변경), `deploy/k8s/ingress.yaml`(Traefik), `deploy/README.md`, `.env.example`.
+- **핵심 결정**(사용자): LLM = Claude API · Q1 패키지 완성 뒤에만 초대 · 노드에서 kubectl, cloudflared는 호스트 → Traefik Ingress · UI 명세가 방법 절과 어긋나면 방법 절 기준. TAT 폼 분할은 방법 절 vs 원칙 문제라 S2에서 따로 묻는다.
+- **다음 단계**: Tunnel 호스트명 받아 `ingress.yaml` 설정 → 홈랩 배포. S1(자유서술 arm + 선언형 모듈 엔진 + 정적 모듈 8종).
+
 - **세션**: 파일럿 서비스 착수 — 설계 문서 + 스프린트 S0 구현
 - **수정 파일**: 신규 `architecture/pilot.md`(Design) + `architecture/index.md`; `index.md`(현재 단계·결정표 '파일럿 서비스' 행); `AGENTS.md`(산출물에 `src/` 코드 추가·코드 작업 규칙); `vision.md`·`manual_experiment_guide.md`(프로젝트 정체성 [User Review] 해결); `experiment_ethics.md`(위기 번호 109 [User Review]). 코드: `src/api`, `src/web`, `deploy/`, `.github/workflows/pilot-images.yml`, `docker-compose.yml`·`.env.example` 교체, 옛 `backend/` 삭제.
 - **핵심 결정**(사용자): 16종 전 모듈(LLM 동적 모듈 포함)·Q1 3-arm 실험 겸용·Next.js+FastAPI·홈랩 k3s(192.168.0.4)+Cloudflare Tunnel. 이에 따라 "앱이 아닌 방법론 위키" vs "앱 청사진" 정체성 모순을 앱 구축 쪽으로 해결. 제안(탐색중): 앱 안에는 LLM 없이 수집만, 예측·채점은 오프라인 단일 프롬프트; SQLite+PVC 단일 레플리카; 런칭 게이트 = Q1 패키지 완성 후 초대.

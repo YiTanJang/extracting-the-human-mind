@@ -26,12 +26,20 @@ kubectl -n ethm-pilot port-forward svc/web 3000:3000   # http://localhost:3000
 
 GHCR 패키지가 비공개로 생성됐다면 GitHub → Packages → 각 패키지 → Package settings에서 Public으로 바꾸거나, `imagePullSecrets`를 추가한다.
 
-## Cloudflare Tunnel
+## Cloudflare Tunnel (cloudflared는 호스트, 입구는 Traefik)
 
-Public hostname의 서비스 주소를 `web` 서비스로 연결한다.
+1. `deploy/k8s/ingress.yaml`의 `host: pilot.example.invalid`를 터널의 공개 호스트명으로 바꾸고 다시 `kubectl apply -k deploy/k8s`.
+2. cloudflared 설정에서 그 호스트명을 k3s Traefik(노드의 80번 포트)으로 보낸다. Traefik이 Host 헤더로 `web`을 찾는다.
 
-- cloudflared가 **클러스터 안**에서 돌면: `http://web.ethm-pilot.svc.cluster.local:3000`
-- cloudflared가 **호스트**에서 돌면: k3s 기본 Traefik에 Ingress를 만들거나 `web`을 NodePort로 노출해 그 주소를 쓴다.
+```yaml
+# cloudflared config.yml (호스트)
+ingress:
+  - hostname: pilot.your-domain.com
+    service: http://localhost:80        # cloudflared가 192.168.0.4 자체에서 돌 때. 다른 호스트면 http://192.168.0.4:80
+  - service: http_status:404
+```
+
+대시보드에서 관리하는 터널이면 Public Hostname의 서비스를 같은 주소(`HTTP` · `localhost:80`)로 지정한다.
 
 권장: `/admin` 경로에 Cloudflare Access 정책(본인 이메일만)을 걸어 관리자 화면을 이중으로 막는다.
 
