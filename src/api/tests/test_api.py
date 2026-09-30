@@ -70,12 +70,12 @@ def test_consent_gates_raw_and_toggles_default_off(app, admin):
     me = client.get("/api/me").json()
     assert me["consent"]["is_current"] is False
     assert set(me["consent"]["toggles"].values()) == {False}
-    assert client.post("/api/raw", json={"module": "free_writing", "payload": {"text": "x"}}).status_code == 403
+    assert client.post("/api/raw", json={"module": "q1_free_open", "payload": {"text": "x"}}).status_code == 403
     assert client.post("/api/consent/agree", json={"version": "stale", "toggles": {}}).status_code == 409
     res = client.post("/api/consent/agree", json={"version": CONSENT_VERSION, "toggles": {"validation": True}})
     assert res.json()["toggles"] == {"analysis": False, "simulation": False, "validation": True,
                                      "research_harvest": False}
-    assert client.post("/api/raw", json={"module": "free_writing", "payload": {"text": "x"}}).status_code == 201
+    assert client.post("/api/raw", json={"module": "q1_free_open", "payload": {"text": "x"}}).status_code == 201
 
 
 def test_toggle_history_is_append_only(app, admin):
@@ -89,24 +89,30 @@ def test_toggle_history_is_append_only(app, admin):
 def test_raw_is_verbatim_and_append_only(app, admin):
     client, _ = join(app, admin)
     text = "  그날 밤, 상사가…\n두 번째 줄  "
-    res = client.post("/api/raw", json={"module": "ccrt", "item": "episode_1", "payload": {"raw_wish": text},
+    res = client.post("/api/raw", json={"module": "q1_free_open", "item": "episode_1", "payload": {"raw_wish": text},
                                         "domain_tag": "work", "client_meta": {"ms_on_page": 1200}})
     assert res.status_code == 201
     entry_id = res.json()["id"]
-    rows = client.get("/api/raw", params={"module": "ccrt"}).json()
+    rows = client.get("/api/raw", params={"module": "q1_free_open"}).json()
     assert rows[0]["payload"]["raw_wish"] == text  # untouched, whitespace included
+    assert rows[0]["created_at"].endswith("+00:00")  # timezone-aware
     assert client.put(f"/api/raw/{entry_id}", json={}).status_code in (404, 405)
     assert client.delete(f"/api/raw/{entry_id}").status_code in (404, 405)
-    assert client.post("/api/raw", json={"module": "ccrt", "payload": {}, "domain_tag": "bogus"}).status_code == 422
+    assert client.post("/api/raw", json={"module": "q1_free_open", "payload": {}, "domain_tag": "bogus"}).status_code == 422
     assert client.post("/api/raw", json={"module": "../etc", "payload": {}}).status_code == 422
+    # Item ids follow the docs' stimulus ids (e.g. "A-romantic"); path characters stay rejected.
+    assert client.post("/api/raw", json={"module": "q1_free_open", "item": "A-romantic", "payload": {}}).status_code == 201
+    assert client.post("/api/raw", json={"module": "q1_free_open", "item": "a/b", "payload": {}}).status_code == 422
 
 
-def test_drafts_resume_and_clear_on_submit(app, admin):
+def test_drafts_resume_and_clear_on_complete(app, admin):
     client, _ = join(app, admin)
-    client.put("/api/drafts/feared_self", json={"payload": {"step": 2, "text": "반쯤"}})
-    assert client.get("/api/drafts/feared_self").json()["payload"]["step"] == 2
-    client.post("/api/raw", json={"module": "feared_self", "payload": {"text": "완성"}})
-    assert client.get("/api/drafts/feared_self").status_code == 404
+    client.put("/api/drafts/q1_free_open", json={"payload": {"step": 2, "text": "반쯤"}})
+    assert client.get("/api/drafts/q1_free_open").json()["payload"]["step"] == 2
+    client.post("/api/raw", json={"module": "q1_free_open", "payload": {"text": "완성"}})
+    assert client.get("/api/drafts/q1_free_open").status_code == 200  # kept until the module is completed
+    client.post("/api/progress/q1_free_open/complete")
+    assert client.get("/api/drafts/q1_free_open").status_code == 404
 
 
 def test_recovery_code_logs_in_on_another_device(app, admin):
@@ -128,8 +134,8 @@ def test_logout_ends_session(app, admin):
 
 def test_hard_delete(app, admin):
     client, recovery = join(app, admin, toggles={"validation": True})
-    client.post("/api/raw", json={"module": "free_writing", "payload": {"text": "민감한 내용"}})
-    client.post("/api/raw", json={"module": "free_writing", "item": "part_2", "payload": {"text": "더"}})
+    client.post("/api/raw", json={"module": "q1_free_open", "payload": {"text": "민감한 내용"}})
+    client.post("/api/raw", json={"module": "q1_free_open", "item": "part_2", "payload": {"text": "더"}})
     assert client.post("/api/me/delete", json={"confirm": "delete"}).status_code == 400
     res = client.post("/api/me/delete", json={"confirm": "삭제"})
     assert res.json() == {"deleted": True, "raw_rows": 2}
@@ -145,3 +151,31 @@ def test_admin_export_includes_toggles(app, admin):
     join(app, admin, nickname="곰", toggles={"validation": True})
     people = admin.get("/api/admin/participants").json()
     assert people[0]["nickname"] == "곰" and people[0]["toggles"]["validation"] is True
+
+
+def test_fixed_sequence(app, admin):
+    from app.battery import SEQUENCE
+
+    client, _ = join(app, admin)
+    steps = client.get("/api/progress").json()["steps"]
+    assert [s["module"] for s in steps] == SEQUENCE
+    assert [s["status"] for s in steps[:3]] == ["available", "locked", "locked"]
+
+    # Later modules stay closed until the one before them is completed.
+    assert client.post("/api/raw", json={"module": SEQUENCE[2], "payload": {"x": 1}}).json()["detail"] == "module_locked"
+    assert client.post("/api/raw", json={"module": "q1_free_deep", "payload": {"x": 1}}).status_code == 409
+    assert client.post("/api/raw", json={"module": "not_a_module", "payload": {}}).status_code == 404
+
+    # Completing needs at least one entry; afterwards the module is closed and the next one opens.
+    assert client.post("/api/progress/q1_free_open/complete").json()["detail"] == "no_entries"
+    client.post("/api/raw", json={"module": "q1_free_open", "payload": {"text": "자유롭게"}})
+    assert client.post("/api/progress/q1_free_open/complete").status_code == 200
+    closed = client.post("/api/raw", json={"module": "q1_free_open", "payload": {"text": "추가"}})
+    assert closed.json()["detail"] == "module_completed"
+    steps = client.get("/api/progress").json()["steps"]
+    assert [s["status"] for s in steps[:3]] == ["done", "available", "locked"]
+    assert steps[0]["entries"] == 1
+    assert client.post("/api/raw", json={"module": "q1_free_deep", "payload": {"text": "깊이"}}).status_code == 201
+
+    export = client.get("/api/me/export").json()
+    assert [c["module"] for c in export["completions"]] == ["q1_free_open"]

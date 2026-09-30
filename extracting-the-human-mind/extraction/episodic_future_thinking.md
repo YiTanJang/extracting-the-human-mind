@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 일화적 미래 사고 (Episodic Future Thinking — Future Self-Continuity)"
 description: "5년 뒤 가장 평범한 수요일 오후 3시를 verbatim으로 서술하게 해 미래 자아 연속성(self-continuity)을 포획하는 추출 모듈. 구체성·연속성 채점은 저장하지 않고 검증·활용 단계로 분리한다."
 tags: [extraction, eft, self-continuity, future-self, verbatim]
-timestamp: 2026-09-30T12:00:00Z
+timestamp: 2026-10-01T00:00:00Z
 ---
 
 # Methodology: 일화적 미래 사고 (Episodic Future Thinking — Future Self-Continuity)
@@ -101,6 +101,7 @@ UI는 한 번에 하나의 발문만 노출(Progressive Disclosure)하며, 앞�
 
 - [User Review] §0 (L27) 미검증 설계 전제 가설 표시: 현재 "평범한 미래의 묘사는 꾸밀 동기가 약해, 그 사람이 자기 삶의 궤적을 실제로 어떻게 투사하는지 … 드러낸다" → 교체안: 이 문장을 `> 가설:` 블록으로 감쌈.
   이유: '평범한' 프레임이 인상 관리를 줄인다는 모듈 핵심 전제이나 인용·검증이 없고, §4 L81 "소망 오염의 잔존"이 스스로 한계를 인정함.
+- [User Review] 파일럿 구현 기본값 — §5 '5년 뒤' 깜빡이 타이머 미적용(ui_ux_guidelines §1·§6과 충돌), '잘 모르겠다' = 빈 답 저장 + `skipped` 메타. 이유: 타이머 성격과 건너뛰기 저장 값이 문서에 없음. [파일럿 설계](../architecture/pilot.md) 「S1 파일럿 기본값」에서 확정(런칭 전).
 
 ## 결정 사항 (Decisions)
 

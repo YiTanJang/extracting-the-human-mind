@@ -2,6 +2,12 @@
 
 ## 2026-10-01
 
+- **세션**: 파일럿 S0 배포 확인 + 스프린트 S1 구현
+- **수정 파일**: `architecture/pilot.md`(진행, 분량 매칭 방식, 「S1 파일럿 기본값」 표, 미결 3건), `index.md`(현재 단계), `extraction/` 8개(generative_metaphor·contextual_value_allocation·judgment_scenarios·attachment_narrative·core_conflict·feared_self·episodic_future_thinking·critical_incident — 파일럿 기본값 [User Review] 한 줄씩). 코드: `src/api`(고정 순서 `battery.py`, `module_completions` 테이블, `/api/progress`, raw 쓰기의 순서·잠금 강제, item id에 하이픈 허용, 테스트 12개), `src/web`(선언형 모듈 엔진 `components/engine`, 모듈 정의 `lib/modules`, `/m/[module]`, 순서형 홈).
+- **핵심 결정**: 없음(사용자 확정 없음). 제안: 서버가 순서를 강제(arm 2개 → 배터리 8개, 앞 과제를 마쳐야 다음이 열림), 완료 기록은 raw 밖 별도 테이블, 자유서술은 30초 길이 스냅샷으로 B-08 사후 매칭. 문서 빈칸은 코드에 임시 기본값으로 넣고 전부 pilot.md 표와 각 모듈 [User Review]로 올림.
+- **검증**: 로컬 브라우저로 10개 과제를 끝까지 진행 — 저장 형식이 각 문서 YAML 필드와 일치(가치 할당 allocations·flip_condition, CCRT 반복성, EFT skipped 등), 서버 초안만으로 다른 기기 이어하기 확인, 서버 오류 없음.
+- **다음 단계**: 사용자 — 「S1 파일럿 기본값」 표와 B-08 분량 매칭 방향 결정. 개발 — S2(인생 장면·자기–타자·TAT·삼항·자유연상). TAT 폼 분할은 S2 착수 때 질문.
+
 - **세션**: 터널 설정 안내 + 보안 보강 3건
 - **수정 파일**: `architecture/pilot.md`(호스팅 행·보안 보강 행·[번복됨] 기록). 코드: `deploy/k8s/web.yaml`(NodePort 30380), `deploy/k8s/ingress.yaml` 삭제, `deploy/README.md`(현재 Cloudflare 대시보드 절차 — Networking > Tunnels · Published application — 와 보안 체크), `src/api/app/content.py`(동의 안내에 Cloudflare 경유 명시 → 동의 버전 변경), `src/api/requirements*.txt`(정확한 버전 고정), `.github/dependabot.yml`.
 - **핵심 결정**(사용자): 터널 입구를 Traefik Ingress에서 `web` NodePort로 번복(Traefik 경유 시 host 없는 다른 Ingress가 파일럿 호스트명으로 노출될 수 있음). 동의 안내에 Cloudflare 전송 중 복호화를 밝힘. Dependabot 주간 업데이트 + 보안 업데이트 켬.

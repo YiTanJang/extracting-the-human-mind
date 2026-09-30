@@ -5,7 +5,7 @@ from sqlalchemy.orm import Session
 
 from ..content import CONSENT_VERSION
 from ..db import get_db
-from ..models import iso, DeletionLog, InviteCode, Participant, RawEntry
+from ..models import DeletionLog, InviteCode, Participant, RawEntry, iso
 from ..security import new_code, require_admin
 from .consent import current_toggles
 from .me import export_participant

@@ -5,7 +5,7 @@ from .config import Settings, get_settings
 from .content import CONSENT_VERSION
 from .db import Base, make_engine
 from .security import RateLimiter
-from .routers import admin, auth, consent, me, raw
+from .routers import admin, auth, consent, me, progress, raw
 
 
 def create_app(settings: Settings | None = None) -> FastAPI:
@@ -23,7 +23,7 @@ def create_app(settings: Settings | None = None) -> FastAPI:
     # Invite/recovery code attempts per client: 10 per 10 minutes.
     app.state.auth_limiter = RateLimiter(limit=10, window_s=600)
 
-    for module in (auth, consent, me, raw, admin):
+    for module in (auth, consent, me, raw, progress, admin):
         app.include_router(module.router, prefix="/api")
 
     @app.get("/api/health")

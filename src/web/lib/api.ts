@@ -67,6 +67,11 @@ export function explain(err: unknown): string {
     confirmation_mismatch: "확인 문구가 일치하지 않아요.",
     login_required: "다시 로그인해 주세요.",
     api_unreachable: "서버에 연결할 수 없어요. 잠시 후 다시 시도해 주세요.",
+    module_locked: "아직 열리지 않은 과제예요. 앞 과제를 먼저 마쳐 주세요.",
+    module_completed: "이미 마친 과제예요.",
+    unknown_module: "없는 과제예요.",
+    no_entries: "기록된 답이 없어요.",
+    consent_required: "안내문 동의가 필요해요.",
   };
   return messages[err.detail] ?? `문제가 생겼어요 (${err.status}).`;
 }

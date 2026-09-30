@@ -101,6 +101,19 @@ class Draft(Base):
     updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now, onupdate=now)
 
 
+class ModuleCompletion(Base):
+    """Process metadata: when a participant finished a module. Kept out of raw_entries so the raw store
+    holds only the participant's own words."""
+
+    __tablename__ = "module_completions"
+
+    participant_id: Mapped[str] = mapped_column(
+        ForeignKey("participants.id", ondelete="CASCADE"), primary_key=True
+    )
+    module: Mapped[str] = mapped_column(String(64), primary_key=True)
+    completed_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=now)
+
+
 class DeletionLog(Base):
     """Proof that a deletion happened. Holds no psychological data."""
 

@@ -3,7 +3,7 @@ type: Playbook
 title: 판단 스타일 및 인지적 복잡성 추출 파이프라인 (Judgment Style Scenario)
 description: 정답 없는 딜레마에서 즉각적 선택을 배제하고, 결핍 정보 요구(분화)와 최종 단일 기준(통합)을 2단으로 질의해 사용자의 사고 과정을 날것으로 추출하는 모듈.
 tags: [judgment, complexity, dilemma, elicitation, decision]
-timestamp: 2026-09-30T12:00:00Z
+timestamp: 2026-10-01T00:00:00Z
 ---
 
 # 판단 스타일 및 인지적 복잡성 추출 파이프라인 (Judgment Style Scenario)
@@ -100,6 +100,7 @@ LLM을 통한 요약이나 평가 수치(예: "인지적 복잡성 상/중/하")
 ## 미결 사항
 
 - [User Review] §2.3 (L~44) 도메인 C 불일치: 현재 "도메인 C 도덕적/윤리적 판단 (Moral Dilemma)" → 교체안: 세션 도메인(일/관계/자기)에 맞춰 '자기/라이프' 시나리오 풀로 교체하거나, 도덕 딜레마 2종을 일·관계 풀에 분산. 이유: §2(L~32)는 "세션 진입 시 확정된 도메인에 해당하는 프리셋 시나리오"를 제시하는데 자기 도메인 세션엔 시나리오가 없음. 도메인 체계는 [principles §1-0](../overview/principles.md) 조건 6·§1-2(Work/Relation/Self).
+- [User Review] 파일럿 구현 기본값 — 일 1번(방향성)·관계 1번(비밀과 신뢰) 두 시나리오 고정, `scenario_id`는 파일럿이 부여. 이유: 도메인 안 어느 시나리오인지 문서에 없고, 고정 배터리(Q1 arm iii)는 전원 동일해야 함. [파일럿 설계](../architecture/pilot.md) 「S1 파일럿 기본값」에서 확정(런칭 전).
 
 ## 결정 사항 (Decisions)
 

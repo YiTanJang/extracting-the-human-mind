@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 핵심 갈등 도식 (Core Conflictual Relationship Theme, CCRT)"
 description: 대인관계에서 소망(W)·타인 반응(RO)·자기 반응(RS)의 3항 사슬을 세 개의 독립 입력창으로 분리 추출해, 반복되는 핵심 관계 도식과 악순환 고리를 드러내는 방법론.
 tags: [ccrt, extraction, relationship, luborsky, raw]
-timestamp: 2026-09-30T12:00:00Z
+timestamp: 2026-10-01T00:00:00Z
 ---
 # Methodology: 핵심 갈등 도식 (Core Conflictual Relationship Theme, CCRT)
 
@@ -106,6 +106,7 @@ timestamp: 2026-09-30T12:00:00Z
 
 - [User Review] §2-3 (L54) 미검증 순서 효과 가설 표시: 현재 "상황(RO, RS)을 먼저 서술하게 하여 기억에 몰입시킨 뒤 마지막에 진짜 의도를 캐물어야 날것의 소망이 추출된다" → 교체안: 이 설계 근거를 `> 가설:` 블록으로 감쌈.
   이유: 슬롯 순서 효과는 인용·검증이 없고, [검증 모드](../validation/validation_mode.md) M-03은 모듈 간 순서(삼항→래더링)만 다룸.
+- [User Review] 파일럿 구현 기본값 — 관계 태그 입력 안내('이름은 적지 말고 관계만') 추가, 장면 3개(도메인 무관)로 완료, 반복성은 {있다·없다, 짧은 서술}로 저장, §1 '실명으로 떠올리라' TIP 미적용(저장 전 가명화 전까지). 이유: 관계 태그 발문이 없고 '도메인당 최소 3장'이 5~10분 추정과 맞지 않음. [파일럿 설계](../architecture/pilot.md) 「S1 파일럿 기본값」에서 확정(런칭 전).
 
 ## 결정 사항 (Decisions)
 

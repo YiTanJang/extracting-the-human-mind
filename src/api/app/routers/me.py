@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from ..config import Settings
 from ..content import CONSENT_VERSION
 from ..db import get_db
-from ..models import iso, ConsentEvent, DeletionLog, Draft, Participant, RawEntry
+from ..models import ConsentEvent, DeletionLog, Draft, ModuleCompletion, Participant, RawEntry, iso
 from ..security import current_participant, end_session, settings_of, sha256
 from .consent import current_toggles
 
@@ -36,6 +36,7 @@ def export_participant(db: Session, participant: Participant) -> dict:
         select(ConsentEvent).where(ConsentEvent.participant_id == participant.id).order_by(ConsentEvent.id)
     )
     drafts = db.scalars(select(Draft).where(Draft.participant_id == participant.id))
+    completions = db.scalars(select(ModuleCompletion).where(ModuleCompletion.participant_id == participant.id))
     return {
         **me_payload(db, participant),
         "consent_events": [
@@ -49,6 +50,7 @@ def export_participant(db: Session, participant: Participant) -> dict:
             for r in raw
         ],
         "drafts": [{"module": d.module, "payload": d.payload, "updated_at": iso(d.updated_at)} for d in drafts],
+        "completions": [{"module": c.module, "completed_at": iso(c.completed_at)} for c in completions],
     }
 
 

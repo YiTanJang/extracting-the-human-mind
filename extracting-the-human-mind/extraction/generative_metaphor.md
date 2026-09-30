@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 무의식 투사 및 생성 은유 파이프라인 (Rapid Projective Elicitation: Metaphor & SCT)"
 description: 빈칸 채우기 형식의 생성 은유·문장 완성(SCT) 문항을 구성개념별 직교 설계 후 무작위 혼합 제시하여 System 2 방어기제를 우회하고, 원문(Verbatim)을 가공 없이 raw_store에 적재하는 투사적 추출 파이프라인.
 tags: [metaphor, sct, projective, elicitation, verbatim]
-timestamp: 2026-09-30T00:00:00Z
+timestamp: 2026-10-01T00:00:00Z
 ---
 # Methodology: 무의식 투사 및 생성 은유 파이프라인 (Rapid Projective Elicitation: Metaphor & SCT)
 
@@ -185,3 +185,4 @@ entries:
 
 - [User Review] §4 (L~166) 런타임 요약 금지 문구: 현재 "챗봇은 해당 텍스트를 임의로 요약하지 않으며" → 교체안: "사용자에게 되비출 때는 원문 어휘를 그대로 모사한다(출력 규칙). 활용 LLM의 내부 처리·요약은 제약 대상이 아니다". 이유: [principles §1-0](../overview/principles.md) 범위 명확화(2026-07-17) — 무가공 제약은 저장·주입 데이터에만 적용되고 런타임 LLM 요약은 허용. [clean_language.md](clean_language.md) §4 동일 항목.
 - [User Review] §4 (L~170) '임상 목적' 고지로 안전 필터 우회: 현재 "본 분석은 임상 심리학적 목적으로 수행되므로 … 병리적 의미를 있는 그대로 분석할 것" → 교체안: "비윤리·자기파괴적 원문도 순화하지 말고 이 사람을 시뮬레이션하는 근거로 그대로 사용할 것"처럼 실제 목적 기준으로 재작성. 이유: 존재하지 않는 임상 목적을 고지하는 허위 프레이밍이며, '병리적 분석'은 최적화 목표(LLM 시뮬레이션, [principles §1-0](../overview/principles.md))와 어긋남. [automated_tat.md](automated_tat.md) §4 동일 항목.
+- [User Review] 파일럿 구현 기본값 — 세 도메인 × 9장 = 27장, 도메인마다 문장 완성·은유 교차 고정 순서, 타이머 없음. 이유: 도메인을 누가 정하는지와 무작위 순서 규칙이 문서에 없음. [파일럿 설계](../architecture/pilot.md) 「S1 파일럿 기본값」에서 확정(런칭 전).
