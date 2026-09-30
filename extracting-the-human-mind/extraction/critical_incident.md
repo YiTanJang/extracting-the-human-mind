@@ -1,9 +1,9 @@
 ---
 type: Playbook
 title: 자기 보고식 사건 분석 (CIT)
-description: Flanagan의 중요 사건 기법(CIT)을 응용해, 추상적 자기보고 대신 구체적 단일 사건 하나를 문제 정의→대응 행동→결과의 3단계로 파고들어 그 사람의 문제 해결 알고리즘과 효과성을 verbatim 추출한다.
+description: "Flanagan(1954) 중요 사건 기법(CIT) 응용 추출 모듈. 최근 가장 막막했던 구체적 단일 사건 하나에 닻을 내리고(날짜 정확도는 강제 안 함) 문제 정의(위협으로 지각한 축)→실제 대응 행동→(선택)결과·효과성을 verbatim 수집한 뒤, 1~5점 대표성 평가로 예외 사건이 핵심 알고리즘으로 과대적합되는 것을 막는다. retrospective_self_report로 사후 도메인과 함께 저장하고, '의미·교훈'은 대표 인생 장면으로 분리하며, Part 2에서 문제 해결 알고리즘 추론과 ESM 대비 대응 갭 검증에 쓴다."
 tags: [extraction, critical-incident, cit, self-report, problem-framing]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # 자기 보고식 사건 분석 (CIT)
@@ -98,8 +98,9 @@ LLM의 요약·해석 없이, `data_type: self_report` 꼬리표와 함께 verba
 
 ---
 
+**🔗 상위 맥락:** [번들 index](../index.md)
+
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
-
-**🔗 상위 맥락:** [번들 index](../index.md)
+- [User Review] §2 (L35) 일반화 감지 시 재유도 제거: 현재 "'보통', '항상' 같은 일반화가 감지되면 '여러 번 말고, 딱 한 번의 그 장면으로 좁혀달라'로 1회 재유도한다" → 교체안: 제출 후 재질문을 삭제하고 같은 안내를 제출 전 힌트·마중물 텍스트(UI 스캐폴딩)로 옮김.
+  이유: 답변 뒤 캐묻기는 [principles](../overview/principles.md) §1-0 조건 2(No Prodding — 무성의 답변 방어는 UI 스캐폴딩으로만)와 충돌하며, '감지' 주체(LLM 여부)도 본문에 정의되지 않음.

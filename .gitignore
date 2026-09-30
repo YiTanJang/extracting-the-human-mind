@@ -5,9 +5,14 @@ my-data/
 private/
 personal/
 
-# OKF inbox/outbox — local-only source & export staging (see okf-system/bundle_design.md)
+# OKF staging folders — local-only (see okf-system/bundle_design.md)
 inbox/
+review/
+journal/
 outbox/
+
+# Claude Code parallel-session worktrees (see okf-system/agent_workflow.md)
+.claude/worktrees/
 
 # OKF methodology folder — local-only meta docs (작업 방식 문서, 프로젝트 산출물 아님)
 okf-system/

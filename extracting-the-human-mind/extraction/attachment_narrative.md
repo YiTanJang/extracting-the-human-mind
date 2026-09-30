@@ -1,9 +1,9 @@
 ---
 type: Playbook
 title: "Methodology: 애착 서사 완성 (Adult Story-Stem Battery — Attachment Schema Elicitation)"
-description: 관계-단절 표준 줄기(예: 3시간째 읽씹)의 빈 결말을 소설처럼 이어 쓰게 해 유기 반응의 내적 작동 모델을 verbatim 포획하는 가설-투사 모듈. 애착 코드는 raw에 박지 않고 검증·활용 단계에서만 동적 생성한다.
+description: "Bowlby 내적 작동 모델·Bretherton 애착 이야기 줄기를 성인 텍스트로 옮긴 가설-투사 추출 모듈(Light, 4~7분). 관계-단절 표준 줄기(A 연애 '3시간째 읽씹'·B 가족 정서적 철수·C 우정 배제) 중 1~2개를 제시하고, 고정 발문 '직후 다음 10분'에 대한 생각·행동을 마중물 문장에 이어 verbatim 서술받는다(LLM 개입 없음, 결말·교훈 요구 없음). 애착 코드(불안/회피/안정)는 raw에 두지 않고 검증·활용에서 동적 생성하며, CCRT·ESM과 교차검증으로만 해석하고 A4 증분 타당도에서 TAT·CCRT·자기–타자 위로 관계 예측을 올리지 못하면 가장 먼저 제거된다."
 tags: [attachment, story-stem, projective, extraction]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # Methodology: 애착 서사 완성 (Adult Story-Stem Battery — Attachment Schema Elicitation)
@@ -100,4 +100,5 @@ timestamp: 2026-07-16T00:00:00Z
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] 요약·§0 (L15, L26) 미검증 핵심 주장 가설 표시: 현재 "줄기는 *겪지 않은 가설*을 투사하게 하므로 **자기합리화 편향(Justification Bias)을 우회**한다"(요약 L15 "자기합리화 편향 없이") → 교체안: L26 해당 문장을 `> 가설:` 블록으로 감싸고 L15 단정 표현을 가설 어조로 맞춤.
+  이유: 모듈 정당화의 하중 주장이나 인용·검증이 없고, §4 L79가 가설–실제 간극을 스스로 인정하며 존폐는 [검증 모드](../validation/validation_mode.md) A4 증분 타당도로 판정됨.

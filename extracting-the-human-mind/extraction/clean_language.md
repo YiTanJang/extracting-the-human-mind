@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 클린 랭귀지 인터뷰 (Clean Language & Symbolic Modelling)"
 description: 사용자가 먼저 꺼낸 상징 하나를 출발점으로 12개 고정 클린 질문 템플릿만 순환해 내면 풍경을 verbatim 슬롯 채움으로 전개하는 2번째 동적 추출 모듈. LLM은 질문을 생성하지 않고 템플릿·슬롯 선택만 하며, 청결도는 부분문자열 검증·클린 선택 정책·근거 로깅으로 구조적으로 강제·감사된다.
 tags: [clean-language, elicitation, symbolic-modelling, verbatim, dynamic]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # Methodology: 클린 랭귀지 인터뷰 (Clean Language & Symbolic Modelling)
@@ -139,4 +139,7 @@ LLM이 `[X]`에 넣은 표현이 **사용자의 직전 발화에 실재하는 �
 **🔗 상위 맥락:** [번들 index](../index.md)
 
 ## 미결 사항
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] §0 (L~26) 오염 0 과장: 현재 "템플릿을 상수로 고정하면 **1%의 오염도 없이** 클린 질문만 구사할 수 있다" → 교체안: "질문 문장 자체의 오염은 구조적으로 차단된다(선택 오염은 §2·§4대로 로그로 측정)"로 한정하거나 가설 블록으로 전환. 이유: 같은 문서 §4(L~124) "원리상 오염 표면이 존재한다 … 청결도는 주장하는 것이 아니라 로그로 *검증되는* 속성"과 모순.
+- [User Review] §2-2·§2-3·§4 (L~81·85·125) 없는 검증 절 참조: 현재 "[검증 모드](../validation/validation_mode.md)의 선택 정책 점검(§4)" → 교체안: 아래 TODO로 실험이 등록되면 그 실험 ID로 참조 교체. 이유: validation_mode §4는 "규칙 (Behavioral Rules)"이고, 클린 랭귀지 선택 정책 셔플 대조군은 validation/ 어디에도 등록돼 있지 않음.
+- [TODO] [검증 모드](../validation/validation_mode.md) 실험 레지스트리(§6)에 클린 랭귀지 **선택 정책 셔플 대조군**(동일 풍경에 선택 근거를 무작위화한 진행과 비교) + 선택 근거 로그 감사 실험을 등록.
+- [User Review] §4 (L~127) 런타임 요약 금지 문구: 현재 "활용 단계에서 챗봇은 이 풍경을 *요약하지 않고*" → 교체안: "사용자에게 되비출 때는 상징 어휘를 verbatim으로 미러링한다(출력 규칙)"로 한정하고 활용 LLM의 내부 처리·요약은 제약 대상이 아님을 명시. 이유: [principles §1-0](../overview/principles.md) 범위 명확화(2026-07-17). [generative_metaphor.md](generative_metaphor.md) §4 동일 항목.

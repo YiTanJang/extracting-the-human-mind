@@ -1,9 +1,9 @@
 ---
 type: Design
 title: 인지 엔진 (Cognitive Engine)
-description: 페르소나 붕괴를 막고 인간의 입체적 내면을 구현하기 위한 4+1 다중 에이전트(Id·Superego·Schema·Somatic + Self) 블랙보드 아키텍처 설계. 원본 데이터를 가공 없이 공유하며 각 에이전트가 고유 렌즈로 해석하고 통합 에이전트(Self)가 판정한다.
+description: 4+1 다중 에이전트(Id·Superego·Schema·Somatic + 통합 Self) 블랙보드 아키텍처 설계(통합 효과는 가설). 동일 전체 raw를 전원에 공유하고 렌즈 프롬프트로만 차별화(프롬프트 캐싱), 선택적 1라운드 교차검토(기본 OFF). Self는 raw 구절을 인용하는 판정자(교차모델·역할별 신뢰도 가중·불일치 채널). 활용 elicitation은 하이브리드(타깃 질의 기본). 검증 계획 = A1 예산매칭 교란변수 ablation(생사 판정)·A2 역할 셔플·A3 붕괴 측정·A4 자체 확장 게이팅, E1~E3 구조 유연화, F1 kill-criteria.
 tags: [architecture, cognitive-engine, multi-agent, blackboard]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # 인지 엔진 (Cognitive Engine)
@@ -145,7 +145,7 @@ flowchart TD
 - **E3. Talker-Reasoner 2층 구조:** 상담·동행 모드의 실시간성을 위해 빠른 Talker(항상 응답) + 4+1 보드는 비동기/간헐 Reasoner로 분리(Christakopoulou et al. 2024). 대화 유창성과 심층 분석을 양립시킨다.
 
 ### 5-3. 거버넌스
-- **F1. 아키텍처 자체에 kill-criteria 적용:** 프로젝트의 "무용해 보이는 4원인" 원칙([Extracting the human mind](../overview/principles.md) §1-0)을 이 아키텍처에도 적용한다. 즉 단일 모델 ablation 1회로 폐기하지 않고, 다모델 재검증을 선행하며, 수정은 특정 모델이 아닌 LLM 전반의 능력을 겨냥한다.
+- **F1. 아키텍처 자체에 kill-criteria 적용:** 프로젝트의 "무용해 보이는 4원인" 원칙([검증 모드](../validation/validation_mode.md) §1-5)을 이 아키텍처에도 적용한다. 즉 단일 모델 ablation 1회로 폐기하지 않고, 다모델 재검증을 선행하며, 수정은 특정 모델이 아닌 LLM 전반의 능력을 겨냥한다.
 
 ---
 
@@ -159,4 +159,10 @@ flowchart TD
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 §3·§5-1 결정 반영분 외 원문 verbatim 보존.
+- [User Review] §3 (L105-113) Self 판정자 제약과 모드별 출력 충돌: 현재 "명료화 질문 하나로 치환하여 출력"·"기전을 차갑게 해체하여 출력" → 교체안: Self는 구조화 판정(인용 raw 구절·가중·미해결 긴장)만 내고, 모드별 문장 생성은 별도 렌더러(§5-2 E3 Talker)가 맡도록 분리. 이유: L98 "생성자가 아니라 판정자(Judge)"와 자기모순. [상담](../application/counseling_mode.md) §1.3·§4.4, [분석](../application/analysis_mode.md) §4.4, [시뮬](../application/multi_agent_simulation.md) §1.3도 같은 전제.
+- [User Review] §1 (L59) 엔진 상시 가동 서술: 현재 "4개의 하위 에이전트가 동시에 칠판을 보고" → 교체안: "A4 게이트가 확장을 택할 때만 4+1 가동, 아니면 단일 에이전트"로 조건화. 이유: §5-1 A4·§5 가설 지위와 불일치, [검증 모드](../validation/validation_mode.md) §1-1 헤드라인=단일 프롬프트. 상담 §4.4·분석 §4.4도 상시 가동 전제.
+- [User Review] §2 (L65) "1:1 매칭" 주장: 현재 "기존에 설계된 데이터 추출 방법론과 1:1로 매칭된다" → 교체안: "1:1" 삭제, 16종 배터리 전체의 렌즈별 우선 주목 표 추가(삼항 도출·판단 시나리오·자기–타자·자동화 TAT·DRM 포함). 이유: Id는 L3·L4, Schema는 L1·L3에 걸치고 L3 서사 전담 에이전트가 없으며 5종 배터리가 어느 렌즈에도 배정되지 않음.
+- [User Review] §4-3 (L123-124)·§5 (L130) IFS 타당성 주장: 현재 "인간의 실제 의식 구조(내면가족체계 등)를 충실히 반영하여…생태학적 타당도를 높인다" → 교체안: 근거를 마음의 4사분면 백본(§2)으로 바꾸고 IFS·System 1/2는 영감으로만 표기, 타당도 향상은 `> 가설:`(A1~A3로 검증)로 표시. 이유: IFS·이중과정은 영감 전용이라는 확정 결정과 충돌하는 미검증 주장.
+- [User Review] §5-1 (L135-140) 예산매칭·A 계열 명명: 현재 A1 "역할 없는 sampling-and-voting(같은 호출 수)", A2 "동일 호출 수(4)" → 교체안: A1에 thinking-token 예산매칭 단일 에이전트 arm 추가, A2 호출 수 5로 정정, A1~A4를 검증 모드 A1~A5와 겹치지 않게 개명(예: CE-A1~A4)하고 A4를 [검증 모드](../validation/validation_mode.md) §6 E-04로 등록(E2와의 관계 명시). 이유: 결정 사항의 "A1(예산매칭)"이 본문·E-01("5회 반복 호출")에 없고, 검증 모드 A4(증분 타당도)와 명칭 충돌.
+- [User Review] §3 (L113) Conflict Metric 해석: 현재 "사용자 내면의 불안정성이나 특정 딜레마의 난이도를 분석하는 핵심 메타 데이터" → 교체안: `> 가설:` 블록으로 표시하고, 에이전트 간 분산이 사용자 불안정성을 반영하는지 E 시리즈 검증 항목으로 연결. 이유: 에이전트 불일치는 모델·프롬프트 산물일 수 있어 인간 내면 지표로 쓰려면 검증이 선행돼야 함.
+- [TODO] §3 (L101) 역할별 신뢰도 가중 미정: Id·Superego·Schema·Somatic 중 어느 것이 제안(proposer)·검증(verifier) 역할인지, 가중 값과 보정 절차가 정의되지 않았다(근거 문헌 The Confident Liar는 2-1 표결).

@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 핵심 갈등 도식 (Core Conflictual Relationship Theme, CCRT)"
 description: 대인관계에서 소망(W)·타인 반응(RO)·자기 반응(RS)의 3항 사슬을 세 개의 독립 입력창으로 분리 추출해, 반복되는 핵심 관계 도식과 악순환 고리를 드러내는 방법론.
 tags: [ccrt, extraction, relationship, luborsky, raw]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 # Methodology: 핵심 갈등 도식 (Core Conflictual Relationship Theme, CCRT)
 
@@ -104,4 +104,7 @@ timestamp: 2026-07-16T00:00:00Z
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] §6 (L96~99) UI의 LLM 추가 질문 제거: 현재 "LLM은 … 비어있는 슬롯을 채우기 위해 1~2회의 추가 질문을 던진다"(Conversational Flow, 1단계 "상황을 자유롭게 묘사") → 교체안: §2와 같은 RO→RS→Wish 3개 입력창 순차 폼으로 바꾸고 LLM 개입을 삭제, "최소 3장의 카드" 조건과 §1 단일 대상 선정의 관계를 확정.
+  이유: §0 L28 "LLM 제로 개입"·§2 L40 "자유 서술 한 덩어리를 막고"·[principles](../overview/principles.md) §1-0 조건 2(No Prodding)·§1-0-5 말미(정적 검사에 LLM 챗봇 미사용)와 정면 충돌.
+- [User Review] §2-3 (L54) 미검증 순서 효과 가설 표시: 현재 "상황(RO, RS)을 먼저 서술하게 하여 기억에 몰입시킨 뒤 마지막에 진짜 의도를 캐물어야 날것의 소망이 추출된다" → 교체안: 이 설계 근거를 `> 가설:` 블록으로 감쌈.
+  이유: 슬롯 순서 효과는 인용·검증이 없고, [검증 모드](../validation/validation_mode.md) M-03은 모듈 간 순서(삼항→래더링)만 다룸.

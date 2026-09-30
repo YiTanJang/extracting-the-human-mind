@@ -3,7 +3,7 @@ type: Playbook
 title: 분석 모드 (Analysis / Profiler Mode)
 description: 수집된 Raw Store를 교차 결합·명시 인용하여 행동 패턴과 심리 기전을 냉철하게 해체하는 프로파일러 모드의 방법론·상호작용·규칙·시스템 프롬프트.
 tags: [analysis, profiler, mechanism, prediction, raw-store]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # 분석 모드 (Analysis / Profiler Mode)
@@ -164,4 +164,8 @@ CRITICAL RULES:
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] §2.3 (L56-57) 피드백의 검증 유입: 현재 "검증 모드의 입력으로도 흘러간다" → 교체안: "활용 후 피드백은 `contaminated: true`로 L2에만 수확하며 `연구 수확 허용` 토글 동의자에 한한다(L1 증거 원장 유입 금지)". 이유: [검증 모드](../validation/validation_mode.md) §1-0 규칙 4·§1-1·§4-2 "그럴듯함 금지" — "들어맞는가?"는 그럴듯함 판정. [시뮬](multi_agent_simulation.md) §2.3도 같은 문제.
+- [User Review] §4.4 (L100) 인지 엔진 상시 가동·Self의 설명 생성: 현재 "백그라운드의 인지 엔진이 가동되어…통합 에이전트는…기전을 차갑게 해체하여 설명한다" → 교체안: 엔진은 A4 게이트가 확장을 택할 때만 가동, Self는 인용 판정만 하고 설명문은 분석 렌더러가 생성. 이유: [인지 엔진](../architecture/cognitive_engine.md) §3 판정자 제약·§5-1 A4.
+- [User Review] §6.1 (L123-159) 하이브리드 elicitation 적용 방식: 현재 "You are provided with the user's 'raw_store.yaml'" + `{raw_store_yaml_here}` 통째 주입 → 교체안: 사용자 요청을 타깃 질의로 간주하는지, 아니면 요청을 타깃 질의로 변환해 raw를 끌어내는 단계를 둘지 명시. 이유: [인지 엔진](../architecture/cognitive_engine.md) §3 하이브리드 결정(타깃 질의 기본, 자율 생성은 특정 모드만).
+- [User Review] §2.1 (L47)·§3.2 관계 분석의 제공자 동의: 현재 "나 + 친구(들) 선택 시 → 상호작용·관계·기대 갭 분석으로 전환" → 교체안: "친구 raw는 그 제공자의 `분석 허용` 토글이 켜진 경우에만 인출, 철회 시 즉시 제외"를 명시. 이유: [실험 주의서](../operations/experiment_ethics.md) 용도별 토글(기본 꺼짐·철회 가능).
+- [User Review] §3.1 (L67) 게이팅 우회 "강제 인출": 현재 "평소의 엄격한 게이팅을 우회하여 해당 raw 데이터를 강제 인출한다" → 교체안: 게이팅을 '인출'이 아닌 '출력 언급' 게이팅으로 재정의(주입은 해금된 전 도메인 전체 raw). 이유: §6.1이 raw_store 전체를 주입하고 [인지 엔진](../architecture/cognitive_engine.md) §1은 동일 전체 raw 공유 — 인출 게이팅과 모순, 전 도메인 종합 주입 결정과도 충돌.

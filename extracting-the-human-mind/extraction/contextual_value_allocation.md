@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 맥락 기반 제로섬 가치 할당 파이프라인 (Context-Based Zero-Sum Value Allocation)"
 description: 극단적 위기 씬을 제시하고 개방형으로 기입한 가치들에 100포인트를 강제 제로섬 배분하여 우선순위 위계를 드러내고, 1위↔최하위가 뒤집히는 전환 조건까지 추출하는 방법론.
 tags: [values, zero-sum, elicitation, schwartz, tetlock]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 # Methodology: 맥락 기반 제로섬 가치 할당 파이프라인 (Context-Based Zero-Sum Value Allocation)
 
@@ -91,9 +91,7 @@ timestamp: 2026-07-16T00:00:00Z
 
 할당된 수치와 전환 조건은 별도의 계산이나 요약 과정을 거치지 않고, 사용자의 우선순위 위계 그대로 YAML 형태로 저장된다.
 
-YAML
-
-```
+```yaml
   - id: v0001
     ts: 2026-06-19T22:30:00+09:00
     method: value_allocation
@@ -130,4 +128,4 @@ YAML
 **🔗 상위 맥락:** [번들 index](../index.md)
 
 ## 미결 사항
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] §1-2 (L~45) 정적 모듈 내 재유도 프로빙: 현재 "일반어 재유도(1회, 비강제) … 구체화를 1회 권장한다" → 교체안: 재유도 문항을 삭제하고 추상어는 그대로 수용·저장(§5의 '고집 자체가 신호' 유지), 또는 principles에 명시적 예외로 등재. 이유: [principles §1-0](../overview/principles.md) 조건 2 "꼬리질문으로 캐묻지 않는다 … UI/UX 스캐폴딩으로만 해결", 조건 1 "래더링과 클린 랭귀지 기법에서만 한정적으로 시스템이 개입".

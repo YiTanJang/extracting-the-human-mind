@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 어제 하루 재구성법 (Day Reconstruction Method)"
 description: 하루의 끝에 어제를 에피소드로 쪼개 회고 서술하게 하여, 같은 날 ESM(경험하는 자아)과 대조해 기억 왜곡(기억하는 자아와의 갭)을 측정하는 의존 모듈.
 tags: [drm, memory, retrospective, affect, esm]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # Methodology: 어제 하루 재구성법 (Day Reconstruction Method)
@@ -86,7 +86,3 @@ DRM의 고유 가치는 **같은 날 ESM과의 대조**에서 나온다. 따라�
 ---
 
 **🔗 상위 맥락:** [번들 index](../index.md) · **의존:** [행동 흔적 + 미니 ESM](behavioral_traces_esm.md)
-
-## 미결 사항
-
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.

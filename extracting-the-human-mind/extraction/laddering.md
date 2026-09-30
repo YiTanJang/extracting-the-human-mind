@@ -3,7 +3,7 @@ type: Playbook
 title: 래더링 (Deterministic Target Selection & Algorithmic Laddering)
 description: (확정) 삼항 행렬의 S(살리언시)·C(중심성/Intensity)·K(딜레마) 3지표로 래더링 타깃 축을 결정론적 선정 후, LLM이 상향 수단-목적 사슬을 캐 종착 가치까지 verbatim 도출. MAX_DEPTH=4, 방어적 회피 시 조기종료. 삼항 도출 의존. LadderChat(2025) 참고.
 tags: [extraction, laddering, means-end-chain, l2-motivation, dynamic-module]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # Methodology: 래더링 (Deterministic Target Selection & Algorithmic Laddering)
@@ -173,8 +173,6 @@ def should_stop_laddering(
 
 래더링이 종료되면 어떠한 LLM의 자의적 해석도 섞이지 않은 순수한 사슬 배열이 `raw_store.yaml`에 Append 된다.
 
-YAML
-
 ```yaml
   - id: l0001
     ts: 2026-06-19T20:57:00+09:00
@@ -222,7 +220,8 @@ YAML
 
 ## 미결 사항
 
-- [TODO] §4-1 반복 감지 코드-주석 불일치. `if new_response.strip() in chain`은 **정확 문자열 일치**만 보는데, 바로 위 주석은 의도를 "embedding similarity > 0.92"(의미적 반복)로 명시한다. MVP 구현에서 의미적 동어반복을 놓쳐 상향 연쇄가 불필요하게 MAX_DEPTH까지 길어질 수 있다. 구현 시 임베딩 유사도 판정으로 교체.
-- 본문은 §4-1 중단 로직(그냥 재분류)을 제외하면 원본 verbatim 보존.
+- [TODO] §4-1 반복 감지를 임베딩 유사도(>0.92) 판정으로 구현 — 현재 정확 일치(임시).
+- [User Review] §2 지표 S (L~53) S 정의 이중화: 현재 "원소들의 살리언시 합(가중치)을 그대로 상속" ↔ [triad_elicitation.md](triad_elicitation.md) §7 코드 `target_s = max(… "deviation_sum")` → 교체안: 본 문서 §2~3을 타깃 선발의 단일 출처로 확정하고 triad §7은 링크로 대체(triad 쪽 대응 항목 있음), C 공식(본 문서 Σr² vs triad 정규화×PC1 계수)도 한쪽으로 통일. 이유: 같은 그리드에서 두 문서가 다른 Target_S·C를 낼 수 있음.
+- [User Review] §5 (L~182) 선정 로직 소재 모순: 현재 `selection_reason` 주석 "(선정 로직은 PART 2)" → 교체안: "(선정 로직은 본 문서 §2~3 — 추출 단계 결정론적 라우팅)". 이유: §0·§2~3이 추출 단계에서 S·C·K로 타깃을 선정하며, [triad_elicitation.md](triad_elicitation.md) §6의 "해석은 전부 PART 2" 문장과 함께 범위 정리가 필요.
 
 **🔗 상위 맥락:** [번들 index](../index.md)

@@ -3,7 +3,7 @@ type: Reference
 title: 관련 연구 · 더 읽을거리 (Related Work & Further Reading)
 description: 학술 토대·인접 연구 맵. 직접 참고=LadderChat(2025). 인접=Generative Agents(2023/2024 1000명)·Argyle 실리콘샘플링(반대극)·Role-play. 비판 문헌(캐리커처·바넘·자기채점 관대함)=검증 모드가 방어할 기준. 16기법의 배경 심리학 표 + 마음의 4사분면(McAdams 재구성) + 경쟁 환경(Character.AI/Replika/Personal.ai).
 tags: [research, related-work, citations, psychology-theory, competitive-landscape]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # 관련 연구 · 더 읽을거리 (Related Work & Further Reading)
@@ -169,4 +169,6 @@ timestamp: 2026-07-16T00:00:00Z
 ## 미결 사항
 
 - [TODO] §2·§3의 최신 LLM 문헌 연도·수치는 원문 재확인 권장(본문 §0 주의 참조). 확인 후 `# Citations` 형식으로 arXiv ID 등 정식 출처 박기.
-- 이관 시점(2026-07-16) 기준 원본 verbatim 보존. 검증 모드·인지 엔진 문서 이관 후 관련 상호 링크를 채울 것.
+- [TODO] [검증 모드](../validation/validation_mode.md)·[인지 엔진](../architecture/cognitive_engine.md)으로의 상호 링크 추가(§4-2 교차 모델 채점, §4-4 블랙보드·다중 에이전트, §5 비판 문헌 ↔ 검증 배터리).
+- [User Review] §4 (L84) 요약 금지 범위: 현재 "LLM의 해석적 요약을 원천 차단하고" → 교체안: "저장·주입 단계의 사전 요약을 차단하고(활용 시점 LLM의 런타임 처리는 허용)". 이유: [principles](../overview/principles.md) 결정 사항(2026-07-17, 무-요약 제약은 저장·주입 데이터에만 적용)과 충돌.
+- [User Review] §4 (L79~97) 출처 없는 주장: 현재 "알고리즘적 자아와 서사적 포획", "페르소나 붕괴 (Persona Manifold Collapse)" 등 문헌 동향이 출처 없이 서술됨(§4-1 없음) → 교체안: 원문 확인된 것만 번호 `# Citations`로 인용하고 나머지는 `> 가설:` 처리 또는 삭제. 이유: Reference 문서의 인용 규칙(읽지 않은 자료는 기재 금지) 위반, §2·§3 문헌 재확인 항목과 함께 처리.

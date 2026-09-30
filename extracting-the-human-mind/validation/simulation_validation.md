@@ -3,7 +3,7 @@ type: Design
 title: "Methodology: 시뮬레이션 검증 배터리 (Simulation & Trajectory Battery)"
 description: 단일 시점 예측을 넘어 여러 턴의 시간축에서 행동 궤적의 일관성과 상황적 타당성을 검증하는 7가지 동적 테스트 배터리(B1~B7).
 tags: [validation, simulation, trajectory, benchmark, persona]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # Methodology: 시뮬레이션 검증 배터리 (Simulation & Trajectory Battery)
@@ -110,4 +110,6 @@ LLM은 대화 컨텍스트가 길어질수록 최초에 부여된 페르소나�
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] B1 (L23~33) 과거 재현 vs 미래 예측: 현재 B1="과거 장면 재현"인데 validation_mode §1-2 L139·§3 L344는 B1을 "미래 행동" 예측이자 누수 없는 대안으로 사용 → 교체안: B1은 과거 재현으로 유지하고 미래 행동 예측을 별도 항목(또는 C2/PT-6)으로 정의. 이유: 과거 에피소드 재현은 중복 인코딩 누수가 가능해 누수 회피 대안이 될 수 없음. [validation_mode.md](validation_mode.md) B1 항목과 짝.
+- [User Review] B2 (L35~45)·B3 (L47~56) 2026-07-17 결정 미반영: 현재 B2에 문체 통제 조건 없음, 다중 턴 적대 심문은 validation_mode §3 L347 사용 예시에만 존재 → 교체안: B2에 "문체(오탈자·이모지·말투) 정규화 대조 조건 병행" 추가, B3(또는 신규 B8)에 논리 연쇄 다중 턴 심문 + internal/external/retest 3차원 일관성 기록 추가. 이유: 원 제안이 "배터리 B에 추가"였음(TwinVoice 2510.25536, PICon 2603.25620). [validation_mode.md](validation_mode.md) §3 항목과 짝.
+- [User Review] B4 (L69) 정답 기준: 현재 "정답: `raw_store`의 [분석 모드]에서 추출된 사용자의 조건부(If-Then) 룰셋" → 교체안: 정답을 사용자의 실제 A/A' 응답(사전 수집한 조건부 선택)으로 두고 룰셋 부합도는 보조 지표로 강등. 이유: LLM 생성 해석을 정답으로 쓰면 순환이며, 분석 모드 산출물은 validation_mode §1-0상 오염 데이터.

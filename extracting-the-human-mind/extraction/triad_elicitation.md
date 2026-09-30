@@ -3,7 +3,7 @@ type: Playbook
 title: 결정론적 삼항 도출 (Deterministic Triadic Elicitation)
 description: (확정) Kelly Repertory Grid 변형 기반 핵심 도출 모듈. 9개 원소를 v=9·24라운드 BIBD(λ=2)로 조합해 삼항을 제시하고, 음극·양극 verbatim 구성개념을 추출한 뒤 이중 게이트(수학 상관 + 임베딩)로 포화를 판정한다. LLM은 두 게이트 불일치 시 타이브레이커로만 개입. Round 1은 자기-불일치(현재/이상/두려운 나) 고정.
 tags: [triadic, repgrid, construct, saturation, elicitation]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # Methodology: 결정론적 삼항 도출 (Deterministic Triadic Elicitation)
@@ -397,3 +397,7 @@ print("래더링 타깃:", targets)
 
 ## 미결 사항
 - [TODO] §5-2 Gate 2의 STS 중복 임계치(0.75~0.85)는 초기 임의의 컷오프 하이퍼파라미터이며, 향후 한국어 임베딩 모델의 특성과 테스트 결과에 따라 조정되어야 한다.
+- [User Review] §1-3 (L~81) 살리언시 용도 모순: 현재 "이 값은 §2-3에서 알고리즘이 삼항을 선택할 때 가중치로 사용된다" → 교체안: "이 값은 삼항 선택에는 쓰이지 않고 §2-3대로 구성개념 가중용 메타데이터로 보존된다". 이유: 같은 문서 §2-3(L~114)은 "어떤 삼항을 선택할지 결정하는 데 쓰이지 않는다(선택은 2-2의 고정 배열이 100% 전담함)"로 정반대.
+- [User Review] §6 (L~194) raw에 파생 수치 저장: 현재 "selection_audit: # 감사 로그: 이 삼항을 고른 근거 수치" 아래 dispersion_score·element_saliency_sum → 교체안: selection_audit 블록 삭제(두 값 모두 grid_row·원소별 살리언시 평정 원값에서 재계산 가능), §2-3의 "saliency_sum … Raw Store에 보존"도 원값 저장으로 정합화. 이유: 삼항 선택은 BIBD 고정 배열이 전담해 '고른 근거'가 없고 dispersion은 §7 스스로 "사후 지표"이며, [principles §1-4](../overview/principles.md)는 "파생 메타데이터는 이 저장소에서 배제".
+- [User Review] §6 (L~199)·§5-4 (L~177) C·K 계산 시점 모순: 현재 "중심성(C)·갈등(K)·construct 동일성 판정 등 *해석*은 전부 PART 2가 이 행렬을 읽어 만든다" → 교체안: "래더링 타깃 선발용 C·K는 추출 단계에서 일시 계산하는 라우팅 값으로 raw에 저장하지 않으며, 그 밖의 해석은 PART 2"로 범위 명시. 이유: §5-4·§7은 추출 중 C·K로 "LLM 개입 없이 결정론적으로 래더링 타깃 축을 선정"하고 [laddering.md](laddering.md) §2~3도 추출 단계에서 선발함.
+- [User Review] §7 (L~339) 타깃 선발 로직 중복·S 정의 불일치: 현재 `target_s = max(results, key=lambda x: x["deviation_sum"])` → 교체안: §7의 타깃 선발 코드(5·6항)를 [laddering.md](laddering.md) §2~3 링크로 대체해 단일 출처화하고, 남길 경우 Target_S를 원소 살리언시 합으로 정렬. 이유: laddering §2는 S를 "원소들의 살리언시 합"으로 정의하고 C 공식(Σr² vs 정규화×PC1 계수)도 다르며, §7 코드엔 laddering §1-1 극 필터·§3 중복 제거가 없음(laddering 쪽 대응 항목 있음).

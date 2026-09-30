@@ -1,9 +1,9 @@
 ---
-type: Reference
+type: Design
 title: 논문 출판 전략 및 연구 로드맵
 description: 가설 단편화를 막기 위해 개별 가설을 시스템·임상 타당성·종단 상호작용의 3개 통합 논문으로 재구성하고, 모든 실험을 가설 지지 여부와 무관하게 학술 가치를 갖도록 설계하는 출판 전략과 연구 로드맵.
 tags: [research, publication, strategy, roadmap, hypotheses]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # 논문 출판 전략 및 연구 로드맵
@@ -104,4 +104,4 @@ graph TD
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] §0·§1·§2 (L22, L38, L71) 가설 ID·기반 가설 정합: 현재 기반 가설 "`B-01`, `B-03` … 무작위 베이스라인이나 통상적인 챗봇보다 우수", "B-09 요약 파이프라인 압축률" → 교체안: 기반 가설을 주장 A 헤드라인인 B-08(분량매칭 자유개방, [open_questions Q1](open_questions.md) Showstopper)로 교체하고, B-09 라벨을 검증 모드 정의("요약 손실 — 원본 verbatim vs 동일 내용 요약")로 맞추며, 논문 명명(A/B/C vs 검증 모드 "논문 2(NLP)의 키스톤")을 한쪽으로 통일. 이유: [validation_mode](../validation/validation_mode.md) L746·L754 정의와 불일치, [vision](../overview/vision.md) L163은 이 문서를 "키스톤 → 논문 DAG … 부록" 구조로 소개하나 본문에 해당 개념이 없음.

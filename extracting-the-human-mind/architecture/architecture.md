@@ -3,7 +3,7 @@ type: Design
 title: 심리 분석 서비스 아키텍처 명세서 (App Blueprint)
 description: (확정) 추출→검증→활용 3대 엔진 시스템 설계도. IA 라우팅, 정적/동적 추출 파이프라인, 2계층 가명화(결정론적 사전·정규식 자동 치환 + NER 후보 사용자 확인, 실명 유출 0 지향), Temp 0.0~0.2 추출·0.7 시뮬, RDBMS+JSONB 스키마(users·raw_store·domain_unlocks·validation_sessions·test_ledger), REST API, Docker 셀프호스팅.
 tags: [architecture, ia, database-schema, api, pipeline, self-hosting]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # App Blueprint: 심리 분석 서비스 아키텍처 명세서
@@ -196,5 +196,8 @@ LangGraph 내장 Checkpointer가 사용하는 표준 스키마를 따른다.
 
 ## 미결 사항
 
-- [TODO] §3-3 `domain_unlocks.current_xp` 100 도달 시 검증 관문 해금 — 임계치 `100`의 근거가 문서에 없는 매직 넘버다. 검증 모드 §2-2의 도메인별 '최소 배터리' 분량과 이 XP 임계치가 어떻게 대응하는지 명시 필요.
-- 본문은 §2 Module 1(가명화)을 제외하면 원본 verbatim 보존. 활용 단계 다중 에이전트 상세는 [cognitive_engine.md](cognitive_engine.md) 참조.
+- [TODO] §3-3 `domain_unlocks.current_xp` 100 도달 시 검증 관문 해금 — 임계치 `100`의 근거가 문서에 없는 매직 넘버다. 검증 모드 §2-2의 도메인별 '최소 배터리' 분량과 이 XP 임계치가 어떻게 대응하는지 명시 필요. 참고: 도메인별 100 XP 게이지와 검사별 XP 보상표는 [MVP 기획](../overview/mvp.md) §3-2에 정의돼 있다.
+- [User Review] §2 Module 3 (L89) 주입 방식 개방: 현재 "어떻게 시스템 프롬프트에 동적으로 주입할지는 앱 개발자와 사용자의 자율에 맡긴다" → 교체안: "활용 elicitation은 하이브리드 — 기본은 매 맥락 타깃 질의, 자율 생성은 시뮬레이션 샌드박스 등 특정 모드만([인지 엔진](cognitive_engine.md) §3)". 이유: 2026-07-17 하이브리드 결정(Habermolt prior-collapse)과 충돌.
+- [User Review] §1 (L29)·§2 Module 3 (L86)·§3 동의 모델 부재: 현재 IA "실험 주의서 동의", "내 배열과 친구의 배열을 함께 가져온다", 스키마에 동의 테이블 없음 → 교체안: `data_consents`(provider_id·grantee_id·purpose ∈ 분석/시뮬레이션/검증/연구 수확·granted 기본 false·revoked_at) 테이블과 토글 관리 라우트·API 추가, Module 3 조회에 목적별 동의 검사 추가. 이유: [실험 주의서](../operations/experiment_ethics.md) 제공자별 용도 토글(기본 꺼짐·철회 가능) 미반영.
+- [User Review] §2 Module 1 (L54)·§4 (L158) 동적 검사의 LLM 역할: 현재 "오직 꼬리질문만 할 것"·"LLM 꼬리질문 생성" → 교체안: 래더링=제약된 why 사슬 질문, 클린 랭귀지=12개 고정 템플릿·슬롯 선택만(질문 생성 금지)으로 나눠 서술. 이유: [클린 랭귀지](../extraction/clean_language.md) "LLM은 질문을 생성하지 않는다", [원칙](../overview/principles.md) §1-0 조건 2(No Prodding).
+- [User Review] §3-2 (L109)·§3-3 (L120) 도메인 값: 현재 "일/관계/자기" → 교체안: `general`(해당 없음/복합)을 포함한 단일 열거형으로 통일해 전 문서·템플릿에 적용. 이유: [원칙](../overview/principles.md) §1-2 General 옵션 필수, [상담](../application/counseling_mode.md) §1.2·[시뮬](../application/multi_agent_simulation.md) §4.1이 `domain: general` 사용.

@@ -3,7 +3,7 @@ type: Design
 title: "Methodology: 신뢰도 검증 배터리 (Reliability & Calibration Battery)"
 description: AI 예측이 우연한 적중이 아님을 증명하고 자신감 지표의 정직성을 측정하는 메타 검증 배터리(C1~C5)를 정의한다.
 tags: [reliability, calibration, validation, robustness, metrics]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # Methodology: 신뢰도 검증 배터리 (Reliability & Calibration Battery)
@@ -85,4 +85,5 @@ timestamp: 2026-07-16T00:00:00Z
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] C1 (L23~32) 천장 서술: 현재 "모델이 아무리 완벽해도 도달할 수 없는 수학적 한계선" → 교체안: "신뢰구간을 가진 추정 상한"으로 수정하고, validation_mode §1-3의 즉시/안정 천장 분리·도메인당 앵커 ≥8·집단 사전분포 보강 규칙을 C1에 명시(또는 링크). 이유: validation_mode L171은 정규화 정확도 1 초과 가능성을 인정하며, C1에는 천장 설계 규칙이 없음.
+- [User Review] C2 (L40) 캘리브레이션 데이터 출처: 현재 "[분석 모드]나 시뮬레이션 중 LLM에게… 확신도" → 교체안: L1 산출분은 검증 모드 예측(validation_mode §2-2 항목 4 캘리브레이션 시드)으로 한정하고, 활용 모드 산출분은 contaminated로 L2에만 적재. 이유: validation_mode §1-0 흐름 규칙 4(활용 → L2 전용).

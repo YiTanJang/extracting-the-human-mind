@@ -3,7 +3,7 @@ type: Roadmap
 title: 프로젝트 개발 이력 및 TODO (Changelog & Tasks)
 description: 기획/설계 단계의 주요 마일스톤을 모두 완료한 상태로, 방법론(A)·아키텍처(B)·실험검증(C)·문서정합성(D) 4개 트랙의 작업 내역을 기록한다.
 tags: [roadmap, todo, planning, changelog]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 # 프로젝트 개발 이력 및 TODO (Changelog & Tasks)
 
@@ -68,4 +68,4 @@ YAML 구조 통일, 용어 충돌 해소 및 전체 코어 문서의 가독성 �
   - 추출 파이프라인 전반의 README 텍스트, MVP 도메인 해금 로직 다이어그램, 검증 모드 테스트 배터리 표를 깔끔하게 시각화하여 가독성 대폭 개선(경쟁 요소 시각적 단락 분리, Extracting 번호 매기기 및 YAML 포맷팅 정리 포함). 개인 기록장 어투를 명확한 개발 스펙 문서 보이스로 개서 완료. API 라우트 네이밍 범용성 확보(`/validation/[test_id]`), 마크다운 괄호 링크 파싱 오류(`< >` 감싸기) 해결. 검증 불가한 불완전 링크 분석 파일(`link_analysis.json`) 폐기 및 검증 모드.md §1-4 미생성 하위 문서(이해 검증, 시뮬레이션 검증, 신뢰도 검증.md) 링크 제거(생성 보류). 검증 모드.md §1-0 L1/L2 오염 전파 규칙 및 아키텍처.md 의사코드화(PT-13 이후 강등 규칙과 PT-1 적재 모순 해소 포함). Extracting the human mind.md §1-0-4에 포함되어 있어 불필요한 README 추출 파이프라인.md 오탐 링크 제거. 수동 실험 가이드 UI 안내를 정적/동적 구분 기반으로 정정. 내부 개발 티켓 번호(`DR-13-xx` 등) 및 재사용 실험 ID(C-06) 충돌 흔적들을 문서에서 완전히 삭제하여 외부 열람 시 혼동이 없도록 단정적인 최종 스펙으로 정제 완료(단, 전체 문서 헤더 표준화 작업은 공수 대비 효용이 낮아 취소).
 
 ## 미결 사항
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다(트랙 항목은 본문 참조).
+- [User Review] 문서 전체 (L3~68) 로드맵 재작성: 현재 "프로젝트 개발 이력 및 TODO (Changelog & Tasks)" — 전 항목 [x], "모든 주요 마일스톤이 완료" → 교체안: Phase 타임라인으로 재작성 — Phase 0(현재: 설계 명세 완료, Q1 Showstopper = 검증 A4 3-arm/B-08, Twin-2K-500 사전 점검) → Ph1(검증: Q3 한국 경제게임 기준선, Q5 자유연상 편입) → Ph2(활용: Q2 4+1 vs 예산매칭, Q6 elicitation 붕괴 측정), 논문 순서는 [paper_strategy](../research/paper_strategy.md) §4(A 선행·C 병행·B 후속)와 정렬. 트랙 A~D 이력은 log.md·git 이력(`inbox/TODO.md`)에 맡기고 본문에서 제거. 이유: type Roadmap은 Phase별 계획인데 본문은 OKF 이전 변경 이력(=log.md 소관)이고, 낡은 내용 포함(L19 동적 개입 "래더링 1종"·"11개 메서드", 번들에 없는 `계산 절차.md`·`프라이버시 동의서.md`, [related_research](../research/related_research.md)에 없는 CultureSteer §4-2).

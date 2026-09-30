@@ -1,9 +1,9 @@
 ---
-type: Playbook
+type: Design
 title: 멀티 에이전트 시뮬레이션 (Multi-Agent Simulation Mode)
 description: 나와 타인의 원시 데이터를 각각 독립 AI 에이전트로 인스턴스화해, 특정 상황에서 턴제 상호작용을 시뮬레이션하고 사용자는 관찰자로서 전개의 분포를 미리 탐색하는 모드.
 tags: [simulation, multi-agent, langgraph, persona, forecasting]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # 멀티 에이전트 시뮬레이션 (Multi-Agent Simulation Mode)
@@ -176,4 +176,9 @@ CRITICAL RULES:
 **🔗 상위 맥락:** [번들 index](../index.md)
 
 ## 미결 사항
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+
+- [User Review] §2.3 (L71-72) 피드백의 검증 유입: 현재 "검증 모드(…)의 핵심 입력이다" → 교체안: "활용 후 피드백은 `contaminated: true`로 L2에만 수확하며 `연구 수확 허용` 토글 동의자에 한한다(L1 증거 원장 유입 금지)". 이유: [검증 모드](../validation/validation_mode.md) §1-0 규칙 4·§4-2 "그럴듯함 금지" — "그럴듯함/어색함"은 face validity. [분석](analysis_mode.md) §2.3도 같은 문제.
+- [User Review] §1.3 (L37) 캐릭터 내부 인지 엔진의 발화 주체: 현재 "내적 갈등을 통과한 뒤에야 최종 발화가 결정되도록" → 교체안: Self는 인용 판정만 하고 발화는 Actor 노드(§6.1)가 판정을 입력받아 생성함을 명시, 엔진 가동 여부는 A4 게이트를 따름. 이유: [인지 엔진](../architecture/cognitive_engine.md) §3 판정자 제약·§5-1 A4.
+- [User Review] §1.1·§5 하이브리드 elicitation의 예외 모드 표기: 현재 이 모드가 자율 생성 허용 모드라는 언급과 prior-collapse 한계가 없음 → 교체안: 이 모드가 하이브리드 결정의 자율 생성 예외임을 명시하고, §5에 "자율 생성 시 개성이 모델 prior로 붕괴할 위험(Habermolt)" 한계 추가. 이유: [인지 엔진](../architecture/cognitive_engine.md) §3 하이브리드 결정(2026-07-17).
+- [User Review] §2.1 (L59) 타인 에이전트 생성 동의: 현재 "각 에이전트에는 그 사람 개인의 원시 데이터가 각각 주입된다" → 교체안: 타인 에이전트는 그 제공자의 `시뮬레이션 허용` 토글이 켜졌을 때만 생성하고 철회 시 즉시 제외함을 명시. 이유: [실험 주의서](../operations/experiment_ethics.md) 시뮬레이션 허용 토글(기본 꺼짐·철회 가능).
+- [User Review] §4.1 (L92) 도메인 필터: 현재 "해당하는 데이터와 `domain: general` 데이터만을 필터링하여 인출" → 교체안: 해금된 전 도메인 raw를 주입하고 상황 도메인은 주목 지시로만 사용. 이유: 도메인별 해금 + 전 도메인 종합 주입 결정, [인지 엔진](../architecture/cognitive_engine.md) §1 "동일한 원시 데이터 전체".

@@ -1,9 +1,9 @@
 ---
 type: Playbook
 title: "Methodology: 대표 인생 장면 및 서사 추출 파이프라인 (Representative Life Scenes Extraction)"
-description: McAdams의 서사적 정체성 이론에 기반해 핵심 가치가 빛나거나 훼손된 결정적 인생 장면 3~5개를 회고적 자기보고로 수집하고, 시기·사건·의미를 태깅해 생애 타임라인으로 구조화하는 추출 모듈.
+description: "McAdams 서사적 정체성 기반 추출 모듈. 래더링 종착 가치·삼항 살리언시 1위·가치 할당 1위에서 뽑은 앵커 가치 3~5개로 그 가치가 빛나거나 훼손된 결정적 장면 3~5개를 회고 인출하고, 가치 무관 기원 장면 카드(Adler 초기 기억, 해석 타이폴로지 코딩 없음)를 선택으로 더한다. 챕터 태그·장면 서술과 의미·삼항 원소(E1~E9) 링킹·드래그 타임라인 순서를 retrospective_self_report로 저장한다. 문제해결 행동은 CIT로 분리하며, Part 2에서 ESM 대비 espoused/enacted 갭의 대조군으로 쓴다."
 tags: [narrative-identity, life-scenes, extraction, self-report, mcadams]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 # Methodology: 대표 인생 장면 및 서사 추출 파이프라인 (Representative Life Scenes Extraction)
 
@@ -31,7 +31,7 @@ timestamp: 2026-07-16T00:00:00Z
 
 ## 1. 가치 연동형 트리거 (Value-Linked Prompting)
 
-무작위로 "기억에 남는 일을 적어보세요"라고 묻지 않는다. 앞선 [래더링], [삼항 도출] 혹은 [맥락 속 가치 할당]에서 도출된 사용자의 최상위 핵심 가치를 트리거로 사용하여 기억을 인출(Retrieval)한다.
+무작위로 "기억에 남는 일을 적어보세요"라고 묻지 않는다. 앞선 [래더링](laddering.md), [삼항 도출](triad_elicitation.md) 혹은 [맥락 속 가치 할당](contextual_value_allocation.md)에서 도출된 사용자의 최상위 핵심 가치를 트리거로 사용하여 기억을 인출(Retrieval)한다.
 
 ### 1-1. 앵커 가치 선정
 
@@ -69,7 +69,7 @@ timestamp: 2026-07-16T00:00:00Z
     - $\rightarrow$ 단일 텍스트 박스 입력 ($Raw\_Narrative$). 입력 폼을 분할하지 않고, 백지 공포를 방지하기 위해 텍스트창에 `[그날, 나에게 가장 강렬하게 남아있는 기억은...]` 이라는 마중물 텍스트를 미리 채워둔다.
         
 3. **그리드 원소 매핑 (Entity Linking) (DR-13-15):**
-    - 사용자가 작성한 장면에 앞서 [삼항 도출] 등에서 확보한 9개의 앵커 원소(E1~E9) 중 등장인물이나 핵심 대상이 겹치는지 확인하여 명시적으로 태깅한다. 
+    - 사용자가 작성한 장면에 앞서 [삼항 도출](triad_elicitation.md) 등에서 확보한 9개의 앵커 원소(E1~E9) 중 등장인물이나 핵심 대상이 겹치는지 확인하여 명시적으로 태깅한다. 
     - `"이 사건에 [가장 존경했던 사람], [가장 피하고 싶은 사람] 등 앞서 떠올렸던 인물이 등장하는가?"` $\rightarrow$ 다중 선택 UI.
         
 
@@ -85,8 +85,6 @@ timestamp: 2026-07-16T00:00:00Z
 ## 4. 산출물 및 데이터 저장 (Raw Store Append)
 
 사용자의 기억과 서술은 어떠한 LLM의 윤문도 거치지 않고, 반드시 `data_type: self_report`라는 꼬리표를 달고 YAML에 기록된다.
-
-YAML
 
 ```yaml
   - id: s0001
@@ -136,4 +134,5 @@ YAML
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] §2·§4 (L67~69, L98~99) 단일 서술 박스 vs 2필드 저장 충돌: 현재 "팩트와 주관적 의미를 쪼개지 않고 한 번에 묻는다 … 단일 텍스트 박스 입력 ($Raw\_Narrative$)"인데 YAML은 `raw_scene`/`raw_meaning`을 분리 저장 → 교체안: (a) 단일 박스 유지 시 YAML을 `raw_narrative` 한 필드로 바꾸고 §0 L29 "단계 2의 '객관적 장면'"·§6 L129 "제목(Single-line)과 상세 묘사"를 정리, 또는 (b) 입력창을 2개로 나누고 투사 구조 보존 원칙의 예외 근거를 명시.
+  이유: 한 원문을 두 필드로 쪼개려면 사후 가공이 필요해 raw 무가공 제약([principles §1-0](../overview/principles.md))과 충돌하며, [principles](../overview/principles.md) §1-1·§1-0-1과 [extraction index](index.md)는 '객관적 묘사/주관적 의미' 분리를 전제로 서술함.

@@ -3,7 +3,7 @@ type: Design
 title: "Methodology: 이해 검증 배터리 (Point Prediction Battery)"
 description: 수집된 Raw Store를 기반으로 특정 시점의 사용자 성향·가치관을 AI가 미리 맞추는 점 예측(Point Prediction) 성능을 7가지 정적 테스트로 정량 검증하는 배터리이다.
 tags: [validation, prediction, benchmark, persona, psychometrics]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # Methodology: 이해 검증 배터리 (Point Prediction Battery)
@@ -109,4 +109,6 @@ LLM의 무정형적 추론과 기존 심리학의 표준화된 도구가 같은 
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] A4 (L59~69) 정의 불일치: 현재 "기성 심리검사(MBTI, Big Five 등)의 단순 요약본보다" 2-세션 비교 → 교체안: A4를 3-arm 주장 A 대조((i) 분량매칭 순수 자유서술 / (ii) +일반 심화 프롬프트 / (iii) 구조화 배터리, 정규화 정확도 비교)로 재정의하고 MBTI/Big Five 요약 비교는 보조 arm 또는 A3 부속으로 이동. 이유: validation_mode 결정(2026-07-17)·open_questions Q1과 모순. [validation_mode.md](validation_mode.md) A4 항목과 짝.
+- [User Review] A1 (L32~33) 자유 응답 채점: 현재 "의미적 유사도(Cross-Encoder STS 기반 의미 일치도)… 0~1 연속형 점수" → 교체안: 변별성 보정 점수 sim(ŷ, y_self) − max_j sim(ŷ, y_other_j)로 교체. 이유: validation_mode §1-6 L206 "절대 임베딩 유사도를 그대로 쓰지 않는다"(바넘 방어). [validation_mode.md](validation_mode.md) §1-6 코드 항목과 짝.
+- [User Review] 도입부 (L19) 정규화 서술: 현재 "기준선 로직(바닥 대비 천장 비율)" → 교체안: "바닥차감 정규화 정확도 =(모델−바닥)/(안정 천장−바닥)". 이유: 단순 비율로 읽히면 validation_mode §1-3 "공식 표기 주의"(Twin-2K 87.67% vs ~55.7%)가 막으려는 과대보고가 재발.

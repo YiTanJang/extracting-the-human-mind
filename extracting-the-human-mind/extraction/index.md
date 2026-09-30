@@ -7,11 +7,11 @@
 | [triad_elicitation.md](triad_elicitation.md) | L1 | 이질 요소 판별 → 음극·양극 축 구성(래더링의 선행) |
 | [laddering.md](laddering.md) | L2 | 삼항 파생 축에 상향 "왜" 연쇄로 종착 가치 도출 |
 | [generative_metaphor.md](generative_metaphor.md) | L1 | 은유·문장 완성으로 무의식 투사 수집 |
-| [clean_language.md](clean_language.md) | L1 | 고정 12 클린 질문 템플릿으로 상징 풍경 전개(의존: 시드 상징) |
+| [clean_language.md](clean_language.md) | L1 | 고정 12 클린 질문 템플릿으로 상징 풍경 전개(독립 — 자체 시드 발문) |
 | [contextual_value_allocation.md](contextual_value_allocation.md) | L2 | 한정 자원을 자기정의 가치에 분배 + 전환 조건 |
 | [judgment_scenarios.md](judgment_scenarios.md) | L2 | 딜레마의 결핍 정보 + 타이브레이커 |
 | [automated_tat.md](automated_tat.md) | L2 | 모호 장면 투사 서술로 암묵 동기(성취·친화·권력) |
-| [defining_life_scenes.md](defining_life_scenes.md) | L3 | 결정적 인생 에피소드를 시기·객관·주관으로 매핑 |
+| [defining_life_scenes.md](defining_life_scenes.md) | L3 | 가치가 빛나거나 훼손된 결정적 장면 3~5개(+기원 장면)의 시기·사건·의미 → 생애 타임라인 |
 | [feared_self.md](feared_self.md) | L3 | 회피할 최악 상태 + 조기 경보 + 방어 행동 |
 | [self_other.md](self_other.md) | L3 | 자기 정의 vs 타인 추정 정의의 괴리(메타지각) |
 | [episodic_future_thinking.md](episodic_future_thinking.md) | L3 | 평범한 미래 하루로 자아 서사의 미래 극 |

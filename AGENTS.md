@@ -4,37 +4,51 @@
 
 사람의 **날것(verbatim)·무라벨 심리 데이터**를 오염 없이 추출해 LLM 컨텍스트에 직주입하고, 그것이 실제로 그 사람을 시뮬레이션하는지 검증하는 방법 설계 위키. 목적은 심리검사 결과 수집이 아니라 **LLM 시뮬레이션**이며, 산출물은 코드가 아니라 방법론·파이프라인·UI 설계다.
 
-## 지식 번들 구조
+## 세션 시작
 
-모든 지식은 [`extracting-the-human-mind/`](extracting-the-human-mind/) 디렉토리(= OKF 지식 번들)에 있다.
-**작업 전 반드시 [`extracting-the-human-mind/index.md`](extracting-the-human-mind/index.md)를 먼저 읽는다.**
+- `extracting-the-human-mind/index.md`(핵심 가설·설계 결정·핵심 원칙)가 아직 컨텍스트에 없으면 먼저 읽는다. 설계 결정의 정본은 그 파일의 결정표이며, 이 브리핑에 따로 복사해 두지 않는다.
+- `review/`에 판정을 기다리는 항목이 남아 있으면 사용자에게 알린다.
 
-- 이 번들은 OKF(Open Knowledge Format)로 관리된다. 규칙은 [`okf-system/`](okf-system/)에 있다 — [format.md](okf-system/format.md)(파일 포맷·마커), [bundle_design.md](okf-system/bundle_design.md)(폴더 구조), [agent_workflow.md](okf-system/agent_workflow.md)(워크플로우).
-- [`inbox/`](inbox/)에는 **OKF 이전(移前) 원본 문서 ~40개**가 마이그레이션 소스로 들어 있다. `.gitignore` 대상(로컬 전용)이며, git 이력에도 보존돼 있다. 아직 개념 문서로 이관되지 않은 원본을 참조·이관할 때 여기서 읽는다.
+## 번들 탐색
 
-## 세션 시작 시 필수 파일 체크
+번들은 위에서 아래로 좁혀 읽도록 짜여 있다: `extracting-the-human-mind/index.md` → 작업할 섹션의 `index.md` → 후보 파일의 frontmatter `description` → 본문. `description`은 본문을 열지 않고도 파일을 고를 수 있게 둔 요약이다. 본문은 편집할 파일과 판단 근거가 되는 파일만 열고, 전역 질문이 걸린 작업이면 `extracting-the-human-mind/research/open_questions.md`의 해당 항목을 본다.
 
-`agent_workflow.md`의 규칙대로 아래가 존재하는지 먼저 확인한다(없으면 즉시 생성):
-`CLAUDE.md`, `AGENTS.md`, `extracting-the-human-mind/research/open_questions.md`.
+- OKF 규칙집은 `okf-system/`(로컬 전용, gitignore)에 있다 — `format.md`(파일 포맷·마커), `bundle_design.md`(폴더 구조), `agent_workflow.md`(워크플로우).
+- `inbox/`에는 OKF 이관 전 원본 34개 문서가 있다(로컬 전용, git 이력에 보존). 이관은 2026-07-16에 끝났고 정본은 번들이다 — 원본은 이관 누락을 대조할 때만 연다.
+- `inbox/`·`journal/`·`outbox/`는 세션 맥락이 아니라 작업 재료라서, 작업이 그 폴더를 다룰 때만 연다.
 
-## 에이전트 브랜치 규칙
+## 지시 우선순위 (충돌하면 위가 이긴다)
 
-- 모든 작업은 `task/YYYYMMDD-간략설명` 브랜치에서. 완료 즉시 master 머지 후 브랜치 삭제.
-- 장기 에이전트 브랜치 금지. master는 항상 최신.
+1. 사용자의 직접 지시 — 단, 판단상 확인이 필요하면 적용 전에 질문
+2. 확정(불변) 섹션 보호
+3. 마커별 상태 전이 규칙 (`okf-system/format.md`)
+4. 기본 관행 (파일 명명·링크 등)
 
-## 작업 지침
+## 문서 위생
 
-1. **읽기 우선**: 담당 파일의 기존 내용과 `## 미결 사항`을 파악한 뒤 작업.
-2. **OKF 형식 준수**: 개념 문서(`index.md`·`log.md` 제외)는 frontmatter(`type`/`title`/`description`/`tags`/`timestamp`) 포함. 파일명은 소문자+언더스코어 영어, 내용은 한국어 무방.
-3. **상태 기반 수정(불변 원칙)**: `> 탐색중` 마커가 없는 확정 섹션은 직접 수정 금지. 수정이 필요하면 해당 파일 `## 미결 사항`에 `[User Review]`(어느 부분 / 현재값→교체값 / 이유)를 추가하고 사용자 컨펌 대기.
-4. **상태 점검**: `grep -r "\[TODO\]" extracting-the-human-mind/`로 이슈 파악.
-5. **에이전트 한계 인정**: `[User Review]`는 혼자 해결하지 말고 사용자에게 질문.
-6. **근거 있는 주장만**: 추측은 `> 가설:`, 하중 전제는 `> 가정:` 블록으로 표시.
+문서는 지금 참인 상태만 서술한다 — 다음 세션에 필요한 것은 편집 과정이 아니라 현재 결론이다.
+- 편집 흔적(취소선·"~해서 안 함" 주석·HTML 주석)을 본문에 남기지 않는다. 남길 이유·이력은 `## 결정 사항`·`## 기각된 대안`·`log.md`로, 아직 결론 안 난 심의는 `journal/`로 보낸다.
+- 본문을 의미 있게 고치면 frontmatter `timestamp`를 갱신하고, 상태가 바뀌었으면 `description`을 본문에서 다시 쓴다.
+- 무의미해진 항목은 재량껏 삭제한다. (상세: `okf-system/format.md` 「문서 수정 위생」)
 
-## 핵심 설계 결정 (변경 시 index.md 업데이트 필요)
+## 내용 품질
 
-- 최적화 목표 = LLM 시뮬레이션. **raw 사후 가공(태그·요약·라벨) 금지** — 타협 불가 제약.
-- 추출 배터리 **16종**, 마음의 4사분면(L1 인지·L2 동기·L3 서사·L4 행동)에 매핑.
-- 파이프라인 순서 = **추출 → 검증(필수 관문) → 활용**.
-- 인지 엔진 = 4+1 다중 에이전트(Id·Superego·Schema·Somatic + 통합 Self 판정자).
-- 검증 핵심 = hold-out 예측 타당도, 정규화 정확도 =(모델−바닥)/(천장−바닥).
+- 분량은 성과가 아니다. 채울 내용이 있을 때만 섹션·파일을 만들고, 삭제만 한 세션도 정상이다.
+- 트레이드오프 나열은 "무엇을 택했고 왜"로 닫는다. 닫지 못하면 확정한 척하지 말고 미결로 남긴다.
+- 독자는 이 프로젝트를 모르는 다음 세션이다. 일반론 배경 대신 무엇이 정해졌고 무엇이 안 정해졌는지를 쓴다. (상세: `okf-system/format.md` 「내용 품질」)
+
+## OKF 작업 규칙
+
+- 개념 문서엔 frontmatter(`type`/`title`/`description`/`tags`/`timestamp`)를 넣는다 (`index.md`·`log.md`는 예외). 파일명은 소문자+언더스코어 영어, 내용은 한국어 무방.
+- 마커 없는 섹션은 확정으로 읽힌다. 그래서 사용자가 확인하지 않은 내용으로 새 섹션을 쓰면 `> 탐색중`을 달고 시작하고, 이 마커를 지워 확정하는 것은 사용자의 승인으로만 한다. 미결·결정 기록 섹션과 `open_questions.md`의 질문처럼 스스로 상태를 담는 항목에는 달지 않는다.
+- 섹션이 열렸는지, Phase 게이트를 지났는지 불분명하면 닫힌 쪽으로 보고 `[User Review]`로 묻는다.
+- 검증 안 된 주장은 `> 가설:`, 딛고 선 전제는 `> 가정:` 블록으로 표시한다. 사용자의 동의는 검증이 아니므로, 독립된 근거 없이 채택한 가설은 `> 가정:`으로 옮긴다.
+- 확정 섹션을 스스로 판단해 바꿔야겠으면 본문 대신 그 파일 `## 미결 사항`에 `[User Review]`(어느 부분 / 현재값→교체값 / 이유)를 남긴다. `[User Review]` 항목은 혼자 해결하지 않고 사용자에게 묻는다.
+- 새 미결은 해당 파일 `## 미결 사항`에, 번들 전체를 막는 질문은 `research/open_questions.md`에 넣는다.
+- 진척·병목은 `[TODO]`·`[User Review]`·`> 탐색중` 마커를 검색해 파악한다. 형식은 `python .claude/okf/okf_check.py check`로 점검할 수 있다.
+
+## 브랜치와 세션 마무리
+
+- 작업은 `task/YYYYMMDD-설명` 브랜치에서 하고, 끝나면 `main`(이 저장소의 기본 브랜치)으로 머지한 뒤 브랜치를 삭제한다. 장기 브랜치는 두지 않는다.
+- 커밋 메시지는 `[섹션] 설명` 형식이다 (예: `[validation] A4 3-arm 프로토콜 구체화`).
+- 세션을 마치면 `extracting-the-human-mind/log.md` 맨 위 오늘 날짜 헤딩(`## YYYY-MM-DD`, 제목 없이) 아래에 인수인계(세션·수정 파일·핵심 결정·다음 단계)를 추가하고, 핵심 결정이 바뀌었으면 `index.md` 결정표에 반영한다.

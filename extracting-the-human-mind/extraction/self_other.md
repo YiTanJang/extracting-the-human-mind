@@ -3,7 +3,7 @@ type: Playbook
 title: 자기-타자 메타 지각 추출 파이프라인 (Self-Other Meta-Perception)
 description: 하나의 가치를 1인칭(자기 정의)과 3인칭(타자 추정)으로 교차 정의시켜, 자기 프레임과 타자 프레임이 충돌하는 지점을 verbatim으로 포획하는 추출 파이프라인.
 tags: [extraction, meta-perception, self-other, johari, elicitation]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # 자기-타자 메타 지각 추출 파이프라인 (Self-Other Meta-Perception)
@@ -85,4 +85,5 @@ entries:
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] §5 (L70) 미검증 판정 규칙 가설 표시: 현재 "이 갭(Gap)이 클수록 관계 갈등의 만성도가 높다고 판정할 수 있다" → 교체안: 이 문장을 `> 가설:` 블록으로 감쌈(에이전트 판정 규칙으로 쓰기 전 검증 필요 명시).
+  이유: 갭 크기→갈등 만성도 연결은 근거 없는 효력 주장이며, [검증 모드](../validation/validation_mode.md) A-02도 갭과 사회불안의 상관만 미검증 가설로 둠.

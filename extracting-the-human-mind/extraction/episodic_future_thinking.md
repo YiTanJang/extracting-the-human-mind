@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 일화적 미래 사고 (Episodic Future Thinking — Future Self-Continuity)"
 description: "5년 뒤 가장 평범한 수요일 오후 3시를 verbatim으로 서술하게 해 미래 자아 연속성(self-continuity)을 포획하는 추출 모듈. 구체성·연속성 채점은 저장하지 않고 검증·활용 단계로 분리한다."
 tags: [extraction, eft, self-continuity, future-self, verbatim]
-timestamp: 2026-07-16T00:00:00Z
+timestamp: 2026-09-30T00:00:00Z
 ---
 
 # Methodology: 일화적 미래 사고 (Episodic Future Thinking — Future Self-Continuity)
@@ -98,4 +98,7 @@ UI는 한 번에 하나의 발문만 노출(Progressive Disclosure)하며, 앞�
 
 ## 미결 사항
 
-- 이관 시점(2026-07-16) 기준 원본 verbatim을 보존하며 새 미결 사항은 없다.
+- [User Review] §5 (L90) 연속성 슬라이더 vs 자유 서술 충돌: 현재 "'지금의 당신과 얼마나 단절되어 있습니까?'라는 수평 슬라이더(1~7)" → 교체안: UI 2단계를 §1-2 자유 서술 발문($Raw\_Continuity$)으로 교체하고, 누락된 §1-3 근미래 단계(선택)를 UI 흐름에 추가.
+  이유: §0 L26 "추상적으로 물어선 안 되고 … 서술의 질감에서 드러나야 한다", §1-2 자유 서술, §3 YAML(슬라이더 필드 없음)과 모순.
+- [User Review] §0 (L27) 미검증 설계 전제 가설 표시: 현재 "평범한 미래의 묘사는 꾸밀 동기가 약해, 그 사람이 자기 삶의 궤적을 실제로 어떻게 투사하는지 … 드러낸다" → 교체안: 이 문장을 `> 가설:` 블록으로 감쌈.
+  이유: '평범한' 프레임이 인상 관리를 줄인다는 모듈 핵심 전제이나 인용·검증이 없고, §4 L81 "소망 오염의 잔존"이 스스로 한계를 인정함.
