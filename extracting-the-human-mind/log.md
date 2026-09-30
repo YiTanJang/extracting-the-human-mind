@@ -2,6 +2,12 @@
 
 ## 2026-09-30
 
+- **세션**: 파일럿 서비스 착수 — 설계 문서 + 스프린트 S0 구현
+- **수정 파일**: 신규 `architecture/pilot.md`(Design) + `architecture/index.md`; `index.md`(현재 단계·결정표 '파일럿 서비스' 행); `AGENTS.md`(산출물에 `src/` 코드 추가·코드 작업 규칙); `vision.md`·`manual_experiment_guide.md`(프로젝트 정체성 [User Review] 해결); `experiment_ethics.md`(위기 번호 109 [User Review]). 코드: `src/api`, `src/web`, `deploy/`, `.github/workflows/pilot-images.yml`, `docker-compose.yml`·`.env.example` 교체, 옛 `backend/` 삭제.
+- **핵심 결정**(사용자): 16종 전 모듈(LLM 동적 모듈 포함)·Q1 3-arm 실험 겸용·Next.js+FastAPI·홈랩 k3s(192.168.0.4)+Cloudflare Tunnel. 이에 따라 "앱이 아닌 방법론 위키" vs "앱 청사진" 정체성 모순을 앱 구축 쪽으로 해결. 제안(탐색중): 앱 안에는 LLM 없이 수집만, 예측·채점은 오프라인 단일 프롬프트; SQLite+PVC 단일 레플리카; 런칭 게이트 = Q1 패키지 완성 후 초대.
+- **S0 구현**: 초대 코드(1회용)·재접속 코드(기기 이동)·세션 쿠키, 동의 문구·4종 토글(기본 꺼짐, append-only 이력), raw append-only 저장(verbatim), 임시저장, 본인 내보내기·영구 삭제(삭제 기록만 잔존), 관리자 초대·참가자·전체 내보내기, '힘들 때' 화면(109 — 2024 통합 번호 확인). API 테스트 11개 통과, 웹 lint·build 통과, 로컬 브라우저로 전 흐름 확인.
+- **다음 단계**: `pilot.md` 미결 — ① LLM 제공자 ② 런칭 게이트 동의 ③ 배포 방식(kubectl/GitOps·네임스페이스·Tunnel 호스트명·노드 CPU 아키텍처) ④ 모듈 구현 기준(방법 절 우선). 그다음 S1(자유서술 arm + 선언형 모듈 엔진 + 정적 모듈 8종).
+
 - **세션**: OKF 감사 — okf-system 2026-09-26 개정 적용 + 번들 전수 내용 감사(섹션별 병렬 감사 5개)
 - **수정 파일**: 저장소 루트 `AGENTS.md`(브리핑 정본)·`CLAUDE.md`(`@AGENTS.md`·`@…/index.md` import)·`README.md`·`CONTRIBUTING.md`·`.gitignore`, 신규 `.claude/settings.json`(훅)·`.claude/okf/okf_check.py`(점검기 사본). 번들 `index.md`·`log.md`·섹션 index 5개, 개념 문서 37개 전부(frontmatter·`## 미결 사항`). 로컬 `review/` 2개.
 - **핵심 결정**:

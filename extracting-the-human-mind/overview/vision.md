@@ -3,7 +3,7 @@ type: Vision
 title: Extracting the Human Mind
 description: 요약 라벨(MBTI·Big Five 점수) 대신, 검증된 심리 기법으로 끄집어낸 속마음을 한 글자도 해석하지 않고 raw verbatim 그대로 LLM에 주입한다 — 무손실·시대불변 데이터로 분량매칭 자유서술·soul.md·Big Five 같은 베이스라인을 이겨야 방법론이 성립한다.
 tags: [vision, motivation, raw-verbatim, baseline, validation]
-timestamp: 2026-09-30T00:00:00Z
+timestamp: 2026-09-30T12:00:00Z
 ---
 
 # Extracting the Human Mind
@@ -182,5 +182,8 @@ Character.AI, Pi, Replika, Personal.ai 등 수많은 상용 AI 챗봇과 디지�
 
 ## 미결 사항
 
-- [User Review] 안내 블록 (L15~21) 프로젝트 정체성: 현재 "자동화된 앱 아키텍처 청사진 (주 목적)" → 교체안: "방법론 설계 위키(주 목적), 앱 아키텍처는 구현 청사진(부)"로 정렬. 이유: [수동 실험 가이드](../operations/manual_experiment_guide.md) L14 "앱 서비스 형태의 소프트웨어가 아닌, 방법론 위키"·CLAUDE.md "산출물은 코드가 아니라 방법론"과 충돌.
 - [User Review] 정직한 불확실성 (L65) 검증 관문 의미: 현재 "LLM이 … 실제 선택을 예측하는지 … 입증해야 한다" → 교체안: "관문 = 최소 배터리(hold-out + 라인업 3라운드)를 오염 없이 적재하는 것, 정확도는 방법론 판정용"으로 명시. 이유: [MVP](mvp.md) §3-4 "정확도 점수 합격이 아니라 … 적재 완료하면 통과"와 충돌(정확도 합격제로 읽힘).
+
+## 결정 사항 (Decisions)
+
+- [해결됨: 2026-09-30] 안내 블록 프로젝트 정체성("앱 아키텍처 청사진이 주 목적" vs 수동 실험 가이드 "앱이 아닌 방법론 위키") → **파일럿 웹 서비스를 실제로 구축·호스팅하기로 사용자 결정** — 본문 "앱 아키텍처 청사진 (주 목적)"을 유지하고, 수동 실험 가이드 쪽을 고쳤다([파일럿 설계](../architecture/pilot.md)).

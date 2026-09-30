@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  labels: { app: web }
+spec:
+  replicas: 1
+  selector:
+    matchLabels: { app: web }
+  template:
+    metadata:
+      labels: { app: web }
+    spec:
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+      containers:
+        - name: web
+          image: ghcr.io/yitanjang/ethm-pilot-web:latest
+          ports:
+            - containerPort: 3000
+          env:
+            - name: API_INTERNAL_URL
+              value: http://api:8000
+          readinessProbe:
+            httpGet: { path: /robots.txt, port: 3000 }
+            periodSeconds: 10
+          livenessProbe:
+            httpGet: { path: /robots.txt, port: 3000 }
+            periodSeconds: 30
+          resources:
+            requests: { cpu: 50m, memory: 128Mi }
+            limits: { memory: 384Mi }
+          securityContext:
+            allowPrivilegeEscalation: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: web
+spec:
+  selector: { app: web }
+  ports:
+    - port: 3000
+      targetPort: 3000

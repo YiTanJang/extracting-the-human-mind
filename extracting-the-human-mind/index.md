@@ -6,7 +6,7 @@ okf_version: "0.1"
 
 사람의 **날것(verbatim)·무라벨 심리 데이터**를 오염 없이 추출해 LLM 컨텍스트에 직주입하고, 그것이 실제로 그 사람을 시뮬레이션하는지 검증하는 방법 설계 위키. 목적은 심리검사 결과 수집이 아니라 **LLM 시뮬레이션**이다.
 
-**현재 단계**: Phase 0 — 설계 스펙 단계. Phase 0 Showstopper는 [Q1](research/open_questions.md) "구조가 활성 성분인가"(검증 모드 A4 3-arm으로 판정).
+**현재 단계**: Phase 0 — 파일럿 서비스 구축 중([architecture/pilot.md](architecture/pilot.md), 스프린트 S0). Phase 0 Showstopper는 [Q1](research/open_questions.md) "구조가 활성 성분인가"(검증 모드 A4 3-arm으로 판정) — 파일럿이 이 실험을 겸한다.
 
 ## 섹션
 
@@ -38,6 +38,7 @@ okf_version: "0.1"
 | 인지 엔진 | 4+1 다중 에이전트(Id·Superego·Schema·Somatic + 통합 Self 판정자). IFS·System1/2는 영감. 활용 elicitation = 하이브리드(타깃 질의 기본, 자율 생성은 특정 모드만) | 확정 |
 | 검증 핵심 지표 | hold-out 예측 타당도, 정규화 정확도=(모델−바닥)/(천장−바닥) — 단순 비율 아님 | 확정 |
 | 활성 성분 주장 | A(구조 고립 — A4 3-arm: 분량매칭 자유서술 / +일반 심화 프롬프트 / 구조화 배터리) / B(실용 우위 — soul.md) 분리 | 확정 |
+| 파일럿 서비스 | 16종 전 모듈(LLM 동적 모듈 포함) + Q1 3-arm 실험, Next.js+FastAPI, 홈랩 k3s + Cloudflare Tunnel | 확정 (2026-09-30) |
 | 반응속도(ms) 측정 | 전역 기본 기각(웹 환경 제약). 단 자유연상 모듈은 명시적 예외로 수집(원칙 위배 명시·보조 신호 한정) | 기각 + 모듈 예외 |
 
 ## 핵심 원칙 (판단 기준)

@@ -15,3 +15,19 @@
 설계 단계. 원본 기획 문서 34개는 2026-07-16에 OKF 번들로 이관을 마쳤다. 진행 상황은 [`log.md`](extracting-the-human-mind/log.md), 프로젝트를 막고 있는 질문은 [`open_questions.md`](extracting-the-human-mind/research/open_questions.md)에 있다 — 가장 큰 질문은 Q1("구조가 활성 성분인가").
 
 형식 점검: `python .claude/okf/okf_check.py check`
+
+## 파일럿 서비스 (`src/`)
+
+친구 대상 연구 파일럿 웹 서비스 — 설계는 [`architecture/pilot.md`](extracting-the-human-mind/architecture/pilot.md), 배포는 [`deploy/README.md`](deploy/README.md).
+
+로컬 개발:
+
+```bash
+# API (FastAPI) — http://localhost:8000/api/docs
+cd src/api && python -m venv .venv && .venv/Scripts/pip install -r requirements-dev.txt
+.venv/Scripts/python dev.py          # 개발용 관리자 토큰: dev-admin
+.venv/Scripts/python -m pytest -q
+
+# 웹 (Next.js) — http://localhost:3000, /api/* 는 로컬 API로 프록시
+cd src/web && npm install && npm run dev
+```

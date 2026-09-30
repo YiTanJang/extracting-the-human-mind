@@ -1,25 +1,24 @@
+# Local run of the pilot with Docker (the homelab uses deploy/k8s instead).
+#   cp .env.example .env   # set PILOT_ADMIN_TOKEN
+#   docker compose up --build   →  http://localhost:3000
 services:
-  frontend:
-    build: 
-      context: ./frontend
-      dockerfile: Dockerfile
+  web:
+    build: ./src/web
     ports:
       - "3000:3000"
     environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8000
+      - API_INTERNAL_URL=http://api:8000
     depends_on:
-      - backend
+      - api
 
-  backend:
-    build: 
-      context: ./backend
-      dockerfile: Dockerfile
-    ports:
-      - "8000:8000"
+  api:
+    build: ./src/api
+    # Not published: the browser reaches it only through the web service's /api proxy.
     volumes:
-      - ./data:/app/data   # Persistent volume for raw_store.yaml and SQLite DB
+      - pilot-data:/data
     environment:
-      - OPENAI_API_KEY=${OPENAI_API_KEY}
-      - ADMIN_PASSCODE=${ADMIN_PASSCODE:-1234}
-      - ENVIRONMENT=production
-    restart: always
+      - PILOT_ADMIN_TOKEN=${PILOT_ADMIN_TOKEN:?set PILOT_ADMIN_TOKEN in .env}
+      - PILOT_COOKIE_SECURE=false # plain http on localhost
+
+volumes:
+  pilot-data:

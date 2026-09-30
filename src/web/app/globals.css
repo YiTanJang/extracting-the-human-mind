@@ -1,0 +1,47 @@
+@import "tailwindcss";
+
+/* Design tokens — extracting-the-human-mind/operations/ui_ux_guidelines.md §6
+   Soft cream background, muted sage accent, charcoal text, warm orange used sparingly, no red. */
+:root {
+  --cream: #f7f3ea;
+  --paper: #fffdf8;
+  --charcoal: #2f2f2c;
+  --muted: #6b6a63;
+  --line: #e4ddcf;
+  --sage: #5f7a61;
+  --sage-soft: #e3ebe1;
+  --warm: #c9794a;
+  --warm-soft: #f6e6da;
+}
+
+@theme inline {
+  --color-cream: var(--cream);
+  --color-paper: var(--paper);
+  --color-charcoal: var(--charcoal);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-sage: var(--sage);
+  --color-sage-soft: var(--sage-soft);
+  --color-warm: var(--warm);
+  --color-warm-soft: var(--warm-soft);
+  --font-sans: system-ui, -apple-system, "Apple SD Gothic Neo", "Malgun Gothic", "Noto Sans KR", sans-serif;
+  --font-serif: "Noto Serif KR", "AppleMyungjo", "Nanum Myeongjo", "Batang", serif;
+}
+
+body {
+  background: var(--cream);
+  color: var(--charcoal);
+  font-family: var(--font-sans);
+  word-break: keep-all;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-serif);
+}
+
+:focus-visible {
+  outline: 3px solid var(--sage);
+  outline-offset: 2px;
+}
