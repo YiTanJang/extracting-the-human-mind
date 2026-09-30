@@ -41,6 +41,8 @@ HOUSE_RULES = [
 # Pilot-specific facts about where data lives and who sees it (architecture/pilot.md).
 PILOT_DATA_NOTICE = [
     "응답은 연구자의 개인 서버(한국)에 저장되며, 연구자 1인만 열람한다.",
+    "이 사이트는 Cloudflare(미국 기업)의 네트워크를 거쳐 접속된다. 전송 중 암호화가 Cloudflare에서 한 번 풀린 뒤 "
+    "연구자 서버로 다시 전달되므로, 응답은 그 구간을 지난다.",
     "응답은 적힌 그대로 저장되고, 요약·해석·라벨을 붙여 고쳐 저장하지 않는다.",
     "일부 과제(래더링·클린 랭귀지)는 다음 질문을 고르기 위해, 이름 등을 가린 응답을 Anthropic의 Claude API로 보낸다.",
     "'내 데이터' 화면에서 언제든 전체 내보내기와 영구 삭제를 할 수 있다. 삭제하면 복구할 수 없다.",

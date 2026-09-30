@@ -39,7 +39,11 @@ kind: Service
 metadata:
   name: web
 spec:
+  # Cloudflare Tunnel (cloudflared on the host) → http://192.168.0.4:30380.
+  # A NodePort instead of the shared Traefik entrypoint, so the tunnel can reach this app and nothing else.
+  type: NodePort
   selector: { app: web }
   ports:
     - port: 3000
       targetPort: 3000
+      nodePort: 30380

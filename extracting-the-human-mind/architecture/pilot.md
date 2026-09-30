@@ -1,9 +1,9 @@
 ---
 type: Design
 title: 파일럿 서비스 설계 (Q1 실험 앱)
-description: 친구 대상 파일럿 웹 서비스 — Q1("구조가 활성 성분인가") 3-arm 실험을 겸한다. 사용자 결정(2026-09-30) = 16종 전 모듈(LLM 동적 모듈 포함)·Q1 실험 포함·Next.js+FastAPI·홈랩 k3s(192.168.0.4, 노드에서 kubectl, cloudflared는 호스트 → Traefik Ingress)·LLM은 Claude API·Q1 패키지(자유서술 arm·고정 배터리·프로브·재검사) 완성 후에만 초대·UI 명세가 방법 절과 어긋나면 방법 절 기준. 제안(탐색중) = 앱 안에는 LLM 없이 수집(동적 모듈 제외), 예측·채점은 오프라인 단일 프롬프트, SQLite+PVC 단일 레플리카, 스프린트 S0~S6. S0 완료.
+description: 친구 대상 파일럿 웹 서비스 — Q1("구조가 활성 성분인가") 3-arm 실험을 겸한다. 사용자 결정(2026-09-30) = 16종 전 모듈(LLM 동적 모듈 포함)·Q1 실험 포함·Next.js+FastAPI·홈랩 k3s(192.168.0.4, 노드에서 kubectl, cloudflared는 호스트 → web NodePort 30380, Traefik 경유 안 함)·LLM은 Claude API·Q1 패키지(자유서술 arm·고정 배터리·프로브·재검사) 완성 후에만 초대·UI 명세가 방법 절과 어긋나면 방법 절 기준. 제안(탐색중) = 앱 안에는 LLM 없이 수집(동적 모듈 제외), 예측·채점은 오프라인 단일 프롬프트, SQLite+PVC 단일 레플리카, 스프린트 S0~S6. S0 완료.
 tags: [pilot, q1, architecture, deployment, k3s, sprint]
-timestamp: 2026-09-30T13:00:00Z
+timestamp: 2026-10-01T00:00:00Z
 ---
 
 # 파일럿 서비스 설계 (Q1 실험 앱)
@@ -17,7 +17,8 @@ timestamp: 2026-09-30T13:00:00Z
 | 추출 범위 | 16종 전 모듈. LLM이 루프에 있는 동적 모듈(래더링·클린 랭귀지) 포함 |
 | 목적 | Q1 실험 포함 — 3-arm A4 + hold-out 프로브 + 재검사 |
 | 런칭 게이트 | 친구 초대는 Q1 패키지(자유서술 arm·arm (iii) 고정 배터리 전체·프로브·재검사) 완성 뒤. arm (iii)이 참가자마다 같아야 Q1 비교가 성립한다 |
-| 호스팅 | 사용자 홈랩 k3s 클러스터(192.168.0.4). 매니페스트는 노드에서 `kubectl`로 적용. cloudflared는 호스트에서 돌며 k3s 기본 Traefik Ingress로 들어온다 |
+| 호스팅 | 사용자 홈랩 k3s 클러스터(192.168.0.4). 매니페스트는 노드에서 `kubectl`로 적용. cloudflared는 호스트에서 돌며 `web` NodePort 30380으로 직접 들어온다(Traefik 경유 안 함) |
+| 보안 보강 (2026-10-01) | 터널은 파일럿 앱 하나에만 닿게 NodePort로 연결 · 동의 안내에 Cloudflare 경유(전송 중 복호화)를 밝힘 · Dependabot(주간 업데이트 PR + 보안 업데이트) |
 | 스택 | Next.js(웹) + FastAPI(API) — [architecture.md](architecture.md) §5-1 |
 | LLM 제공자 | Anthropic Claude API(동적 모듈·오프라인 예측). 동의 문구에 제공자를 명시한다 |
 | 모듈 구현 기준 | UI 명세 절이 같은 문서의 방법 절과 어긋나면 방법 절을 따른다 — LLM 꼬리질문·재질문·자유 서술 대신 슬라이더 없음([principles](../overview/principles.md) §1-0 조건 2·3) |
@@ -46,7 +47,7 @@ timestamp: 2026-09-30T13:00:00Z
 - **저장소 구조**: `src/api`(FastAPI·SQLAlchemy), `src/web`(Next.js App Router·TypeScript), `deploy/k8s`(매니페스트). 코드는 OKF 규칙 밖(`bundle_design.md` 「전형적인 저장소 구조」).
 - **DB**: SQLite(WAL) + PVC, API 단일 레플리카. 참가자 수십 명 규모에 충분하고 백업은 파일 복사. raw 테이블은 append-only(수정·삭제는 참가자 본인 "내 데이터 삭제"만).
 - **이미지**: GitHub Actions가 테스트 후 빌드해 GHCR(공개 패키지)에 푸시, k3s가 pull. 이미지에 비밀값·데이터 없음.
-- **노출**: Cloudflare Tunnel(호스트) → Traefik Ingress → `web`. API는 NetworkPolicy로 `web` 파드에서만 접근.
+- **노출**: Cloudflare Tunnel(호스트) → `web` NodePort 30380. API는 NetworkPolicy로 `web` 파드에서만 접근.
 - **LLM**: 추출 단계 LLM은 동적 모듈(래더링·클린 랭귀지)에만. 외부 전송 전 2계층 가명화([architecture.md](architecture.md) §2 Module 1). 예측·채점은 앱 밖(오프라인).
 
 ## 스프린트
@@ -67,7 +68,6 @@ timestamp: 2026-09-30T13:00:00Z
 ## 미결 사항
 
 - [TODO] 프로브 세트 내용(딜레마·강제 선택·자기 행동 예측·경제 게임) 초안 작성 — S5 전, 사용자 검토 필요.
-- [TODO] Cloudflare Tunnel 공개 호스트명 확정 → `deploy/k8s/ingress.yaml`의 `host` 설정.
 - [TODO] TAT 입력 폼: 방법 절 자체가 4개 발문을 단계별 입력으로 나누는데 [principles](../overview/principles.md) §1-0 조건 3은 폼 분할을 금지한다(방법 절 vs 원칙이라 '모듈 구현 기준'으로 풀리지 않음) — S2에서 TAT를 만들 때 사용자에게 묻는다([automated_tat.md](../extraction/automated_tat.md) 미결).
 
 ## 결정 사항 (Decisions)
@@ -75,4 +75,5 @@ timestamp: 2026-09-30T13:00:00Z
 - [해결됨: 2026-09-30] LLM 제공자 → **Claude API**(사용자). 동의 화면 '검증 허용' 설명과 데이터 안내에 제공자 명시.
 - [해결됨: 2026-09-30] 런칭 게이트 → **Q1 패키지 완성 뒤에만 초대**(사용자).
 - [해결됨: 2026-09-30] 배포 방식 → **노드에서 kubectl, cloudflared는 호스트 → Traefik Ingress**(사용자). 네임스페이스 `ethm-pilot`, 스토리지는 k3s 기본 `local-path`.
+- [번복됨: 2026-10-01 → 터널을 `web` NodePort 30380으로 직접 연결] 입구 Traefik Ingress (사용자 — Traefik으로 보내면 클러스터의 host 없는 다른 Ingress까지 파일럿 호스트명으로 외부 노출될 수 있어, 터널이 이 앱 하나에만 닿게 함).
 - [해결됨: 2026-09-30] 모듈 구현 기준 → **방법 절 기준**(사용자). CCRT·판단 시나리오·EFT·CIT·가치 할당의 [User Review]를 이 기준으로 해결하고 각 문서 본문을 고침. TAT는 성격이 달라 미결로 남김.

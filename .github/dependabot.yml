@@ -1,0 +1,35 @@
+# Weekly update PRs for the pilot service. Security fixes arrive immediately regardless of this schedule
+# (Dependabot security updates are enabled in the repository settings).
+# Minor/patch bumps are grouped so each ecosystem opens at most one routine PR a week.
+version: 2
+updates:
+  - package-ecosystem: npm
+    directory: /src/web
+    schedule: { interval: weekly, day: monday }
+    groups:
+      web-minor-patch:
+        update-types: [minor, patch]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: pip
+    directory: /src/api
+    schedule: { interval: weekly, day: monday }
+    groups:
+      api-minor-patch:
+        update-types: [minor, patch]
+    open-pull-requests-limit: 5
+
+  - package-ecosystem: docker
+    directories: [/src/api, /src/web]
+    schedule: { interval: weekly, day: monday }
+    # Base-image majors (e.g. Node LTS → next major) are upgraded deliberately, not by bot.
+    ignore:
+      - dependency-name: "*"
+        update-types: [version-update:semver-major]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule: { interval: weekly, day: monday }
+    groups:
+      actions:
+        patterns: ["*"]

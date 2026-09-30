@@ -1,5 +1,12 @@
 # 변경 이력
 
+## 2026-10-01
+
+- **세션**: 터널 설정 안내 + 보안 보강 3건
+- **수정 파일**: `architecture/pilot.md`(호스팅 행·보안 보강 행·[번복됨] 기록). 코드: `deploy/k8s/web.yaml`(NodePort 30380), `deploy/k8s/ingress.yaml` 삭제, `deploy/README.md`(현재 Cloudflare 대시보드 절차 — Networking > Tunnels · Published application — 와 보안 체크), `src/api/app/content.py`(동의 안내에 Cloudflare 경유 명시 → 동의 버전 변경), `src/api/requirements*.txt`(정확한 버전 고정), `.github/dependabot.yml`.
+- **핵심 결정**(사용자): 터널 입구를 Traefik Ingress에서 `web` NodePort로 번복(Traefik 경유 시 host 없는 다른 Ingress가 파일럿 호스트명으로 노출될 수 있음). 동의 안내에 Cloudflare 전송 중 복호화를 밝힘. Dependabot 주간 업데이트 + 보안 업데이트 켬.
+- **다음 단계**: 사용자가 터널 라우트의 Service URL을 `http://192.168.0.4:30380`으로 바꾸고 배포. 그다음 S1.
+
 ## 2026-09-30
 
 - **세션**: 파일럿 결정 4건 반영
