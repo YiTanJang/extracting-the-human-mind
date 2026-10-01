@@ -3,7 +3,7 @@ type: Playbook
 title: 결정론적 삼항 도출 (Deterministic Triadic Elicitation)
 description: (확정) Kelly Repertory Grid 변형 기반 핵심 도출 모듈. 9개 원소를 v=9·24라운드 BIBD(λ=2)로 조합해 삼항을 제시하고, 음극·양극 verbatim 구성개념을 추출한 뒤 이중 게이트(수학 상관 + 임베딩)로 포화를 판정한다. LLM은 두 게이트 불일치 시 타이브레이커로만 개입. Round 1은 자기-불일치(현재/이상/두려운 나) 고정.
 tags: [triadic, repgrid, construct, saturation, elicitation]
-timestamp: 2026-10-01T16:00:00Z
+timestamp: 2026-10-01T18:00:00Z
 ---
 
 # Methodology: 결정론적 삼항 도출 (Deterministic Triadic Elicitation)
@@ -401,5 +401,8 @@ print("래더링 타깃:", targets)
 - [User Review] §6 (L~194) raw에 파생 수치 저장: 현재 "selection_audit: # 감사 로그: 이 삼항을 고른 근거 수치" 아래 dispersion_score·element_saliency_sum → 교체안: selection_audit 블록 삭제(두 값 모두 grid_row·원소별 살리언시 평정 원값에서 재계산 가능), §2-3의 "saliency_sum … Raw Store에 보존"도 원값 저장으로 정합화. 이유: 삼항 선택은 BIBD 고정 배열이 전담해 '고른 근거'가 없고 dispersion은 §7 스스로 "사후 지표"이며, [principles §1-4](../overview/principles.md)는 "파생 메타데이터는 이 저장소에서 배제".
 - [User Review] §6 (L~199)·§5-4 (L~177) C·K 계산 시점 모순: 현재 "중심성(C)·갈등(K)·construct 동일성 판정 등 *해석*은 전부 PART 2가 이 행렬을 읽어 만든다" → 교체안: "래더링 타깃 선발용 C·K는 추출 단계에서 일시 계산하는 라우팅 값으로 raw에 저장하지 않으며, 그 밖의 해석은 PART 2"로 범위 명시. 이유: §5-4·§7은 추출 중 C·K로 "LLM 개입 없이 결정론적으로 래더링 타깃 축을 선정"하고 [laddering.md](laddering.md) §2~3도 추출 단계에서 선발함.
 - [User Review] §7 (L~339) 타깃 선발 로직 중복·S 정의 불일치: 현재 `target_s = max(results, key=lambda x: x["deviation_sum"])` → 교체안: §7의 타깃 선발 코드(5·6항)를 [laddering.md](laddering.md) §2~3 링크로 대체해 단일 출처화하고, 남길 경우 Target_S를 원소 살리언시 합으로 정렬. 이유: laddering §2는 S를 "원소들의 살리언시 합"으로 정의하고 C 공식(Σr² vs 정규화×PC1 계수)도 다르며, §7 코드엔 laddering §1-1 극 필터·§3 중복 제거가 없음(laddering 쪽 대응 항목 있음).
-- [User Review] 파일럿 실시간 게이트 — S2 파일럿은 Gate 2(STS)·Gate 3(LLM 타이브레이커) 없이 돌고 유효 축 12개 또는 24라운드에서 끝난다(포화 조기 종료 없음 → 참가자 대부분 12라운드, 약 20~25분). 게이트는 저장된 행으로 사후 계산할 수 있다. 결정 필요: S3에서 (a) Gate 2용 한국어 STS 모델·임계치를 정해 실시간으로 돌릴지, (b) Gate 3 — 방법 절 §5-3 안의 LLM 질문으로, 파일럿 구현 규칙 '재질문 없음'([pilot.md](../architecture/pilot.md))과 충돌 — 을 넣을지, 아니면 (c) 지금처럼 12축 상한으로 확정할지. 이유: Gate 2는 모델이 지정되지 않았고(§5-2 임계치 미결 항목), Gate 1만으로 판정하는 것은 §5가 금지한다.
 - [User Review] 파일럿 구현 기본값 — 도메인 관계(relation) 고정(전원 동일, 인생 장면 링킹이 '인물'을 묻고 Kelly 원형이 역할 인물). E4~E9 괄호 속 이론 주석은 화면에 안 띄움(§0 해석 라벨 선제공 금지). 입력은 이름·명칭만, 아홉 개 서로 달라야 하고 '별명·이니셜도 괜찮다' 안내 한 줄. 살리언시 발문 "지금 당신에게 각각은 얼마나 중요하거나 강렬하게 다가오나요?"(1 거의 그렇지 않다~5 매우 그렇다)·평정 발문 "방금 적은 두 기준을 양 끝에 두고, 아홉 가지를 하나씩 1~7 사이에 놓아 주세요" 작성. 24라운드 표 = AG(2,3) 두 벌(둘째 벌은 E3↔E4·E6→E8→E9→E6 치환): Round 1 고정, 2~12라운드 = 첫 벌, 13~24 = 둘째 벌, 벌 안의 순서·카드 좌중우는 고정 시드로 한 번 섞음 → 12축에서 멈춰도 모든 원소 쌍을 한 번씩 봄(§2-2 "완전히 섞여서"와 다름). 패스는 라운드 시작 15초 뒤 분류·양극 단계에 노출, 패스 라운드도 `passed: true`로 기록. 양극은 음극 → 양극 순서(§9의 동시 입력 대신 §3), 빈칸이면 진행 불가(대신 패스). 평정은 원소마다 1~7 버튼 행(드래그 대신, 터치·키보드 동일). 저장: 원소 엔트리(`elements` — id·글, `element_saliency` — 원소별 1~5 원값)와 라운드 엔트리의 `elements_shown_ids`·`odd_one_id` 추가(`grid_row`는 E1~E9 순), `selection_audit`은 저장 안 함(위 §6 항목). 이유: 문서에 24블록 표·참가자 발문·원소 저장 필드가 없음. [파일럿 설계](../architecture/pilot.md) 「S1·S2 파일럿 기본값」에서 확정(런칭 전).
+
+## 결정 사항 (Decisions)
+
+- [해결됨: 2026-10-01] 파일럿 실시간 게이트 → **게이트 없이 유효 축 12개(또는 24라운드)에서 종료**(사용자). Gate 2(한국어 STS)·Gate 3(LLM 타이브레이커)는 파일럿에서 실시간으로 돌리지 않고, 저장된 음극·양극·평정 행으로 사후 계산한다. 이유: Gate 2는 모델이 지정되지 않았고(§5-2 임계치 미결), Gate 1만으로 판정하는 것은 §5가 금지하며, Gate 3의 LLM 질문은 파일럿 구현 규칙 '재질문 없음'([pilot.md](../architecture/pilot.md))과 충돌. 대가: 포화 조기 종료가 없어 참가자 대부분 12라운드(약 20~25분, §5 추정 15~20분보다 김).
