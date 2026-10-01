@@ -2,6 +2,12 @@
 
 ## 2026-10-01
 
+- **세션**: 스프린트 S2 — TAT·자기–타자·삼항·인생 장면
+- **수정 파일**: `architecture/pilot.md`(기본값 표를 「S1·S2 파일럿 기본값」으로, S2 행 4개·배터리 순서, 스프린트 진행, 자유연상 S5로, TAT [TODO] → [해결됨]), `extraction/automated_tat.md`(§5 단일 서술창 + [해결됨], 기본값 [User Review]), `extraction/defining_life_scenes.md`(단일 박스 `raw_narrative` [해결됨] → §0·§1-3·§4·§5·§6 본문 정리, 기본값 [User Review]), `extraction/self_other.md`(우회 프롬프트를 제출 전 힌트로, §6 갭 강조·슬라이더 제거 — 모듈 구현 기준 적용, 기본값 [User Review]), `extraction/triad_elicitation.md`([User Review] 2건: 실시간 게이트·기본값), 모듈 문서 8개(기본값 표 이름), `index.md`(현재 단계). 코드(`ethm-pilot`): 엔진 확장(앞 모듈 답 읽기·정지 규칙·지연 패스·고르기·다중 선택·다중 평정·순서 정렬), 모듈 4개, 배터리 순서, 순서 의존성 테스트.
+- **핵심 결정**(사용자): TAT는 장면마다 단일 서술창, 표준 발문 4개는 안내로만. 기존 '모듈 구현 기준' 적용: 인생 장면 단일 박스(`raw_narrative`), 자기–타자 우회 프롬프트는 제출 전 힌트·갭 슬라이더 없음. 제안: 자유연상(후보)은 같은 날 격리 규칙 때문에 일정 게이트가 생기는 S5로.
+- **검증**: API 테스트 13개 통과, 웹 lint·build 통과. 로컬 브라우저로 TAT 6장면, 자기–타자(가치 할당 1위·조사), 삼항(원소 입력·중복 차단·패스 15초 지연·12축에서 정지), 인생 장면(링킹·기원 건너뛰기·타임라인)을 끝까지 진행해 저장 형식 확인.
+- **다음 단계**: 사용자 — 삼항 실시간 게이트 결정([triad_elicitation](extraction/triad_elicitation.md) 미결), 「S1·S2 파일럿 기본값」 표 확정(런칭 전), 클러스터를 새 저장소로 이전. 개발 — S3(2계층 가명화, Claude API, 래더링, 클린 랭귀지; 인생 장면에 래더링 앵커 추가).
+
 - **세션**: 서비스 코드를 비공개 저장소로 분리
 - **수정 파일**: `src/`·`deploy/`·`.github/`·`docker-compose.yml`·`.env.example`·`.claude/launch.json` 삭제(→ `YiTanJang/ethm-pilot`), `.gitignore`·`README.md`·`AGENTS.md`(서비스 코드 위치·기록 규칙), `architecture/pilot.md`(결정표 '코드 저장소' 행·저장소 구조·이미지), `index.md`(파일럿 행).
 - **핵심 결정**(사용자 위임): 서비스 코드·배포 설정은 비공개 저장소 `YiTanJang/ethm-pilot`(로컬 `../ethm-pilot`, `src/api`→`api`, `src/web`→`web`), 이미지는 비공개 GHCR `ghcr.io/yitanjang/ethm-pilot/{api,web}` + 클러스터 `ghcr-pull` 시크릿. 설계 정본과 공백·기본값 기록은 계속 이 번들. 기존 `src/` 이력은 이 저장소 git 히스토리에 남김(비밀값 없음, 공개 이력 재작성은 하지 않음).

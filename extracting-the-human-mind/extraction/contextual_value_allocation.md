@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 맥락 기반 제로섬 가치 할당 파이프라인 (Context-Based Zero-Sum Value Allocation)"
 description: 극단적 위기 씬을 제시하고 개방형으로 기입한 가치들에 100포인트를 강제 제로섬 배분하여 우선순위 위계를 드러내고, 1위↔최하위가 뒤집히는 전환 조건까지 추출하는 방법론.
 tags: [values, zero-sum, elicitation, schwartz, tetlock]
-timestamp: 2026-10-01T12:00:00Z
+timestamp: 2026-10-01T16:00:00Z
 ---
 # Methodology: 맥락 기반 제로섬 가치 할당 파이프라인 (Context-Based Zero-Sum Value Allocation)
 
@@ -129,7 +129,7 @@ timestamp: 2026-10-01T12:00:00Z
 
 ## 미결 사항
 
-- [User Review] 파일럿 구현 기본값 — 가치 2개 필수·4개 권장·최대 6개, 할당 화면 문구는 §2-2 서술에서 작성, 1위·최하위 동점 규칙(1위=먼저 적은 것·최하위=나중에 적은 것), allocations 입력 순서 보존. 이유: 할당 화면 문구와 동점 규칙이 문서에 없음. [파일럿 설계](../architecture/pilot.md) 「S1 파일럿 기본값」에서 확정(런칭 전).
+- [User Review] 파일럿 구현 기본값 — 가치 2개 필수·4개 권장·최대 6개, 할당 화면 문구는 §2-2 서술에서 작성, 1위·최하위 동점 규칙(1위=먼저 적은 것·최하위=나중에 적은 것), allocations 입력 순서 보존. 이유: 할당 화면 문구와 동점 규칙이 문서에 없음. [파일럿 설계](../architecture/pilot.md) 「S1·S2 파일럿 기본값」에서 확정(런칭 전).
 
 ## 결정 사항 (Decisions)
 

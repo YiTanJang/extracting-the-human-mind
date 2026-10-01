@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 두려운 자기 및 조기 경보 추출 파이프라인 (Feared Self & Early Warning Extraction)"
 description: "'절대 되고 싶지 않은 모습(두려운 자기)'을 심상으로 포획하고, 그 상태로 미끄러지는 조기 경보 신호·방어 행동을 관찰 가능한 지표로 verbatim 추출하는 3단계 파이프라인."
 tags: [feared-self, early-warning, elicitation, extraction, possible-selves]
-timestamp: 2026-10-01T12:00:00Z
+timestamp: 2026-10-01T16:00:00Z
 ---
 # Methodology: 두려운 자기 및 조기 경보 추출 파이프라인 (Feared Self & Early Warning Extraction)
 
@@ -129,7 +129,7 @@ UI는 화면에 한 번에 하나의 질문만 노출(Progressive Disclosure)하
 
 - [User Review] §0 (L23) 미검증 하중 주장 가설 표시: 현재 "'절대 되고 싶지 않은 모습(Feared Self)'에 의해 훨씬 강하고 명확하게 규정된다 … 회피 동기는 윤곽이 또렷하다" → 교체안: 이 문장(이상적 자기 대비 우위 주장)을 `> 가설:` 블록으로 감쌈.
   이유: 모듈 존재 근거를 떠받치는 비교 주장이나 본문에 인용 근거가 없고, [검증 모드](../validation/validation_mode.md) M-06도 feared_self 단독 예측력만 가설로 둠.
-- [User Review] 파일럿 구현 기본값 — `raw_early_warning`은 문자열(§3 YAML은 목록), 마중물의 대괄호 제거. 이유: 단일 신호 발문과 목록 필드가 다름. [파일럿 설계](../architecture/pilot.md) 「S1 파일럿 기본값」에서 확정(런칭 전).
+- [User Review] 파일럿 구현 기본값 — `raw_early_warning`은 문자열(§3 YAML은 목록), 마중물의 대괄호 제거. 이유: 단일 신호 발문과 목록 필드가 다름. [파일럿 설계](../architecture/pilot.md) 「S1·S2 파일럿 기본값」에서 확정(런칭 전).
 
 ## 결정 사항 (Decisions)
 

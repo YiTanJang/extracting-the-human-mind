@@ -3,7 +3,7 @@ type: Playbook
 title: 자기 보고식 사건 분석 (CIT)
 description: "Flanagan(1954) 중요 사건 기법(CIT) 응용 추출 모듈. 최근 가장 막막했던 구체적 단일 사건 하나에 닻을 내리고(날짜 정확도는 강제 안 함) 문제 정의(위협으로 지각한 축)→실제 대응 행동→(선택)결과·효과성을 verbatim 수집한 뒤, 1~5점 대표성 평가로 예외 사건이 핵심 알고리즘으로 과대적합되는 것을 막는다. retrospective_self_report로 사후 도메인과 함께 저장하고, '의미·교훈'은 대표 인생 장면으로 분리하며, Part 2에서 문제 해결 알고리즘 추론과 ESM 대비 대응 갭 검증에 쓴다."
 tags: [extraction, critical-incident, cit, self-report, problem-framing]
-timestamp: 2026-10-01T00:00:00Z
+timestamp: 2026-10-01T16:00:00Z
 ---
 
 # 자기 보고식 사건 분석 (CIT)
@@ -102,7 +102,7 @@ LLM의 요약·해석 없이, `data_type: self_report` 꼬리표와 함께 verba
 
 ## 미결 사항
 
-- [User Review] 파일럿 구현 기본값 — `data_type: retrospective_self_report`로 통일, 도메인 태그는 마지막 단계. 이유: 본문 `self_report`와 YAML `retrospective_self_report`가 다름. [파일럿 설계](../architecture/pilot.md) 「S1 파일럿 기본값」에서 확정(런칭 전).
+- [User Review] 파일럿 구현 기본값 — `data_type: retrospective_self_report`로 통일, 도메인 태그는 마지막 단계. 이유: 본문 `self_report`와 YAML `retrospective_self_report`가 다름. [파일럿 설계](../architecture/pilot.md) 「S1·S2 파일럿 기본값」에서 확정(런칭 전).
 
 ## 결정 사항 (Decisions)
 
