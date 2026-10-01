@@ -2,6 +2,11 @@
 
 ## 2026-10-01
 
+- **세션**: 서비스 코드를 비공개 저장소로 분리
+- **수정 파일**: `src/`·`deploy/`·`.github/`·`docker-compose.yml`·`.env.example`·`.claude/launch.json` 삭제(→ `YiTanJang/ethm-pilot`), `.gitignore`·`README.md`·`AGENTS.md`(서비스 코드 위치·기록 규칙), `architecture/pilot.md`(결정표 '코드 저장소' 행·저장소 구조·이미지), `index.md`(파일럿 행).
+- **핵심 결정**(사용자 위임): 서비스 코드·배포 설정은 비공개 저장소 `YiTanJang/ethm-pilot`(로컬 `../ethm-pilot`, `src/api`→`api`, `src/web`→`web`), 이미지는 비공개 GHCR `ghcr.io/yitanjang/ethm-pilot/{api,web}` + 클러스터 `ghcr-pull` 시크릿. 설계 정본과 공백·기본값 기록은 계속 이 번들. 기존 `src/` 이력은 이 저장소 git 히스토리에 남김(비밀값 없음, 공개 이력 재작성은 하지 않음).
+- **다음 단계**: 사용자 — GHCR 읽기 토큰으로 `ghcr-pull` 시크릿 만들고 새 저장소에서 `kubectl apply -k deploy/k8s`, 예전 공개 패키지 `ethm-pilot-api`·`ethm-pilot-web` 삭제. 개발 — S2(서비스 저장소).
+
 - **세션**: S1 결정 2건 반영 + 의존성 정리
 - **수정 파일**: `architecture/pilot.md`(사용자 결정 표 2행·결정 사항 2건, 기본값 표 정리), `validation/validation_mode.md`(B-08 매칭 방향 본문 + 결정 사항), `extraction/`의 generative_metaphor·contextual_value_allocation·feared_self(파일럿 도메인 [해결됨], 남은 기본값 [User Review] 축소), `index.md`(활성 성분 행에 매칭 방법). 코드: `src/web/lib/modules/battery_a.ts`(`PILOT_DOMAIN`), `src/web/package.json`(@types/node ^24), `.github/dependabot.yml`(npm 메이저 제외), `.github/workflows/pilot-images.yml`(CI Python 3.14 — 이미지와 일치).
 - **핵심 결정**(사용자): 도메인 결합 모듈은 모듈마다 한 도메인 순환(은유=자기·가치 할당=일·두려운 자기=관계). B-08은 자유서술 분량에 맞춘 배터리 모듈 무작위 부분집합(여러 번 평균)과 비교. Dependabot PR 정리 — #5(pytest 보안 수정)·#4·#6·#9·#3 머지, #7·#8·#10 닫음.

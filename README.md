@@ -16,18 +16,6 @@
 
 형식 점검: `python .claude/okf/okf_check.py check`
 
-## 파일럿 서비스 (`src/`)
+## 파일럿 서비스
 
-친구 대상 연구 파일럿 웹 서비스 — 설계는 [`architecture/pilot.md`](extracting-the-human-mind/architecture/pilot.md), 배포는 [`deploy/README.md`](deploy/README.md).
-
-로컬 개발:
-
-```bash
-# API (FastAPI) — http://localhost:8000/api/docs
-cd src/api && python -m venv .venv && .venv/Scripts/pip install -r requirements-dev.txt
-.venv/Scripts/python dev.py          # 개발용 관리자 토큰: dev-admin
-.venv/Scripts/python -m pytest -q
-
-# 웹 (Next.js) — http://localhost:3000, /api/* 는 로컬 API로 프록시
-cd src/web && npm install && npm run dev
-```
+이 방법론을 친구 대상으로 실제로 돌리는 연구 파일럿 웹 서비스가 있다. 설계는 이 저장소의 [`architecture/pilot.md`](extracting-the-human-mind/architecture/pilot.md)가 정본이고, 구현 코드는 참가자 데이터를 다루는 서비스라 별도의 비공개 저장소에서 관리한다.

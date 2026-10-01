@@ -1,9 +1,9 @@
 ---
 type: Design
 title: 파일럿 서비스 설계 (Q1 실험 앱)
-description: 친구 대상 파일럿 웹 서비스 — Q1("구조가 활성 성분인가") 3-arm 실험을 겸한다. 사용자 결정(2026-09-30) = 16종 전 모듈(LLM 동적 모듈 포함)·Q1 실험 포함·Next.js+FastAPI·홈랩 k3s(192.168.0.4, 노드에서 kubectl, cloudflared는 호스트 → web NodePort 30380, Traefik 경유 안 함)·LLM은 Claude API·Q1 패키지(자유서술 arm·고정 배터리·프로브·재검사) 완성 후에만 초대·UI 명세가 방법 절과 어긋나면 방법 절 기준·도메인 결합 모듈은 모듈당 한 도메인 순환(은유=자기·가치 할당=일·두려운 자기=관계)·B-08은 자유서술 분량에 맞춘 배터리 모듈 무작위 부분집합과 비교. 제안(탐색중) = 앱 안에는 LLM 없이 수집(동적 모듈 제외), 예측·채점은 오프라인 단일 프롬프트, SQLite+PVC 단일 레플리카, 스프린트 S0~S6. S0 배포(pilot.yitan-lab.com), S1 코드 완료(고정 순서 + 선언형 모듈 엔진 + arm 2개 + 정적 모듈 8개) — 남은 문서 빈칸은 「S1 파일럿 기본값」 표로 런칭 전 확정 대기.
+description: 친구 대상 파일럿 웹 서비스 — Q1("구조가 활성 성분인가") 3-arm 실험을 겸한다. 사용자 결정(2026-09-30) = 16종 전 모듈(LLM 동적 모듈 포함)·Q1 실험 포함·Next.js+FastAPI(코드는 비공개 저장소 YiTanJang/ethm-pilot)·홈랩 k3s(192.168.0.4, 노드에서 kubectl, cloudflared는 호스트 → web NodePort 30380, Traefik 경유 안 함)·LLM은 Claude API·Q1 패키지(자유서술 arm·고정 배터리·프로브·재검사) 완성 후에만 초대·UI 명세가 방법 절과 어긋나면 방법 절 기준·도메인 결합 모듈은 모듈당 한 도메인 순환(은유=자기·가치 할당=일·두려운 자기=관계)·B-08은 자유서술 분량에 맞춘 배터리 모듈 무작위 부분집합과 비교. 제안(탐색중) = 앱 안에는 LLM 없이 수집(동적 모듈 제외), 예측·채점은 오프라인 단일 프롬프트, SQLite+PVC 단일 레플리카, 스프린트 S0~S6. S0 배포(pilot.yitan-lab.com), S1 코드 완료(고정 순서 + 선언형 모듈 엔진 + arm 2개 + 정적 모듈 8개) — 남은 문서 빈칸은 「S1 파일럿 기본값」 표로 런칭 전 확정 대기.
 tags: [pilot, q1, architecture, deployment, k3s, sprint]
-timestamp: 2026-10-01T12:00:00Z
+timestamp: 2026-10-01T15:00:00Z
 ---
 
 # 파일럿 서비스 설계 (Q1 실험 앱)
@@ -20,6 +20,7 @@ timestamp: 2026-10-01T12:00:00Z
 | 호스팅 | 사용자 홈랩 k3s 클러스터(192.168.0.4). 매니페스트는 노드에서 `kubectl`로 적용. cloudflared는 호스트에서 돌며 `web` NodePort 30380으로 직접 들어온다(Traefik 경유 안 함) |
 | 보안 보강 (2026-10-01) | 터널은 파일럿 앱 하나에만 닿게 NodePort로 연결 · 동의 안내에 Cloudflare 경유(전송 중 복호화)를 밝힘 · Dependabot(주간 업데이트 PR + 보안 업데이트) |
 | 스택 | Next.js(웹) + FastAPI(API) — [architecture.md](architecture.md) §5-1 |
+| 코드 저장소 (2026-10-01, 사용자 위임) | 서비스 코드·배포 설정은 비공개 저장소 `YiTanJang/ethm-pilot`, 설계는 이 공개 번들이 정본. 이유: 공개 연구 위키(기여 환영)와 민감 데이터를 다루는 서비스는 독자·공개 범위가 다르고, 의존성·배포 변경이 연구 이력을 덮지 않게 한다. 대가: 설계 결정과 코드 변경이 두 저장소에 나뉘므로 서비스 저장소 README에 구현 기준 번들 커밋을 적는다 |
 | LLM 제공자 | Anthropic Claude API(동적 모듈·오프라인 예측). 동의 문구에 제공자를 명시한다 |
 | 도메인 결합 모듈 (2026-10-01) | 모듈마다 한 도메인, 모듈 간 순환 — 은유=자기 · 가치 할당=일 · 두려운 자기=관계. 전원 동일하면서 세 도메인을 모두 덮고, 세 도메인 전부보다 약 1/3 시간 |
 | B-08 분량 매칭 (2026-10-01) | 분석 때 참가자 자유서술 단어수에 맞춘 배터리 모듈 무작위 부분집합을 여러 번 뽑아 평균 비교([validation_mode](../validation/validation_mode.md) B-08) |
@@ -46,7 +47,7 @@ timestamp: 2026-10-01T12:00:00Z
 ## S1 파일럿 기본값
 > 탐색중
 
-모듈 문서가 비워 둔 곳을 S1 구현이 임시로 채운 값. 코드는 한 곳(`src/web/lib/modules`, 순서는 `src/api/app/battery.py`)에 모여 있어 바꾸기 쉽다. **런칭 전에 확정한다**(런칭 게이트).
+모듈 문서가 비워 둔 곳을 S1 구현이 임시로 채운 값. 코드는 서비스 저장소의 한 곳(`web/lib/modules`, 순서는 `api/app/battery.py`)에 모여 있어 바꾸기 쉽다. **런칭 전에 확정한다**(런칭 게이트).
 
 | 항목 | 임시 기본값 | 문서의 빈칸 |
 |---|---|---|
@@ -65,9 +66,9 @@ timestamp: 2026-10-01T12:00:00Z
 ## 스택·배포
 > 탐색중
 
-- **저장소 구조**: `src/api`(FastAPI·SQLAlchemy), `src/web`(Next.js App Router·TypeScript), `deploy/k8s`(매니페스트). 코드는 OKF 규칙 밖(`bundle_design.md` 「전형적인 저장소 구조」).
+- **저장소 구조**: 비공개 저장소 `YiTanJang/ethm-pilot` — `api/`(FastAPI·SQLAlchemy), `web/`(Next.js App Router·TypeScript), `deploy/k8s`(매니페스트), CI. 코드는 OKF 규칙 밖.
 - **DB**: SQLite(WAL) + PVC, API 단일 레플리카. 참가자 수십 명 규모에 충분하고 백업은 파일 복사. raw 테이블은 append-only(수정·삭제는 참가자 본인 "내 데이터 삭제"만).
-- **이미지**: GitHub Actions가 테스트 후 빌드해 GHCR(공개 패키지)에 푸시, k3s가 pull. 이미지에 비밀값·데이터 없음.
+- **이미지**: GitHub Actions가 테스트 후 빌드해 비공개 GHCR 패키지(`ghcr.io/yitanjang/ethm-pilot/{api,web}`)에 푸시, k3s가 `ghcr-pull` 시크릿으로 pull. 이미지에 비밀값·데이터 없음.
 - **노출**: Cloudflare Tunnel(호스트) → `web` NodePort 30380. API는 NetworkPolicy로 `web` 파드에서만 접근.
 - **LLM**: 추출 단계 LLM은 동적 모듈(래더링·클린 랭귀지)에만. 외부 전송 전 2계층 가명화([architecture.md](architecture.md) §2 Module 1). 예측·채점은 앱 밖(오프라인).
 
