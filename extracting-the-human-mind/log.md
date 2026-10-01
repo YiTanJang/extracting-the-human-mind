@@ -2,6 +2,12 @@
 
 ## 2026-10-01
 
+- **세션**: 스프린트 S3 — 2계층 가명화, Claude API, 래더링, 클린 랭귀지
+- **수정 파일**: `architecture/pilot.md`(「S3 파일럿 기본값」 표 신설, 배터리 순서, 진행, 가명화 [TODO] → [해결됨], 런칭 전 [TODO] 2건), `extraction/laddering.md`·`extraction/clean_language.md`·`architecture/architecture.md`(파일럿 기본값 [User Review]), `index.md`(현재 단계). 코드(`ethm-pilot`): `api/app/pseudonym.py`·`routers/pseudonyms.py`(가명화·후보 확인), `api/app/llm.py`(Claude 게이트웨이), `api/app/dynamic/`(래더링 타깃 수학·인터뷰 엔진 2개), `routers/dynamic.py`, 저장·읽기·내보내기 가명화, 테이블 3개(`pseudonyms`·`llm_calls`·`dynamic_sessions`), 동의 안내 한 줄(동의 버전 변경), 웹 이름 확인 화면·인터뷰 화면, 인생 장면 래더링 앵커, 배포 매니페스트·README(키 2개).
+- **핵심 결정**: 없음(사용자 확정 없음). 제안: Claude는 질문을 쓰지 않고 고정 템플릿과 참가자 원문 슬롯만 고름(슬롯 기계 검증·전 시도 기록), 2계층 가명화의 탐지는 로컬 규칙 + 참가자 확인, 가명화 키가 없으면 사이트는 열고 저장만 막음(구 매니페스트가 새 이미지를 받아도 다운되지 않게).
+- **검증**: API 테스트 25개 통과, 웹 lint·build 통과. 로컬 브라우저로 가명화 확인 화면(이름 후보 → 가림 → 저장본 `[Person_A]`·본인 화면 원문), 클린 랭귀지·래더링(대역 모델)을 끝까지 진행, Claude 요청에 토큰만 담기는 것과 인생 장면 앵커 2개를 확인.
+- **다음 단계**: 사용자 — `pilot-secrets`에 `pseudonym-key`·`anthropic-api-key` 추가 후 배포(서비스 저장소 `deploy/README.md` 'S3로 올릴 때'), 실제 Claude로 래더링·클린 랭귀지 한 번씩 시험, 「S3 파일럿 기본값」 확정. 개발 — S4(ESM PWA·DRM).
+
 - **세션**: S2 마무리 — 삼항 정지 규칙 결정, 두 저장소 push
 - **수정 파일**: `extraction/triad_elicitation.md`(실시간 게이트 [User Review] → [해결됨]), `architecture/pilot.md`(사용자 결정 표에 '삼항 포화 판정' 행, 기본값 표 삼항 행 정리).
 - **핵심 결정**(사용자): 삼항은 실시간 포화 게이트 없이 유효 축 12개(또는 24라운드)에서 종료, 게이트는 사후 계산. 클러스터는 비공개 저장소·비공개 이미지로 이전 완료(사용자). 이미지 태그 고정(토큰 만료 대비)은 하지 않음 — 토큰 만료 시 `ghcr-pull` 재생성 절차는 서비스 저장소 `deploy/README.md`.

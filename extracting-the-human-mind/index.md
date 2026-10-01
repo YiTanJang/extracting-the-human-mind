@@ -6,7 +6,7 @@ okf_version: "0.1"
 
 사람의 **날것(verbatim)·무라벨 심리 데이터**를 오염 없이 추출해 LLM 컨텍스트에 직주입하고, 그것이 실제로 그 사람을 시뮬레이션하는지 검증하는 방법 설계 위키. 목적은 심리검사 결과 수집이 아니라 **LLM 시뮬레이션**이다.
 
-**현재 단계**: Phase 0 — 파일럿 서비스 구축 중([architecture/pilot.md](architecture/pilot.md), S0 배포·S1·S2 완료, S3 다음). Phase 0 Showstopper는 [Q1](research/open_questions.md) "구조가 활성 성분인가"(검증 모드 A4 3-arm으로 판정) — 파일럿이 이 실험을 겸한다.
+**현재 단계**: Phase 0 — 파일럿 서비스 구축 중([architecture/pilot.md](architecture/pilot.md), S0 배포·S1~S3 완료, S4 다음). Phase 0 Showstopper는 [Q1](research/open_questions.md) "구조가 활성 성분인가"(검증 모드 A4 3-arm으로 판정) — 파일럿이 이 실험을 겸한다.
 
 ## 섹션
 

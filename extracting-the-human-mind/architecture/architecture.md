@@ -3,7 +3,7 @@ type: Design
 title: 심리 분석 서비스 아키텍처 명세서 (App Blueprint)
 description: (확정) 추출→검증→활용 3대 엔진 시스템 설계도. IA 라우팅, 정적/동적 추출 파이프라인, 2계층 가명화(결정론적 사전·정규식 자동 치환 + NER 후보 사용자 확인, 실명 유출 0 지향), Temp 0.0~0.2 추출·0.7 시뮬, RDBMS+JSONB 스키마(users·raw_store·domain_unlocks·validation_sessions·test_ledger), REST API, Docker 셀프호스팅.
 tags: [architecture, ia, database-schema, api, pipeline, self-hosting]
-timestamp: 2026-09-30T00:00:00Z
+timestamp: 2026-10-01T20:00:00Z
 ---
 
 # App Blueprint: 심리 분석 서비스 아키텍처 명세서
@@ -196,6 +196,7 @@ LangGraph 내장 Checkpointer가 사용하는 표준 스키마를 따른다.
 
 ## 미결 사항
 
+- [User Review] 파일럿 구현 기본값(§2 Module 1·추출 봇) — 2계층 가명화는 저장 직전·Claude 전송 직전에 적용: 1계층 = 정규식 + 참가자 이름 목록(자동), 2계층 = Claude가 아닌 로컬 규칙 탐지기가 후보만 제시하고 후보가 있을 때만 저장 전 참가자 확인. 토큰은 `[Person_A]`·`[Org_A]`·`[Email_A]`·`[Phone_A]`·`[ID_A]`(참가자별), 이름 목록은 키로 암호화해 본인에게만 되돌림. 추출 봇은 '꼬리질문 생성' 대신 고정 템플릿 선택만, 온도 설정 없는 현재 모델이라 온도 0~0.2 대신 기계 검증, SSE 대신 검증 후 표시. 이유: NER 방법·토큰 형식·목록 보관·확인 시점이 정해져 있지 않음. [파일럿 설계](pilot.md) 「S3 파일럿 기본값」에서 확정(런칭 전).
 - [TODO] §3-3 `domain_unlocks.current_xp` 100 도달 시 검증 관문 해금 — 임계치 `100`의 근거가 문서에 없는 매직 넘버다. 검증 모드 §2-2의 도메인별 '최소 배터리' 분량과 이 XP 임계치가 어떻게 대응하는지 명시 필요. 참고: 도메인별 100 XP 게이지와 검사별 XP 보상표는 [MVP 기획](../overview/mvp.md) §3-2에 정의돼 있다.
 - [User Review] §2 Module 3 (L89) 주입 방식 개방: 현재 "어떻게 시스템 프롬프트에 동적으로 주입할지는 앱 개발자와 사용자의 자율에 맡긴다" → 교체안: "활용 elicitation은 하이브리드 — 기본은 매 맥락 타깃 질의, 자율 생성은 시뮬레이션 샌드박스 등 특정 모드만([인지 엔진](cognitive_engine.md) §3)". 이유: 2026-07-17 하이브리드 결정(Habermolt prior-collapse)과 충돌.
 - [User Review] §1 (L29)·§2 Module 3 (L86)·§3 동의 모델 부재: 현재 IA "실험 주의서 동의", "내 배열과 친구의 배열을 함께 가져온다", 스키마에 동의 테이블 없음 → 교체안: `data_consents`(provider_id·grantee_id·purpose ∈ 분석/시뮬레이션/검증/연구 수확·granted 기본 false·revoked_at) 테이블과 토글 관리 라우트·API 추가, Module 3 조회에 목적별 동의 검사 추가. 이유: [실험 주의서](../operations/experiment_ethics.md) 제공자별 용도 토글(기본 꺼짐·철회 가능) 미반영.

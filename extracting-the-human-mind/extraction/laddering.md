@@ -3,7 +3,7 @@ type: Playbook
 title: 래더링 (Deterministic Target Selection & Algorithmic Laddering)
 description: (확정) 삼항 행렬의 S(살리언시)·C(중심성/Intensity)·K(딜레마) 3지표로 래더링 타깃 축을 결정론적 선정 후, LLM이 상향 수단-목적 사슬을 캐 종착 가치까지 verbatim 도출. MAX_DEPTH=4, 방어적 회피 시 조기종료. 삼항 도출 의존. LadderChat(2025) 참고.
 tags: [extraction, laddering, means-end-chain, l2-motivation, dynamic-module]
-timestamp: 2026-09-30T00:00:00Z
+timestamp: 2026-10-01T20:00:00Z
 ---
 
 # Methodology: 래더링 (Deterministic Target Selection & Algorithmic Laddering)
@@ -223,5 +223,6 @@ def should_stop_laddering(
 - [TODO] §4-1 반복 감지를 임베딩 유사도(>0.92) 판정으로 구현 — 현재 정확 일치(임시).
 - [User Review] §2 지표 S (L~53) S 정의 이중화: 현재 "원소들의 살리언시 합(가중치)을 그대로 상속" ↔ [triad_elicitation.md](triad_elicitation.md) §7 코드 `target_s = max(… "deviation_sum")` → 교체안: 본 문서 §2~3을 타깃 선발의 단일 출처로 확정하고 triad §7은 링크로 대체(triad 쪽 대응 항목 있음), C 공식(본 문서 Σr² vs triad 정규화×PC1 계수)도 한쪽으로 통일. 이유: 같은 그리드에서 두 문서가 다른 Target_S·C를 낼 수 있음.
 - [User Review] §5 (L~182) 선정 로직 소재 모순: 현재 `selection_reason` 주석 "(선정 로직은 PART 2)" → 교체안: "(선정 로직은 본 문서 §2~3 — 추출 단계 결정론적 라우팅)". 이유: §0·§2~3이 추출 단계에서 S·C·K로 타깃을 선정하며, [triad_elicitation.md](triad_elicitation.md) §6의 "해석은 전부 PART 2" 문장과 함께 범위 정리가 필요.
+- [User Review] 파일럿 구현 기본값 — §3 질문은 L111(T1)·L113(T2)·L169(경계) 고정 템플릿으로만 내고, Claude는 시스템 프롬프트로 질문을 쓰는 대신 {가장 최근 답에서 그대로 잘라낸 슬롯, 종착 여부}만 고른다(슬롯은 기계 검증). S는 제시 원소 살리언시 합, C는 Σr²(PC1 20% 미만이면 제외), K는 선호 극 정렬 후 r ≤ −0.67, 각 1위 최대 3축, 동점은 앞 라운드, §1-1 필터는 E2 = 4만. 최대 4답, 반복·방어적 회피는 코드 판정, 경계 질문 1회. 종착 구절을 `terminal_slot`으로 저장(인생 장면 앵커가 읽음), 참가자 중단 `user_stop`·건너뛴 축 `skipped` 추가, 짧은 답 확인 없음, 타깃 화면엔 두 극만(L100 '가장 깊은 뿌리처럼 보입니다' 같은 해석 문구 없음). 이유: 질문 생성 주체·종착 판정·검증 실패·중단·축 개수가 문서에 없거나 서로 다름. [파일럿 설계](../architecture/pilot.md) 「S3 파일럿 기본값」에서 확정(런칭 전).
 
 **🔗 상위 맥락:** [번들 index](../index.md)
