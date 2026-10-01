@@ -3,7 +3,7 @@ type: Playbook
 title: 자유연상 (Free Association)
 description: (후보·탐색중) 자극어 없이 떠오르는 단어 스트림과 막힘·거부를 순수하게 verbatim 수집하는 idiographic L1 모듈. 설계자 프레임을 원천 제거해 무오염을 최대화. 반응지연(RT)은 principles §1-2 전역 기각 원칙에 대한 명시적 예외로 수집하되 웹 노이즈 때문에 같은 세션 내 상대 지연·긴 정지의 보조 신호로만 사용. 점화 오염 방지를 위해 다른 심리 검사와 같은 날 실시 금지(administered_alone 감사). 은유·클린과의 L1 직교성은 본 추출을 순수하게 유지한 채 검증용 소규모 cue 별도 세션의 개인 의미망(PPMI 코사인) 비교로 측정. 배터리 정식 편입은 A4 증분 타당도 통과 조건.
 tags: [extraction, free-association, l1-cognition, candidate, reaction-time-exception]
-timestamp: 2026-10-02T01:00:00Z
+timestamp: 2026-10-02T12:00:00Z
 ---
 
 # Methodology: 자유연상 (Free Association)
@@ -96,7 +96,7 @@ timestamp: 2026-10-02T01:00:00Z
 
 ## 미결 사항
 
-- [User Review] 파일럿 구현 기본값 — 배터리 뒤·ESM 전의 단독 날(한국 시간)에 열고 그날 다른 기록이 있으면 막음, ESM은 그다음 날부터. `administered_alone`은 서버가 그날 다른 기록 유무로 기록. '안 떠오름' = `(막힘)`, '이 흐름 불편' = `(이 흐름 불편)`을 남기고 종료, 종료 방식은 `stop`, 끝나고 선택 자기보고. 후보 모듈이지만 arm (iii)에 넣어 분석 때 넣고 빼고 비교. 이유: 배치·ESM과의 관계·'불편' 기록 방식이 문서에 없음. [파일럿 설계](../architecture/pilot.md) 「S5 파일럿 기본값」에서 확정(런칭 전).
+- [User Review] 파일럿 구현 기본값 — 배터리 뒤·ESM 전의 단독 날에 열고(다음 날 0시와 배터리를 마친 뒤 6시간 중 늦은 때), 그날 다른 기록이 있으면 막음, ESM도 같은 규칙으로 그다음에. 한 번만(두 번째 저장은 서버가 막음). `administered_alone`은 서버가 그날 다른 기록 유무로 기록. '안 떠오름' = `(막힘)`, '이 흐름 불편' = `(이 흐름 불편)`을 남기고 종료 + 지원 안내 한 줄, 종료 방식은 `stop`, 끝나고 선택 자기보고. 시간·개수는 안 보임, 입력은 한글 조합 중 Enter를 무시, 이 기기에 초안 저장(다시 열면 이어서, 이어 쓴 횟수는 `client_meta.resumes`), 다 쓴 뒤 실명은 참가자가 표시해 가림. 후보 모듈이지만 arm (iii)에 넣어 분석 때 넣고 빼고 비교. 이유: 배치·ESM과의 관계·'불편' 기록 방식이 문서에 없고, 자정만 넘기면 열리던 '단독 날'은 배터리 2분 뒤에도 열 수 있었음(휴리스틱 감사 E4 — 6시간은 프로토콜 판단이라 확인 필요). [파일럿 설계](../architecture/pilot.md) 「감사 반영 파일럿 기본값」에서 확정(런칭 전).
 
 - [TODO] [생성 은유와 문장 완성](generative_metaphor.md)·[클린 랭귀지](clean_language.md)와의 L1 직교성을 [검증 모드](../validation/validation_mode.md) A4로 실증 — 위 결정대로 *별도 cue 세션의 개인 의미망 비교* + A4 증분 타당도 병행.
 - [TODO] 배터리 정식 편입은 A4 증분 타당도 통과 조건(EFT·애착 서사 선례). 통과 전까지 '후보(탐색중)'. 편입 확정 시 [번들 index](../index.md)·[../overview/principles.md](../overview/principles.md)의 "16종" 카운트를 갱신해야 함(현재는 16종 확정 상태 유지).
