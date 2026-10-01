@@ -3,7 +3,7 @@ type: Playbook
 title: "Methodology: 어제 하루 재구성법 (Day Reconstruction Method)"
 description: 하루의 끝에 어제를 에피소드로 쪼개 회고 서술하게 하여, 같은 날 ESM(경험하는 자아)과 대조해 기억 왜곡(기억하는 자아와의 갭)을 측정하는 의존 모듈.
 tags: [drm, memory, retrospective, affect, esm]
-timestamp: 2026-09-30T00:00:00Z
+timestamp: 2026-10-01T23:30:00Z
 ---
 
 # Methodology: 어제 하루 재구성법 (Day Reconstruction Method)
@@ -86,3 +86,7 @@ DRM의 고유 가치는 **같은 날 ESM과의 대조**에서 나온다. 따라�
 ---
 
 **🔗 상위 맥락:** [번들 index](../index.md) · **의존:** [행동 흔적 + 미니 ESM](behavioral_traces_esm.md)
+
+## 미결 사항
+
+- [User Review] 파일럿 구현 기본값 — ESM 14일 창의 8일째·14일째 두 번, 각 '어제'를 재구성(그날만 가능). 장면 입력에 '한 줄 핵심'(`raw_core`) 필드를 두고, 하루 전반 정서 1~5 대신 ESM과 같은 스트레스·에너지 1~5로 물어 비교 가능하게 함. ESM 응답은 화면에 보여 주지 않음. 이유: 시점('당일 말' vs '어제')·빈도('하루 1회' vs '저빈도')·척도가 문서 안에서 엇갈림. [파일럿 설계](../architecture/pilot.md) 「S4 파일럿 기본값」에서 확정(런칭 전).

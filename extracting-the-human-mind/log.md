@@ -2,6 +2,12 @@
 
 ## 2026-10-01
 
+- **세션**: 스프린트 S4 — ESM 14일 + DRM, Web Push
+- **수정 파일**: `architecture/pilot.md`(「S4 파일럿 기본값」 표 신설, 참가 흐름, 진행), `extraction/behavioral_traces_esm.md`·`extraction/day_reconstruction.md`(파일럿 기본값 [User Review]), `index.md`(현재 단계). 코드(`ethm-pilot`): `api/app/esm.py`(일정·문항·발송), `routers/esm.py`, 테이블 4개(`esm_settings`·`esm_settings_log`·`push_subscriptions`·`esm_pings`), 1분 주기 루프(API 수명 주기), ESM 단계 완료 규칙(창 종료), 내보내기에 발송·응답 기록, `app/vapid.py`(키 생성), 동의 안내 한 줄(알림), 웹 `Esm.tsx`·manifest·service worker·아이콘, 배포 매니페스트·README(VAPID 키).
+- **핵심 결정**: 없음(사용자 확정 없음). 제안: ESM은 배터리 뒤 14일 고정 창으로 arm (iii)에 포함, 알림은 질문 없는 일반 문구, 슬롯 문항은 문서 문구만, DRM은 8·14일째 두 번 ESM과 같은 척도로.
+- **검증**: API 테스트 32개(시계 고정: 창 시작·슬롯 시각·만료·중복 방지·빈도 0·끊긴 구독 삭제·DRM 날짜·창 종료 후 완료) 통과, 웹 lint·build 통과. 로컬 브라우저로 설정 → 슬롯 응답(이름 가림) → 직접 기록 확인, manifest·service worker 응답 확인.
+- **다음 단계**: 사용자 — `pilot-secrets`에 VAPID 키 추가 후 배포(서비스 저장소 `deploy/README.md` 'S4로 올릴 때'), 휴대폰(아이폰은 홈 화면 앱)으로 알림 시험, 「S4 파일럿 기본값」 확정(특히 ESM의 arm (iii) 포함과 행동 문항). 개발 — S5(프로브 세트·일정 게이트·재검사·자유연상·라인업 동의 → 런칭 게이트).
+
 - **세션**: 스프린트 S3 — 2계층 가명화, Claude API, 래더링, 클린 랭귀지
 - **수정 파일**: `architecture/pilot.md`(「S3 파일럿 기본값」 표 신설, 배터리 순서, 진행, 가명화 [TODO] → [해결됨], 런칭 전 [TODO] 2건), `extraction/laddering.md`·`extraction/clean_language.md`·`architecture/architecture.md`(파일럿 기본값 [User Review]), `index.md`(현재 단계). 코드(`ethm-pilot`): `api/app/pseudonym.py`·`routers/pseudonyms.py`(가명화·후보 확인), `api/app/llm.py`(Claude 게이트웨이), `api/app/dynamic/`(래더링 타깃 수학·인터뷰 엔진 2개), `routers/dynamic.py`, 저장·읽기·내보내기 가명화, 테이블 3개(`pseudonyms`·`llm_calls`·`dynamic_sessions`), 동의 안내 한 줄(동의 버전 변경), 웹 이름 확인 화면·인터뷰 화면, 인생 장면 래더링 앵커, 배포 매니페스트·README(키 2개).
 - **핵심 결정**: 없음(사용자 확정 없음). 제안: Claude는 질문을 쓰지 않고 고정 템플릿과 참가자 원문 슬롯만 고름(슬롯 기계 검증·전 시도 기록), 2계층 가명화의 탐지는 로컬 규칙 + 참가자 확인, 가명화 키가 없으면 사이트는 열고 저장만 막음(구 매니페스트가 새 이미지를 받아도 다운되지 않게).
