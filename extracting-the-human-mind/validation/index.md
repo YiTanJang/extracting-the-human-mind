@@ -8,3 +8,4 @@
 | [comprehension_validation.md](comprehension_validation.md) | 이해 검증 — 배터리 A1–A7(블라인드 점예측·라인업 식별·수렴·증분·스왑·문체 지문·편향 동조) |
 | [simulation_validation.md](simulation_validation.md) | 시뮬레이션 검증 — 배터리 B1–B7(과거 재현·역튜링·궤적 일관성·반사실·경제 게임·적대적 스트레스·시간적 붕괴) |
 | [reliability_validation.md](reliability_validation.md) | 신뢰도 검증 — 배터리 C1–C5(재검사·캘리브레이션·교차삼각·과잉 일관성·프롬프트 교란) |
+| [pilot_probe_set.md](pilot_probe_set.md) | 파일럿 프로브 세트 초안 — 앵커 24(재검사)·라인업 5·경제 게임 3·자기 이해 1 (사용자 검토 전) |
